@@ -1,4 +1,4 @@
-# Discord_log
+# Discord_Log
 
 ## サービス概要
 Discordを使って特定の作業を行っている人へ
@@ -33,3 +33,6 @@ Discordを使用して特定の作業を行った時間を視覚化してくれ�
 
 ## マーケット
 Discordを使用して特定の作業を行った時間を知りたい人へ
+
+## 画面遷移図
+https://www.figma.com/file/dn6UEqmDPbHQVAHZTh82ZJ/Discord_Log?node-id=0%3A1
