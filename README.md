@@ -36,3 +36,6 @@ Discordを使用して特定の作業を行った時間を知りたい人へ
 
 ## 画面遷移図
 https://www.figma.com/file/dn6UEqmDPbHQVAHZTh82ZJ/Discord_Log?node-id=0%3A1
+
+## ER図
+https://drive.google.com/file/d/1X6dgtyOB7E_Ura-ork7KWAzUbyIn370t/view?usp=sharing
