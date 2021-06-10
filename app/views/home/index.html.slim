@@ -1,0 +1,54 @@
+.main
+  .top.jumbotron.jumbotrn-fluid.bg-white
+    .container-fluid
+      .row
+        .col-7.text-center
+          .h1.display-1.font-weight-bold
+            | Discord-Log
+          p.lead.ml-5.font-weight-bold.text-muted
+            |
+              Discordアカウントでログインすると<br>
+              使った時間を視覚化します
+
+          = link_to 'Discorl-Logを使う', "#", class: 'btn btn-lg btn-info mt-5'
+        .col-5.align-self-center.pr-5
+          img
+            = image_tag 'stacked_graph.png', class: 'mw-100'
+
+  .container-fluid.contents.pt-5
+    .container
+      .row
+        .col-3
+        .col-6
+          h3.text-center.font-weight-bold.mb-4
+            |こんな悩みはありませんか？
+          h5.text-center.font-weight-bold.text-muted
+            |
+              Discordを繋ぎながらゲームや勉強をしているけど<br>
+              どれだけの時間それを行っていたのかがわからない。<br>
+              視覚化できたらいいのになぁ。
+        .col-3
+          = image_tag 'working_women', size: '300x300'
+
+      .row
+        .col-3
+          = image_tag 'timer', size: '300x300'
+        .col-6
+          h3.text-center.font-weight-bold.mb-4
+            |Discordでの使用時間を視覚化します
+          h5.text-center.font-weight-bold.text-muted
+            |
+              Discordのアカウントでログインするだけで、<br>
+              サーバーやチャンネルごとに使用した時間を<br>
+              計測し、グラフを用いて視覚化します
+        .col-3
+
+      .row
+        .col-3
+        .col-6
+          h3.text-center.font-weight-bold.mb-4
+            |継続日数を記録!
+          h5.text-center.font-weight-bold.text-muted
+            |Discordを使用した日は、カレンダーに印がつきます。
+        .col-3
+          = image_tag 'calender', size: '300x300'
