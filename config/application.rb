@@ -29,5 +29,12 @@ module DiscordLog
 
     config.generators.system_tests = nil
     config.generators.template_engine = :slim
+
+    config.generators do |g|
+      g.skip_routes true
+      g.assets false
+      g.helper false
+      g.test_framework false
+    end
   end
 end
