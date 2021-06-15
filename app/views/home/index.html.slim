@@ -10,7 +10,7 @@
               Discordアカウントでログインすると<br>
               使った時間を視覚化します
 
-          = link_to 'Discorl-Logを使う', "#", class: 'btn btn-lg btn-info mt-5'
+          = link_to 'Discord-Logを使う', api_v1_auth_at_provider_path(:provider => :discord), class: 'btn btn-lg btn-info mt-5'
         .col-5.align-self-center.pr-5
           img
             = image_tag 'stacked_graph.png', class: 'mw-100'

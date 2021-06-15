@@ -5,5 +5,5 @@ header.py-2
 
       ul.navbar-nav
         li.nav-item.mr-5
-          = link_to 'ログイン', "#", class: 'nav-link btn btn-info btn-lg'
+          = link_to 'ログイン', api_v1_auth_at_provider_path(:provider => :discord), class: 'nav-link btn btn-info btn-lg'
           / = link_to 'ログアウト', "#", class: 'nav-link btn-danger'
