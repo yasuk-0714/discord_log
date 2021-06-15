@@ -7,7 +7,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
   def callback
     provider = auth_params[:provider]
     if auth_params[:denied].present?
-      redirect_to root_path, notice: "ログインをキャンセルしました"
+      redirect_to root_path, info: 'ログインをキャンセルしました'
       return
     end
     if (user = login_from(provider))
@@ -18,7 +18,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
     else
       fetch_user_data_from(provider)
     end
-    redirect_to root_path, notice: "Discordでログインしました"
+    redirect_to root_path, success: 'Discordでログインしました'
   end
 
   private
