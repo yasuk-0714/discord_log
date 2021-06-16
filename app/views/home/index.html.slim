@@ -1,4 +1,4 @@
-.main
+main
   .top.jumbotron.jumbotrn-fluid.bg-white
     .container-fluid
       .row
@@ -15,40 +15,40 @@
           img
             = image_tag 'stacked_graph.png', class: 'mw-100'
 
-  .container-fluid.contents.pt-5
+  .py-4.contents
     .container
       .row
-        .col-3
-        .col-6
+        .col-md-3
+        .col-md-6.py-5.pl-5
           h3.text-center.font-weight-bold.mb-4
             |こんな悩みはありませんか？
-          h5.text-center.font-weight-bold.text-muted
+          h5.text-left.font-weight-bold.text-muted.pl-4
             |
               Discordを繋ぎながらゲームや勉強をしているけど<br>
               どれだけの時間それを行っていたのかがわからない。<br>
               視覚化できたらいいのになぁ。
-        .col-3
+        .col-md-3
           = image_tag 'working_women', size: '300x300'
 
       .row
-        .col-3
+        .col-md-3
           = image_tag 'timer', size: '300x300'
-        .col-6
+        .col-md-6.py-5.pl-5
           h3.text-center.font-weight-bold.mb-4
             |Discordでの使用時間を視覚化します
-          h5.text-center.font-weight-bold.text-muted
+          h5.text-left.font-weight-bold.text-muted.pl-4
             |
               Discordのアカウントでログインするだけで、<br>
-              サーバーやチャンネルごとに使用した時間を<br>
-              計測し、グラフを用いて視覚化します
-        .col-3
+              サーバーやチャンネルごとに使用した時間を計測し、<br>
+              グラフを用いて視覚化します。
+        .col-md-3
 
       .row
-        .col-3
-        .col-6
+        .col-md-3
+        .col-md-6.py-5.pl-5
           h3.text-center.font-weight-bold.mb-4
             |継続日数を記録!
-          h5.text-center.font-weight-bold.text-muted
-            |Discordを使用した日は、カレンダーに印がつきます。
-        .col-3
+          h5.text-left.font-weight-bold.text-muted.pl-4
+            |Discordの利用日は、カレンダーに印がつきます。
+        .col-md-3
           = image_tag 'calender', size: '300x300'
