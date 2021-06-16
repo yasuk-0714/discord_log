@@ -1,0 +1,38 @@
+main
+  .container-fluid
+    .row
+      .col-md-2.border-right.bg-white
+        ul.nav.flex-column
+          = link_to 'サーバーA', "#", class: 'nav-link'
+          li.nav-item.pl-5
+            = link_to 'チャンネル1', "#", class: 'nav-link'
+            = link_to 'チャンネル2', "#", class: 'nav-link'
+            = link_to 'チャンネル3', "#", class: 'nav-link'
+        ul.nav.flex-column
+          = link_to 'サーバーB', "#", class: 'nav-link'
+          li.nav-item.pl-5
+            = link_to 'チャンネル4', "#", class: 'nav-link'
+            = link_to 'チャンネル5', "#", class: 'nav-link'
+            = link_to 'チャンネル6', "#", class: 'nav-link'
+
+      .col-md-10.contents
+        .container-fluid.text-center
+          .row
+            .col-md-3.mt-4.text-left.font-weight-bold
+              h2 使用状況
+            .col-md-6.text-left.pl-5
+              = image_tag 'calender', size: '600x300'
+            .col-md-3
+
+          .row
+            .col-md-3
+              = image_tag 'traiangle', size: '300x300'
+            .col-md-6.text-left.pl-5
+              = image_tag 'growth_curve', size: '600x300'
+            .col-md-3
+              = image_tag 'joy_character', size: '300x300'
+          .row.text-center
+            .col-md-3
+            .col-md-6.text-left.pl-5
+              = image_tag 'timer', size: '600x300'
+            .col-md-3

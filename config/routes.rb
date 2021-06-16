@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'home#index'
+  get 'mypage', to: 'home#mypage'
 
   namespace :api do
     namespace :v1 do

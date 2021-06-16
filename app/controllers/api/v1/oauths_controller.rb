@@ -18,7 +18,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
     else
       fetch_user_data_from(provider)
     end
-    redirect_to root_path, success: t('.success')
+    redirect_to mypage_path, success: t('.success')
   end
 
   private
