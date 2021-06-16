@@ -7,3 +7,6 @@ ja:
         callback:
           info: 'ログインをキャンセルしました'
           success: 'Discordでログインしました'
+      user_sessions:
+        destroy:
+          success: 'ログアウトしました'
