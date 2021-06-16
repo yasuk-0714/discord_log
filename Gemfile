@@ -36,6 +36,10 @@ gem 'html2slim'
 # 日本語化
 gem 'rails-i18n'
 
+gem 'sorcery'
+
+gem 'config'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'better_errors'

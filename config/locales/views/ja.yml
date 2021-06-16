@@ -1,0 +1,12 @@
+ja:
+  defaults:
+    message:
+  api:
+    v1:
+      oauths:
+        callback:
+          info: 'ログインをキャンセルしました'
+          success: 'Discordでログインしました'
+      user_sessions:
+        destroy:
+          success: 'ログアウトしました'
