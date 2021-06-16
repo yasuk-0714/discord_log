@@ -29,6 +29,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
 
   def fetch_user_data_from(provider)
     user_from_provider = build_from(provider)
+    binding.pry
     user = User.find_or_initialize_by(discord_id: user_from_provider.discord_id)
     @user.build_authentication(uid: @user_hash[:uid],
                                provider: provider,

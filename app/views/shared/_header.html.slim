@@ -3,9 +3,12 @@ header.py-2
     .container-fluid
       = link_to 'Discord-Log', root_path, class: 'navbar-brand ml-5'
 
-      ul.navbar-nav
-        li.nav-item.mr-5
-          - if current_user
-            = link_to 'ログアウト', api_v1_logout_path, method: :delete, class: 'nav-link active'
+      ul.navbar-nav.justify-content-end
+        - if current_user
+          - if current_page?(root_path)
+            li= link_to 'マイページ', mypage_path, class: 'nav-link active'
           - else
-            = link_to 'ログイン', api_v1_auth_at_provider_path(:provider => :discord), class: 'nav-link active'
+            li= link_to 'ホーム', root_path, class: 'nav-link active'
+          li= link_to 'ログアウト', api_v1_logout_path, method: :delete, class: 'nav-link active'
+        - else
+          li= link_to 'ログイン', api_v1_auth_at_provider_path(:provider => :discord), class: 'nav-link active'
