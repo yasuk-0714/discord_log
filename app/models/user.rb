@@ -5,6 +5,9 @@ class User < ApplicationRecord
   has_one :authentication, dependent: :destroy
   accepts_nested_attributes_for :authentication
 
+  has_many :user_guilds
+  has_many :guilds, through: :user_guilds
+
   validates :discord_id, presence: true, uniqueness: true
   validates :name, presence: true
   validates :email, presence: true
