@@ -2,18 +2,7 @@ main
   .container-fluid
     .row
       .col-md-2.border-right.bg-white
-        ul.nav.flex-column
-          = link_to 'サーバーA', "#", class: 'nav-link'
-          li.nav-item.pl-5
-            = link_to 'チャンネル1', "#", class: 'nav-link'
-            = link_to 'チャンネル2', "#", class: 'nav-link'
-            = link_to 'チャンネル3', "#", class: 'nav-link'
-        ul.nav.flex-column
-          = link_to 'サーバーB', "#", class: 'nav-link'
-          li.nav-item.pl-5
-            = link_to 'チャンネル4', "#", class: 'nav-link'
-            = link_to 'チャンネル5', "#", class: 'nav-link'
-            = link_to 'チャンネル6', "#", class: 'nav-link'
+        = render partial: 'guild', collection: @guilds, as: :guild
 
       .col-md-10.contents
         .container-fluid.text-center

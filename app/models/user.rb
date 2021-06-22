@@ -1,12 +1,17 @@
 class User < ApplicationRecord
+  require "net/http"
+  require "uri"
+  require "json"
+  require "openssl"
+
   before_create :set_uuid
 
   authenticates_with_sorcery!
   has_one :authentication, dependent: :destroy
   accepts_nested_attributes_for :authentication
 
-  has_many :user_guilds
-  has_many :guilds, through: :user_guilds
+  has_many :user_guilds, dependent: :destroy
+  has_many :guilds, through: :user_guilds, source: :guild
 
   validates :discord_id, presence: true, uniqueness: true
   validates :name, presence: true
