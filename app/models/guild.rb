@@ -4,6 +4,9 @@ class Guild < ApplicationRecord
   has_many :user_guilds, dependent: :destroy
   has_many :users, through: :user_guilds, source: :user
 
+  validates :name, presence: true
+  validates :uuid, presence: true
+
   private
 
   def set_uuid
