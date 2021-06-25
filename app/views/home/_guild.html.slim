@@ -1,6 +1,7 @@
 ul.nav.flex-column
-  = link_to guild.name, "#", class: 'nav-link'
-  li.nav-item.pl-5
-    = link_to 'チャンネル1', "#", class: 'nav-link'
-    = link_to 'チャンネル2', "#", class: 'nav-link'
-    = link_to 'チャンネル3', "#", class: 'nav-link'
+  li= link_to guild.name, "#", class: 'nav-link'
+
+  ul.nav-item.pl-5
+    - @channels.each do |channel|
+      - if guild.id == channel.guild_id
+        li= link_to channel.name, '#', class: 'nav-link'

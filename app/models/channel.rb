@@ -1,12 +1,13 @@
-class Guild < ApplicationRecord
+class Channel < ApplicationRecord
   before_create :set_uuid
 
-  has_many :user_guilds, dependent: :destroy
-  has_many :users, through: :user_guilds, source: :user
-  has_many :channels, dependent: :destroy
+  has_many :user_channels, dependent: :destroy
+  has_many :users, through: :user_channels, source: :user
+  belongs_to :guild
 
   validates :name, presence: true
   validates :uuid, presence: true
+  validates :position, presence: true
 
   private
 
