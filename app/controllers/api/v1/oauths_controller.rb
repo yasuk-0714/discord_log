@@ -20,6 +20,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
     else
       fetch_user_data_from(provider)
       get_guilds
+      get_channels
     end
     redirect_to mypage_path, success: t('.success')
   end
@@ -57,11 +58,38 @@ class Api::V1::OauthsController < Api::V1::BaseController
     results.each do |result|
       guild_id = result["id"].to_i
       guild_name = result["name"]
-      #なぜかIDがguild_idで保存される
-      guild = Guild.new(name: guild_name, uuid: guild_id)
+      guild = Guild.new(id: guild_id, name: guild_name, uuid: guild_id)
       guild.save
       user_guild = UserGuild.new(user_id: current_user.id, guild_id: guild.id)
       user_guild.save
+    end
+  end
+
+  def get_channels
+    guilds = []
+    current_user.guilds.each do |result|
+      guilds << result[:id]
+    end
+    guilds.each do |guild|
+      begin
+        uri = URI.parse("https://discord.com")
+        uri.path = "/api/v8/guilds/#{guild}/widget.json"
+        https = Net::HTTP.new(uri.host, uri.port)
+        https.use_ssl = true
+        response = https.get uri.request_uri
+        response_hash = JSON.parse(response.body)
+        response_hash["channels"].each do |value|
+          id = value['id']
+          name = value['name']
+          position = value['position']
+          channel = Channel.new(id: id, name: name, uuid: id, position: position, guild_id: guild)
+          channel.save
+          user_channel = UserChannel.new(user_id: current_user.id, channel_id: id)
+          user_channel.save
+        end
+      rescue => e
+        puts "#{e.class}, #{e.message}"
+      end
     end
   end
 end

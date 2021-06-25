@@ -3,6 +3,7 @@ class Guild < ApplicationRecord
 
   has_many :user_guilds, dependent: :destroy
   has_many :users, through: :user_guilds, source: :user
+  has_many :channels, dependent: :destroy
 
   validates :name, presence: true
   validates :uuid, presence: true
