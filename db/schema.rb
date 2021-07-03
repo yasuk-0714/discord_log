@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 2021_06_29_074955) do
 
   create_table "authentications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "provider", null: false
     t.string "uid", null: false
     t.string "access_token", default: "", null: false
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_074955) do
   end
 
   create_table "channel_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.datetime "start_time"
+    t.datetime "start_time", null: false
     t.datetime "end_time"
     t.bigint "user_channel_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_074955) do
     t.string "name", null: false
     t.string "email", null: false
     t.string "uuid", null: false
-    t.integer "role", default: 1, null: false
+    t.integer "role", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["discord_id"], name: "index_users_on_discord_id", unique: true
