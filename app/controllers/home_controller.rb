@@ -4,12 +4,9 @@ class HomeController < ApplicationController
 
   def mypage
     @guilds = current_user.guilds
-    @guild_channels = []
-    @guilds.each do |guild|
-      if guild.channels.exists?
-        @guild_channels << guild.channels
-      end
-    end
-    @channels = @guild_channels.flatten
+    @channels = current_user.channels.order(position: :asc).map {|user_channel| user_channel }
+
+    user_channels = UserChannel.where(user_id: current_user.id)
+    channel_time = ChannelTime.where(user_channel_id: user_channels.ids)
   end
 end

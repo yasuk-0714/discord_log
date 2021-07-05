@@ -1,7 +1,7 @@
 class SorceryExternal < ActiveRecord::Migration[6.0]
   def change
     create_table :authentications do |t|
-      t.integer :user_id, null: false
+      t.bigint :user_id, null: false
       t.string :provider, :uid, null: false
       t.string :access_token, null: false, default: ""
       t.string :refresh_token, null: false, default: ""

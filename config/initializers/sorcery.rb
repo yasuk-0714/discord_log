@@ -234,6 +234,7 @@ Rails.application.config.sorcery.configure do |config|
   config.discord.callback_url = Settings.sorcery[:callback_url]
   config.discord.scope = "identify email guilds bot applications.builds.read"
   config.discord.user_info_mapping = {
+    id: 'id',
     discord_id: 'id',
     name: 'username',
     email: 'email'

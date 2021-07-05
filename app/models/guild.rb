@@ -7,6 +7,7 @@ class Guild < ApplicationRecord
 
   validates :name, presence: true
   validates :uuid, presence: true
+  validates :id, uniqueness: true
 
   private
 
