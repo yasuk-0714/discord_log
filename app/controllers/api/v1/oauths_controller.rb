@@ -9,7 +9,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
   def callback
     provider = auth_params[:provider]
     if auth_params[:denied].present?
-      redirect_to root_path, info: t('.info')
+      redirect_to root_path
       return
     end
     if (user = login_from(provider))
@@ -18,10 +18,10 @@ class Api::V1::OauthsController < Api::V1::BaseController
         refresh_token: access_token.refresh_token)
     else
       fetch_user_data_from(provider)
-      get_guilds
-      get_channels
     end
-    redirect_to mypage_path, success: t('.success')
+    get_guilds
+    get_channels
+    redirect_to mypage_path
   end
 
   private
@@ -57,9 +57,9 @@ class Api::V1::OauthsController < Api::V1::BaseController
     results.each do |result|
       guild_id = result["id"].to_i
       guild_name = result["name"]
-      guild = Guild.new(id: guild_id, name: guild_name, uuid: guild_id)
+      guild = Guild.find_or_initialize_by(id: guild_id, name: guild_name, uuid: guild_id)
       guild.save
-      user_guild = UserGuild.new(user_id: current_user.id, guild_id: guild.id)
+      user_guild = UserGuild.find_or_initialize_by(user_id: current_user.id, guild_id: guild.id)
       user_guild.save
     end
   end
@@ -81,9 +81,9 @@ class Api::V1::OauthsController < Api::V1::BaseController
           id = value['id']
           name = value['name']
           position = value['position']
-          channel = Channel.new(id: id, name: name, uuid: id, position: position, guild_id: guild)
+          channel = Channel.find_or_initialize_by(id: id, name: name, uuid: id, position: position, guild_id: guild)
           channel.save
-          user_channel = UserChannel.new(user_id: current_user.id, channel_id: id)
+          user_channel = UserChannel.find_or_initialize_by(user_id: current_user.id, channel_id: id)
           user_channel.save
         end
       rescue => e
