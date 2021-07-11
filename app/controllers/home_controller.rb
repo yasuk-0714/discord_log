@@ -13,9 +13,7 @@ class HomeController < ApplicationController
 
     #ユーザーが参加しているチャンネルの総合時間 :グラフ用
     @time_all = {}
-    time = time_all.values.sum / 3600.0
-    shaped_time = sprintf('%0.2f', time)
-    @time_all['合計時間'] = shaped_time
+    @time_all['合計時間'] = shaped_time(time_all.values.sum)
     #ユーザーが参加している各チャンネルの使用時間
     @user_channels_time_all = {}
     time_all.each do |key, value|
@@ -27,6 +25,7 @@ class HomeController < ApplicationController
 
     #今日のチャンネルの使用時間
     user_channels_time_today = current_user.channel_times.where(created_at: Time.now.all_day,updated_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
+    @total_time_today = caliculate_time(user_channels_time_today.values.sum)
     @user_channels_time_today = {}
     user_channels_time_today.each do |key, value|
       user_channel =  UserChannel.find(key)

@@ -10,31 +10,36 @@ main
 
         .container-fluid.text-center.pt-5
           .row.text-center
-            .col-md-6.text-left.pl-5
+            .col-md-6.text-left.pt-5
               = column_chart @user_channels_time_today
             .col-md-6.pt-2
               h3 今日のチャンネル使用時間
-              h1= @total_time
+              h1= @total_time_today
+
           .row.text-center
-            .col-md-6.text-left.pl-5
+            .col-md-6.text-left.pt-5
               = column_chart @graph, stacked: true
             .col-md-6.pt-2
               h3.pb-2
                 |今週のチャンネル使用時間
               h1= @user_channels_time_week
+
           .row.text-center
-            .col-md-6.text-left.pl-5
+            .col-md-6.text-left.pt-5
               = column_chart @user_channels_time_all
+
           .row.text-center
-            .col-md-6.text-left.pl-5
-              = bar_chart @time_all, width: '800px', precision: 3
+            .col-md-6.text-left.pt-5
+              = bar_chart @time_all
             .col-md-6.pt-2
               h3.pb-2
-                |これまでのDiscordの使用時間
+                |トータル使用時間
               h1= @total_time
+
           .row.text-center
-            .col-md-12.text-left.pl-5
+            .col-md-12.text-left.pt-5
               = column_chart @months_graph, stacked: true
+
           .row.text-center
             .col-md-6
               = image_tag 'traiangle', size: '300x300'

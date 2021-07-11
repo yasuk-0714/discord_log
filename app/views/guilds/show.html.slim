@@ -3,3 +3,6 @@ main
     .row
       .col-md-2.border-right.bg-white
         = render partial: 'guild', collection: @guilds, as: :guild
+
+      h1.pt-4.pl-4
+        = @guild.name

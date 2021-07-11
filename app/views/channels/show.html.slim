@@ -3,3 +3,38 @@ main
     .row
       .col-md-2.border-right.bg-white
         = render partial: 'guilds/guild', collection: @guilds, as: :guild
+
+
+      .col-md-10.contents.pt-4
+        h1.pl-5
+          = @channel.name
+          |の使用状況
+
+        .container-fluid.text-center.pt-5
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              = bar_chart @channel_time_today_graph
+            .col-md-6.pt-2
+              h3 今日のチャンネル使用時間
+              h1= @channel_time_today
+
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              = column_chart @weeks_graph, stacked: true
+            .col-md-6.pt-2
+              h3 今週のチャンネル使用時間
+              h1= @channel_time_week
+
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              = bar_chart @channel_time_graph
+            .col-md-6.pt-2
+              h3 これまでのチャンネル使用時間
+              h1= @channel_time
+
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              = column_chart @months_graph, stacked: true
+            .col-md-6.pt-2
+              h3 今月のチャンネル使用時間
+              h1= @channel_time_month
