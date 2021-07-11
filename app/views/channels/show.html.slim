@@ -3,39 +3,36 @@ main
     .row
       .col-md-2.border-right.bg-white
         ul.navbar-nav
+          li.text-center.py-3
+            = link_to 'マイページへ移動', mypage_path, class: 'nav-link btn btn-outline-success btn-sm'
           li= render partial: 'guilds/guild', collection: @guilds, as: :guild
 
       .col-md-10.contents.pt-4
         h1.pl-5
-         |Discordの使用状況
+          = @channel.name
+          |の使用状況
 
         .container-fluid.text-center.pt-5
           .row.text-center
             .col-md-6.text-left.pt-5
-              = column_chart @user_channels_time_today
+              = bar_chart @channel_time_today_graph
             .col-md-6.pt-2
               h3 今日のチャンネル使用時間
-              h1= @total_time_today
+              h1= @channel_time_today
 
           .row.text-center
             .col-md-6.text-left.pt-5
-              = column_chart @graph, stacked: true
+              = column_chart @weeks_graph, stacked: true
             .col-md-6.pt-2
-              h3.pb-2
-                |今週のチャンネル使用時間
-              h1= @user_channels_time_week
+              h3 今週のチャンネル使用時間
+              h1= @channel_time_week
 
           .row.text-center
             .col-md-6.text-left.pt-5
-              = column_chart @user_channels_time_all
-
-          .row.text-center
-            .col-md-6.text-left.pt-5
-              = bar_chart @time_all
+              = bar_chart @channel_time_graph
             .col-md-6.pt-2
-              h3.pb-2
-                |トータル使用時間
-              h1= @total_time
+              h3 これまでのチャンネル使用時間
+              h1= @channel_time
 
           .row.text-center
             .col-md-12.text-left.pt-5
@@ -43,10 +40,10 @@ main
 
           .row.text-center.pt-4
             .col-md-3
-              = image_tag 'traiangle', size: '200x200'
-            .col-md-6
+              = image_tag 'joy_character', size: '200x200'
+            .col-md-6.pt-2
               h3.pb-2
                 |今月のチャンネル使用時間
-              h1= @user_channels_time_month
+              h1= @channel_time_month
             .col-md-3.pt-2
-              = image_tag 'joy_character', size: '200x200'
+              = image_tag 'dornuts_and_characters', size: '200x200'

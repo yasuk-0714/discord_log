@@ -1,0 +1,49 @@
+main
+  .container-fluid
+    .row
+      .col-md-2.border-right.bg-white
+        ul.navbar-nav
+          li.text-center.py-3
+            = link_to 'マイページへ移動', mypage_path, class: 'nav-link btn btn-outline-success btn-sm'
+          li= render partial: 'guilds/guild', collection: @guilds, as: :guild
+
+      .col-md-10.contents.pt-4
+        h1.pl-5
+          = @guild.name
+          |の使用状況
+
+        .container-fluid.text-center.pt-5
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              = bar_chart @guild_time_today_graph
+            .col-md-6.pt-2
+              h3 今日のサーバー使用時間
+              h1= @guild_time_today
+
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              = column_chart @weeks_graph, stacked: true
+            .col-md-6.pt-2
+              h3 今週のサーバー使用時間
+              h1= @guild_time_week
+
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              = bar_chart @guild_time_graph
+            .col-md-6.pt-2
+              h3 これまでのサーバー使用時間
+              h1= @guild_time
+
+          .row.text-center
+            .col-md-12.text-left.pt-5
+              = column_chart @months_graph, stacked: true
+
+          .row.text-center.pt-4
+            .col-md-3
+              = image_tag 'character_with_ballonns', size: '200x200'
+            .col-md-6.pt-2
+              h3.pb-2
+                |今月のサーバー使用時間
+              h1= @guild_time_month
+            .col-md-3.pt-2
+              = image_tag 'traiangle', size: '200x200'

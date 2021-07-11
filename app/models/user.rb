@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :guilds, through: :user_guilds, source: :guild
   has_many :user_channels, dependent: :destroy
   has_many :channels, through: :user_channels, source: :channel
-  has_many :channel_times, through: :user_channels, source: :channel_time
+  has_many :channel_times, through: :user_channels
 
   validates :discord_id, presence: true, uniqueness: true
   validates :name, presence: true

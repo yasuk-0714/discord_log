@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'home#index'
   get 'mypage', to: 'home#mypage'
+  resources :guilds, param: :uuid, only: %i[show]
+  resources :channels, param: :uuid, only: %i[show]
 
   namespace :api do
     namespace :v1 do

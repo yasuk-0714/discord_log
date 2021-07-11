@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_074955) do
   create_table "channel_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.datetime "start_time", null: false
     t.datetime "end_time"
+    t.integer "total_time"
     t.bigint "user_channel_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

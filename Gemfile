@@ -42,8 +42,7 @@ gem 'config'
 
 gem 'font-awesome-sass'
 
-#保留
-# gem 'discordrb'
+gem "chartkick"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

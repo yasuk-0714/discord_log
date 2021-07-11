@@ -4,6 +4,7 @@ class Channel < ApplicationRecord
   has_many :user_channels, dependent: :destroy
   has_many :users, through: :user_channels, source: :user
   belongs_to :guild
+  has_many :channel_times, through: :user_channels, dependent: :destroy
 
   validates :name, presence: true
   validates :uuid, presence: true
