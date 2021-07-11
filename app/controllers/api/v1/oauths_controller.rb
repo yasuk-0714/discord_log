@@ -59,7 +59,6 @@ class Api::V1::OauthsController < Api::V1::BaseController
       guild_name = result["name"]
       # TODO サーバーが削除された時やサーバー名が更新された時に対応していない
       guild = Guild.find_or_initialize_by(id: guild_id, name: guild_name, uuid: guild_id)
-      guild.save
       user_guild = UserGuild.find_or_initialize_by(user_id: current_user.id, guild_id: guild.id)
       user_guild.save
     end

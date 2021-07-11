@@ -12,7 +12,6 @@ Chartkick.options = {
       backgroundColor: 'none',
       plotBorderWidth: 0,
       plotShadow: false,
-      thousands: ","
     },
   }
 }

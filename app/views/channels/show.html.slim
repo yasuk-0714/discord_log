@@ -1,2 +1,5 @@
-h1 Channels#show
-p Find me in app/views/channels/show.html.slim
+main
+  .container-fluid
+    .row
+      .col-md-2.border-right.bg-white
+        = render partial: 'guilds/guild', collection: @guilds, as: :guild

@@ -1,2 +1,5 @@
-h1 Guilds#show
-p Find me in app/views/guilds/show.html.slim
+main
+  .container-fluid
+    .row
+      .col-md-2.border-right.bg-white
+        = render partial: 'guild', collection: @guilds, as: :guild
