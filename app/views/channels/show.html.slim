@@ -35,9 +35,15 @@ main
               h1= @channel_time
 
           .row.text-center
-            .col-md-6.text-left.pt-5
+            .col-md-12.text-left.pt-5
               = column_chart @months_graph, stacked: true
+
+          .row.text-center.pt-4
+            .col-md-3
+              = image_tag 'joy_character', size: '200x200'
             .col-md-6.pt-2
-              h3 今月のチャンネル使用時間
+              h3.pb-2
+                |今月のチャンネル使用時間
               h1= @channel_time_month
+            .col-md-3.pt-2
               = image_tag 'dornuts_and_characters', size: '200x200'

@@ -35,9 +35,15 @@ main
               h1= @guild_time
 
           .row.text-center
-            .col-md-6.text-left.pt-5
+            .col-md-12.text-left.pt-5
               = column_chart @months_graph, stacked: true
-            .col-md-6.pt-2
-              h3 今月のサーバー使用時間
-              h1= @guild_time_month
+
+          .row.text-center.pt-4
+            .col-md-3
               = image_tag 'character_with_ballonns', size: '200x200'
+            .col-md-6.pt-2
+              h3.pb-2
+                |今月のサーバー使用時間
+              h1= @guild_time_month
+            .col-md-3.pt-2
+              = image_tag 'traiangle', size: '200x200'
