@@ -54,6 +54,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
     req_options = {
       use_ssl: uri.scheme == 'https'
     }
+    @guild_list = current_user.guilds.ids
     response = Net::HTTP.start(uri.hostname, uri.port, req_options) do |http|
       http.request(req)
     end
@@ -61,10 +62,18 @@ class Api::V1::OauthsController < Api::V1::BaseController
     results.each do |result|
       guild_id = result["id"].to_i
       guild_name = result["name"]
-      # TODO サーバーが削除された時やサーバー名が更新された時に対応していない
       guild = Guild.find_or_initialize_by(id: guild_id, name: guild_name, uuid: guild_id)
-      user_guild = UserGuild.find_or_initialize_by(user_id: current_user.id, guild_id: guild.id)
+      unless guild.save
+        guild = Guild.find_by(id: guild_id)
+        guild.update(name: guild_name)
+      end
+      user_guild = current_user.user_guilds.find_or_initialize_by(guild_id: guild.id)
       user_guild.save
+      @guild_list.delete_if { |n| n == guild_id }
+    end
+    destroy_guilds = UserGuild.where(guild_id: @guild_list)
+    destroy_guilds.each do |guild|
+      guild.destroy
     end
   end
 
@@ -73,6 +82,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
     current_user.guilds.each do |result|
       guilds << result[:id]
     end
+    @channel_list = current_user.channels.ids
     guilds.each do |guild|
       begin
         uri = URI.parse("https://discord.com")
@@ -82,18 +92,25 @@ class Api::V1::OauthsController < Api::V1::BaseController
         response = https.get uri.request_uri
         response_hash = JSON.parse(response.body)
         response_hash["channels"].each do |value|
-          id = value['id']
+          id = value['id'].to_i
           name = value['name']
           position = value['position']
-          # TODO チャンネルが削除された時やチャンネル名が更新された時に対応していない
           channel = Channel.find_or_initialize_by(id: id, name: name, uuid: id, position: position, guild_id: guild)
-          channel.save
-          user_channel = UserChannel.find_or_initialize_by(user_id: current_user.id, channel_id: id)
+          unless channel.save
+            channel = Channel.find_by(id: id)
+            channel.update(name: name, position: position)
+          end
+          user_channel = current_user.user_channels.find_or_initialize_by(channel_id: id)
           user_channel.save
+          @channel_list.delete_if { |n| n ==id }
         end
       rescue => e
         puts "#{e.class}, #{e.message}"
       end
+    end
+    destroy_channels = UserChannel.where(channel_id: @channel_list)
+    destroy_channels.each do |channel|
+      channel.destroy
     end
   end
 end

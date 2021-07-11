@@ -3,6 +3,7 @@ Chartkick.options = {
   thousands: ",",
   suffix: "時間",
   legend: false,
+  loading: "ちょっと待ってね",
   library: {
     title: {
       align: 'center',

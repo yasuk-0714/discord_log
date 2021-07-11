@@ -24,19 +24,18 @@ class HomeController < ApplicationController
     end
 
     #今日のチャンネルの使用時間
-    user_channels_time_today = current_user.channel_times.where(created_at: Time.now.all_day,updated_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
+    user_channels_time_today = current_user.channel_times.where(created_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
     @total_time_today = caliculate_time(user_channels_time_today.values.sum)
     @user_channels_time_today = {}
     user_channels_time_today.each do |key, value|
       user_channel =  UserChannel.find(key)
       channel = Channel.find(user_channel.channel_id)
-      time = value / 3600.0
-      shaped_time = sprintf('%0.2f', time)
+      shaped_time = shaped_time(value)
       @user_channels_time_today[channel.name] = shaped_time
     end
 
     #今週のチャンネルの使用時間
-    user_channels_time_week = current_user.channel_times.where(created_at: Time.now.all_week, updated_at: Time.now.all_week).group(:user_channel_id).sum(:total_time)
+    user_channels_time_week = current_user.channel_times.where(created_at: Time.now.all_week).group(:user_channel_id).sum(:total_time)
     @user_channels_time_week = caliculate_time(user_channels_time_week.values.sum)
     #曜日ごとのチャンネル使用時間
     sunday = current_user.channel_times.where(created_at: Time.now.beginning_of_week(:sunday).beginning_of_day..Time.now.beginning_of_week(:sunday).end_of_day).group(:user_channel_id).sum(:total_time)

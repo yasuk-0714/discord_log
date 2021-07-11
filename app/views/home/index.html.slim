@@ -13,14 +13,15 @@ main
           = link_to 'サーバーにボットを登録する', "https://discord.com/api/oauth2/authorize?client_id=#{Rails.application.credentials.discord[:client_id]}&permissions=0&scope=bot",
                     target: :_blank, rel: "noopener noreferrer", class: 'btn btn-lg btn-info mt-5 mr-5'
           = link_to 'Discord-Logを使う', api_v1_auth_at_provider_path(:provider => :discord), class: 'btn btn-lg btn-primary mt-5'
+          = link_to 'Discord-Logの使い方', '#', class: 'btn btn-lg btn-warning mt-5 ml-5'
         .col-5.align-self-center.pr-5
-          img
-            = image_tag 'stacked_graph.png', class: 'mw-100'
+          = image_tag 'stacked_graph.png', class: 'mw-100'
 
-  .py-4.contents
+  .contents.py-4
     .container
       .row
         .col-md-3
+          = image_tag 'timer', size: '300x300'
         .col-md-6.py-5.pl-5
           h3.text-center.font-weight-bold.mb-4
             |こんな悩みはありませんか？
@@ -34,7 +35,7 @@ main
 
       .row
         .col-md-3
-          = image_tag 'timer', size: '300x300'
+          = image_tag 'man_pie_graph', size: '300x300'
         .col-md-6.py-5.pl-5
           h3.text-center.font-weight-bold.mb-4
             |Discordでの使用時間を視覚化します
@@ -44,3 +45,4 @@ main
               サーバーやチャンネルごとに使用した時間を計測し、<br>
               グラフを用いて視覚化します。
         .col-md-3
+          = image_tag 'man_graph', size: '300x300'
