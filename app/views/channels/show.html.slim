@@ -2,8 +2,10 @@ main
   .container-fluid
     .row
       .col-md-2.border-right.bg-white
-        = render partial: 'guilds/guild', collection: @guilds, as: :guild
-
+        ul.navbar-nav
+          li.text-center.py-3
+            = link_to 'マイページへ移動', mypage_path, class: 'nav-link btn btn-outline-success btn-sm'
+          li= render partial: 'guilds/guild', collection: @guilds, as: :guild
 
       .col-md-10.contents.pt-4
         h1.pl-5
@@ -38,3 +40,4 @@ main
             .col-md-6.pt-2
               h3 今月のチャンネル使用時間
               h1= @channel_time_month
+              = image_tag 'dornuts_and_characters', size: '200x200'

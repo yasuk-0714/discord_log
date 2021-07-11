@@ -4,6 +4,6 @@ class GuildsController < ApplicationController
     @guilds = current_user.guilds
     @channels = current_user.channels.order(position: :asc).map {|user_channel| user_channel }
 
-    
+    # @channels = @guilds.channels
   end
 end

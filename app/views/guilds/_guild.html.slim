@@ -1,8 +1,8 @@
 - if guild.channels.present?
   ul.nav.flex-column
-    li= link_to guild.name, guild_path(guild.uuid), class: 'nav-link'
+    li= link_to guild.name, guild_path(guild.uuid), class: 'nav-link btn btn-outline-secondary bg-warning my-2'
 
-    ul.nav-item.pl-5
+    nav-item.pl-2
       - @channels.each do |channel|
         - if guild.id == channel.guild_id
-          li= link_to channel.name, channel_path(channel.uuid), class: 'nav-link'
+          li= link_to channel.name, channel_path(channel.uuid), class: 'nav-link btn-outline-secondary btn my-2'

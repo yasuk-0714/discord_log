@@ -2,7 +2,42 @@ main
   .container-fluid
     .row
       .col-md-2.border-right.bg-white
-        = render partial: 'guild', collection: @guilds, as: :guild
+        ul.navbar-nav
+          li.text-center.py-3
+            = link_to 'マイページへ移動', mypage_path, class: 'nav-link btn btn-outline-success btn-sm'
+          li= render partial: 'guilds/guild', collection: @guilds, as: :guild
 
-      h1.pt-4.pl-4
-        = @guild.name
+      .col-md-10.contents.pt-4
+        h1.pl-5
+          = @guild.name
+          |の使用状況
+
+        .container-fluid.text-center.pt-5
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              / = bar_chart @channel_time_today_graph
+            .col-md-6.pt-2
+              h3 今日のサーバー使用時間
+              / h1= @channel_time_today
+
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              / = column_chart @weeks_graph, stacked: true
+            .col-md-6.pt-2
+              h3 今週のサーバー使用時間
+              / h1= @channel_time_week
+
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              / = bar_chart @channel_time_graph
+            .col-md-6.pt-2
+              h3 これまでのサーバー使用時間
+              / h1= @channel_time
+
+          .row.text-center
+            .col-md-6.text-left.pt-5
+              / = column_chart @months_graph, stacked: true
+            .col-md-6.pt-2
+              h3 今月のサーバー使用時間
+              / h1= @channel_time_month
+              = image_tag 'character_with_ballonns', size: '200x200'
