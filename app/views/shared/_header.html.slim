@@ -4,7 +4,9 @@ header.py.sticky-top
       = link_to 'Discord-Log', root_path, class: 'navbar-brand ml-5'
 
       ul.navbar-nav.justify-content-end
-        - if current_user
+        li= link_to 'ボットを登録', "https://discord.com/api/oauth2/authorize?client_id=#{Rails.application.credentials.discord[:client_id]}&permissions=0&scope=bot",
+                    target: :_blank, rel: "noopener noreferrer", class: 'nav-link active pr-3'
+        - if logged_in?
           li= link_to 'マイページ', mypage_path, class: 'nav-link active pr-3'
           li= link_to 'ログアウト', api_v1_logout_path, method: :delete, class: 'nav-link active'
         - else

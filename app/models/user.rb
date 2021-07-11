@@ -1,9 +1,4 @@
 class User < ApplicationRecord
-  require "net/http"
-  require "uri"
-  require "json"
-  require "openssl"
-
   before_create :set_uuid
 
   authenticates_with_sorcery!

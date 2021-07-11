@@ -12,16 +12,20 @@ class Api::V1::OauthsController < Api::V1::BaseController
       redirect_to root_path
       return
     end
-    if (user = login_from(provider))
-      user.authentication.update!(
-        access_token: access_token.token,
-        refresh_token: access_token.refresh_token)
-    else
-      fetch_user_data_from(provider)
+    begin
+      if (user = login_from(provider))
+        user.authentication.update!(
+          access_token: access_token.token,
+          refresh_token: access_token.refresh_token)
+      else
+        fetch_user_data_from(provider)
+      end
+      get_guilds
+      get_channels
+      redirect_to mypage_path
+    rescue
+      redirect_to root_path, info: 'ログインをキャンセルしました'
     end
-    get_guilds
-    get_channels
-    redirect_to mypage_path
   end
 
   private
