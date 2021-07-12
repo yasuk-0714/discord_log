@@ -15,27 +15,85 @@ main
         .container-fluid.text-center.pt-5
           .row.text-center
             .col-md-6.text-left.pt-5
+              h3.text-center.text-secondary
+                |今日のサーバー使用時間
               = bar_chart @guild_time_today_graph
-            .col-md-6.pt-2
-              h3 今日のサーバー使用時間
-              h1= @guild_time_today
+            .col-md-6.pt-5
+              table.table.table-hover
+                h3.text-secondary.mb-3
+                  |今日のチャンネル使用時間トップ5
+                thead
+                  tr
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                    - @guild_time_today_each_channel.each do |key, value|
+                      tr
+                        td= key
+                        td= value
+
+
+          .row.text-center.mt-3
+            .col-md-12
+              h3.pb-2
+                |今日のサーバー使用時間
+                h1= @guild_time_today
+
 
           .row.text-center
             .col-md-6.text-left.pt-5
+              h3.text-center.text-secondary
+                |ここ１週間のサーバー使用時間
               = column_chart @weeks_graph, stacked: true
-            .col-md-6.pt-2
-              h3 今週のサーバー使用時間
-              h1= @guild_time_week
+            .col-md-6.pt-5
+              table.table.table-hover
+                h3.text-secondary.mb-3
+                  |今週のチャンネル使用時間トップ5
+                thead
+                  tr
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                    - @guild_time_week_each_channel.each do |key, value|
+                      tr
+                        td= key
+                        td= value
+
+          .row.text-center.mt-5
+            .col-md-12
+              h3.pb-2
+                |今週のサーバー使用時間
+                h1= @guild_time_week
 
           .row.text-center
             .col-md-6.text-left.pt-5
+              h3.text-center.text-secondary
+                |これまでのサーバー使用時間
               = bar_chart @guild_time_graph
             .col-md-6.pt-2
-              h3 これまでのサーバー使用時間
-              h1= @guild_time
+              table.table.table-hover
+                h3.text-secondary.mb-3
+                  |これまでのチャンネル使用時間トップ5
+                thead
+                  tr
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                    - @guild_time_each_channel.each do |key, value|
+                      tr
+                        td= key
+                        td= value
+
+          .row.text-center.mt-3
+            .col-md-12
+              h3.pb-2
+                |これまでのサーバー使用時間
+                h1= @guild_time
 
           .row.text-center
             .col-md-12.text-left.pt-5
+              h3.text-center.text-secondary
+                |月別のチャンネル使用時間
               = column_chart @months_graph, stacked: true
 
           .row.text-center.pt-4
@@ -47,3 +105,4 @@ main
               h1= @guild_time_month
             .col-md-3.pt-2
               = image_tag 'blooming', size: '200x200'
+

@@ -102,7 +102,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
           end
           user_channel = current_user.user_channels.find_or_initialize_by(channel_id: id)
           user_channel.save
-          @channel_list.delete_if { |n| n ==id }
+          @channel_list.delete_if { |n| n == id }
         end
       rescue => e
         puts "#{e.class}, #{e.message}"

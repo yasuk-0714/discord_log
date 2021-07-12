@@ -10,7 +10,18 @@ class GuildsController < ApplicationController
     guild_time = ChannelTime.where(user_channel_id: user_channel).sum(:total_time)
     @guild_time = caliculate_time(guild_time)
     @guild_time_graph = {}
-    @guild_time_graph[@guild.name] = shaped_time(guild_time)
+    @guild_time_graph['合計時間'] = shaped_time(guild_time)
+
+    #サーバー内のチャンネル使用時間トップ5を算出
+    guild_time_all = ChannelTime.where(user_channel_id: user_channel).group(:user_channel_id).sum(:total_time)
+    guild_time_each = guild_time_all.sort_by {|k,v| v}.reverse.first(5).to_h
+    @guild_time_each_channel = {}
+    guild_time_each.each do |key, value|
+      find_channel =  UserChannel.find(key)
+      channel = Channel.find(find_channel.channel_id)
+      shaped_time = caliculate_time(value)
+      @guild_time_each_channel[channel.name] = shaped_time
+    end
 
     #今日のチャンネル使用時間が算出される
     guild_time_today = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_day).sum(:total_time)
@@ -18,6 +29,16 @@ class GuildsController < ApplicationController
     @guild_time_today_graph = {}
     @guild_time_today_graph[@guild.name] = shaped_time(guild_time_today)
 
+    #本日のサーバー内のチャンネル使用時間トップ5を算出
+    guild_time_today_all = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
+    guild_time_today_each = guild_time_today_all.sort_by {|k,v| v}.reverse.first(5).to_h
+    @guild_time_today_each_channel = {}
+    guild_time_today_each.each do |key, value|
+      find_channel =  UserChannel.find(key)
+      channel = Channel.find(find_channel.channel_id)
+      shaped_time = caliculate_time(value)
+      @guild_time_today_each_channel[channel.name] = shaped_time
+    end
 
     # #今週のチャンネルの使用時間
     guild_time_week = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_week).sum(:total_time)
@@ -38,6 +59,17 @@ class GuildsController < ApplicationController
     saturday_time = [['土曜日', shaped_time(saturday)]]
     sunday_time = [['日曜日', shaped_time(sunday)]]
     @weeks_graph = [{name: '月曜日', data: monday_time}, {name: '火曜日', data: tuesday_time}, {name: '水曜日', data: wednesday_time}, {name:'木曜日', data: thursday_time}, {name: '金曜日', data: friday_time}, {name: '土曜日', data: saturday_time}, {name: '日曜日', data: sunday_time}]
+
+    #今週のサーバー内のチャンネル使用時間トップ5を算出
+    guild_time_week_all = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_week).group(:user_channel_id).sum(:total_time)
+    guild_time_week_each = guild_time_today_all.sort_by {|k,v| v}.reverse.first(5).to_h
+    @guild_time_week_each_channel = {}
+    guild_time_week_each.each do |key, value|
+      find_channel =  UserChannel.find(key)
+      channel = Channel.find(find_channel.channel_id)
+      shaped_time = caliculate_time(value)
+      @guild_time_week_each_channel[channel.name] = shaped_time
+    end
 
     # # #今月のチャンネル使用時間
     guild_time_month = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_month).sum(:total_time)

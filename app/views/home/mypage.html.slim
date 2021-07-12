@@ -12,95 +12,86 @@ main
         .container-fluid.text-center.pt-5
           .row.text-center
             .col-md-6.text-left.pt-5
+              h3.text-center.text-secondary
+                |今日のチャンネル使用時間
               = column_chart @user_channels_time_today, colors: ['#E16B8C']
-            .col-md-6.pt-2.align-self-start
-              h3 今日のチャンネル使用時間
-              h1= @total_time_today
-
+            .col-md-6.pt-5
               table.table.table-hover
+                h3.text-secondary.mb-3
+                  |今日のチャンネル使用時間トップ5
                 thead
                   tr
                     th= "チャンネル名"
                     th= "チャンネル使用時間"
                 tbody
-                  tr
-                    td= "チャンネル名1"
-                    td= "3時間 00分"
-                  tr
-                    td= "チャンネル名2"
-                    td= "2時間 40分"
-                  tr
-                    td= "チャンネル名3"
-                    td= "2時間 00分"
-                  tr
-                    td= "チャンネル名4"
-                    td= "1時間 30分"
-                  tr
-                    td= "チャンネル名5"
-                    td= "1時間 01分"
+                    - @user_channel_time_each_today.each do |key, value|
+                      tr
+                        td= key
+                        td= value
+          .row.text-center.mt-3
+            .col-md-12
+              h3.pb-2
+                |今日のチャンネル使用時間
+                h1= @total_time_today
 
           .row.text-center.pt-5
             .col-md-6.text-left.pt-5
+              h3.text-center.text-secondary
+                |ここ１週間のチャンネル使用時間
               = column_chart @graph, stacked: true
-            .col-md-6.pt-2.align-self-start
+            .col-md-6.pt-5
+              table.table.table-hover
+                h3.text-secondary.mb-3
+                  |今週のチャンネル使用時間トップ5
+                thead
+                  tr
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                    - @user_channel_time_each_month.each do |key, value|
+                      tr
+                        td= key
+                        td= value
+          .row.text-center.mt-3
+            .col-md-12
               h3.pb-2
                 |今週のチャンネル使用時間
-              h1= @user_channels_time_week
-
-              table.table.table-hover
-                thead
-                  tr
-                    th= "チャンネル名"
-                    th= "チャンネル使用時間"
-                tbody
-                  tr
-                    td= "チャンネル名1"
-                    td= "3時間 00分"
-                  tr
-                    td= "チャンネル名2"
-                    td= "2時間 40分"
-                  tr
-                    td= "チャンネル名3"
-                    td= "2時間 00分"
-                  tr
-                    td= "チャンネル名4"
-                    td= "1時間 30分"
-                  tr
-                    td= "チャンネル名5"
-                    td= "1時間 01分"
+                h1= @user_channels_time_week
 
           .row.text-center.pt-5
             .col-md-6.text-left.pt-5
-              = bar_chart @time_all, colors: ['#E98B2A']
-            .col-md-6.pt-2.align-self-start
-              h3.pb-2
+              h3.text-center.text-secondary
                 |トータル使用時間
-              h1= @total_time
-
+              = bar_chart @time_all, colors: ['#E98B2A']
+            .col-md-6.pt-5
               table.table.table-hover
+                h3.text-secondary.mb-3
+                  |これまでのチャンネル使用時間トップ5
                 thead
                   tr
                     th= "チャンネル名"
                     th= "チャンネル使用時間"
                 tbody
-                  tr
-                    td= "チャンネル名1"
-                    td= "3時間 00分"
-                  tr
-                    td= "チャンネル名2"
-                    td= "2時間 40分"
-                  tr
-                    td= "チャンネル名3"
-                    td= "2時間 00分"
-                  tr
-                    td= "チャンネル名4"
-                    td= "1時間 30分"
-                  tr
-                    td= "チャンネル名5"
-                    td= "1時間 01分"
+                    - @user_channel_time_each_all.each do |key, value|
+                      tr
+                        td= key
+                        td= value
+          .row.text-center.mt-3
+            .col-md-12
+              h3.pb-2
+                |トータル使用時間
+                h1= @total_time
 
           .row.text-center.pt-5
             .col-md-12.text-left.pt-5
+              h3.text-center.text-secondary
+                |これまでの各チャンネルの使用時間
+              = column_chart @user_channels_time_all
+
+          .row.text-center.pt-5
+            .col-md-12.text-left.pt-5
+              h3.text-center.text-secondary
+                |月別のチャンネル使用時間
               = column_chart @months_graph, stacked: true
 
           .row.text-center.pt-5

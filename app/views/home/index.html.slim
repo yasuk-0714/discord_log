@@ -12,9 +12,11 @@ main
 
           = link_to 'サーバーにボットを登録する', "https://discord.com/api/oauth2/authorize?client_id=#{Rails.application.credentials.discord[:client_id]}&permissions=0&scope=bot",
                     target: :_blank, rel: "noopener noreferrer", class: 'btn btn-lg btn-info mt-5 mr-5'
-          = link_to 'Discord-Logを使う', api_v1_auth_at_provider_path(:provider => :discord), class: 'btn btn-lg btn-primary mt-5'
-          button.btn.btn-warning.btn-lg.mt-5.ml-5[type="button" data-toggle="modal" data-target="#modal01"]
+
+          button.btn.btn-warning.btn-lg.mt-5.mr-5[type="button" data-toggle="modal" data-target="#modal01"]
             |Discord-Logの使い方
+
+          = link_to 'Discord-Logを使う', api_v1_auth_at_provider_path(:provider => :discord), class: 'btn btn-lg btn-primary mt-5'
 
         .modal.fade[id="modal01" tabindex="-1" role="dialog" aria-labelleadby="modal-01-label" aria-hidden="true"]
           .modal-dialog.modal-dialog-centered[role="document"]
@@ -63,12 +65,12 @@ main
           = image_tag 'timer', size: '300x300'
         .col-md-6.py-5.pl-5
           h3.text-center.font-weight-bold.mb-4
-            |こんな悩みはありませんか？
+            |Discordをただ使うだけじゃ勿体なく無いですか?
           h5.text-left.font-weight-bold.text-muted.pl-4
             |
               Discordを繋ぎながらゲームや勉強をしているけど<br>
               どれだけの時間それを行っていたのかがわからない。<br>
-              視覚化できたらいいのになぁ。
+
         .col-md-3
           = image_tag 'working_women', size: '300x300'
 

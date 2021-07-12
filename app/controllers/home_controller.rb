@@ -14,6 +14,17 @@ class HomeController < ApplicationController
     #ユーザーが参加しているチャンネルの総合時間 :グラフ用
     @time_all = {}
     @time_all['合計時間'] = shaped_time(time_all.values.sum)
+
+    #全てのユーザーチャンネルの使用時間トップ5を算出
+    user_channel_time_each_all = time_all.sort_by {|k,v| v}.reverse.first(5).to_h
+    @user_channel_time_each_all = {}
+    user_channel_time_each_all.each do |key, value|
+      find_channel =  UserChannel.find(key)
+      channel = Channel.find(find_channel.channel_id)
+      shaped_time = caliculate_time(value)
+      @user_channel_time_each_all[channel.name] = shaped_time
+    end
+
     #ユーザーが参加している各チャンネルの使用時間
     @user_channels_time_all = {}
     time_all.each do |key, value|
@@ -34,6 +45,16 @@ class HomeController < ApplicationController
       @user_channels_time_today[channel.name] = shaped_time
     end
 
+    #今日のユーザーチャンネルの使用時間トップ5を算出
+    user_channel_time_each_today = user_channels_time_today.sort_by {|k,v| v}.reverse.first(5).to_h
+    @user_channel_time_each_today = {}
+    user_channel_time_each_today.each do |key, value|
+      find_channel =  UserChannel.find(key)
+      channel = Channel.find(find_channel.channel_id)
+      shaped_time = caliculate_time(value)
+      @user_channel_time_each_today[channel.name] = shaped_time
+    end
+
     #今週のチャンネルの使用時間
     user_channels_time_week = current_user.channel_times.where(created_at: Time.now.all_week).group(:user_channel_id).sum(:total_time)
     @user_channels_time_week = caliculate_time(user_channels_time_week.values.sum)
@@ -52,7 +73,23 @@ class HomeController < ApplicationController
     friday_time = [['金曜日', shaped_time(friday.values.sum)]]
     saturday_time = [['土曜日', shaped_time(saturday.values.sum)]]
     sunday_time = [['日曜日', shaped_time(sunday.values.sum)]]
-    @graph = [{name: '月曜日', data: monday_time}, {name: '火曜日', data: tuesday_time}, {name: '水曜日', data: wednesday_time}, {name:'木曜日', data: thursday_time}, {name: '金曜日', data: friday_time}, {name: '土曜日', data: saturday_time}, {name: '日曜日', data: sunday_time}]
+    @graph = [{name: '月曜日', data: monday_time},
+              {name: '火曜日', data: tuesday_time},
+              {name: '水曜日', data: wednesday_time},
+              {name:'木曜日', data: thursday_time},
+              {name: '金曜日', data: friday_time},
+              {name: '土曜日', data: saturday_time},
+              {name: '日曜日', data: sunday_time}]
+
+    #今週のユーザーチャンネルの使用時間トップ5を算出
+    user_channel_time_each_month = user_channels_time_week.sort_by {|k,v| v}.reverse.first(5).to_h
+    @user_channel_time_each_month = {}
+    user_channel_time_each_month.each do |key, value|
+      find_channel =  UserChannel.find(key)
+      channel = Channel.find(find_channel.channel_id)
+      shaped_time = caliculate_time(value)
+      @user_channel_time_each_month[channel.name] = shaped_time
+    end
 
     #今月のチャンネル使用時間
     user_channels_time_month = current_user.channel_times.where(created_at: Time.now.all_month).group(:user_channel_id).sum(:total_time)
@@ -81,7 +118,18 @@ class HomeController < ApplicationController
     nine_month_ago_time = [['9ヶ月前', shaped_time(nine_month_ago.values.sum)]]
     ten_month_ago_time = [['10ヶ月前', shaped_time(ten_month_ago.values.sum)]]
     eleven_month_ago_time = [['11ヶ月前', shaped_time(eleven_month_ago.values.sum)]]
-    @months_graph = [{name: '11ヶ月前', data: eleven_month_ago_time}, {name: '10ヶ月前', data: ten_month_ago_time}, {name: '9ヶ月前', data: nine_month_ago_time}, {name: '8ヶ月前', data: eight_month_ago_time}, {name: '7ヶ月前', data: seven_month_ago_time}, {name: '6ヶ月前', data: six_month_ago_time}, {name: '5ヶ月前', data: five_month_ago_time}, {name: '4ヶ月前', data: four_month_ago_time}, {name: '3ヶ月前', data: three_month_ago_time}, {name: '2ヶ月前', data: two_month_ago_time}, {name: '1ヶ月前', data: a_month_ago_time}, {name: '今月', data: this_month_time}]
+    @months_graph = [{name: '11ヶ月前', data: eleven_month_ago_time},
+                      {name: '10ヶ月前', data: ten_month_ago_time},
+                      {name: '9ヶ月前', data: nine_month_ago_time},
+                      {name: '8ヶ月前', data: eight_month_ago_time},
+                      {name: '7ヶ月前', data: seven_month_ago_time},
+                      {name: '6ヶ月前', data: six_month_ago_time},
+                      {name: '5ヶ月前', data: five_month_ago_time},
+                      {name: '4ヶ月前', data: four_month_ago_time},
+                      {name: '3ヶ月前', data: three_month_ago_time},
+                      {name: '2ヶ月前', data: two_month_ago_time},
+                      {name: '1ヶ月前', data: a_month_ago_time},
+                      {name: '今月', data: this_month_time}]
     # user_channels_time_year = current_user.channel_times.where(created_at: Time.now.all_year).group(:user_channel_id).sum(:total_time)
     # @user_channels_time_year = caliculate_time(user_channels_time_year.values.sum)
   end

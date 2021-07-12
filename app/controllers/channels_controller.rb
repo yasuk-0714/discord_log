@@ -9,7 +9,7 @@ class ChannelsController < ApplicationController
     channel_time = ChannelTime.where(user_channel_id: user_channel).group(:user_channel_id).sum(:total_time)
     @channel_time = caliculate_time(channel_time.values[0])
     @channel_time_graph = {}
-    @channel_time_graph[@channel.name] = shaped_time(channel_time.values[0])
+    @channel_time_graph['合計時間'] = shaped_time(channel_time.values[0])
 
     #今日のチャンネル使用時間が算出される
     channel_time_today = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
