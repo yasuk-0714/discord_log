@@ -12,7 +12,7 @@ main
         .container-fluid.text-center.pt-5
           .row.text-center
             .col-md-6.text-left.pt-5
-              = column_chart @user_channels_time_today
+              = column_chart @user_channels_time_today, colors: ['#E16B8C']
             .col-md-6.pt-2
               h3 今日のチャンネル使用時間
               h1= @total_time_today
@@ -27,7 +27,7 @@ main
 
           .row.text-center
             .col-md-6.text-left.pt-5
-              = bar_chart @time_all
+              = bar_chart @time_all, colors: ['#E98B2A']
             .col-md-6.pt-2
               h3.pb-2
                 |トータル使用時間
