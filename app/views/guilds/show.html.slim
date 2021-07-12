@@ -17,7 +17,7 @@ main
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |今日のサーバー使用時間
-              = bar_chart @guild_time_today_graph
+              = bar_chart @guild_time_today_graph, colors: ['#EEA9A9']
             .col-md-6.pt-5
               table.table.table-hover
                 h3.text-secondary.mb-3
@@ -30,7 +30,8 @@ main
                     - @guild_time_today_each_channel.each do |key, value|
                       tr
                         td= key
-                        td= value
+                        td.text-info
+                          = value
 
 
           .row.text-center.mt-3
@@ -57,7 +58,8 @@ main
                     - @guild_time_week_each_channel.each do |key, value|
                       tr
                         td= key
-                        td= value
+                        td.text-info
+                          = value
 
           .row.text-center.mt-5
             .col-md-12
@@ -69,7 +71,7 @@ main
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |これまでのサーバー使用時間
-              = bar_chart @guild_time_graph
+              = bar_chart @guild_time_graph, colors: ['#81C7D4']
             .col-md-6.pt-5
               table.table.table-hover
                 h3.text-secondary.mb-3
@@ -82,7 +84,8 @@ main
                     - @guild_time_each_channel.each do |key, value|
                       tr
                         td= key
-                        td= value
+                        td.text-info
+                          = value
 
           .row.text-center.mt-3
             .col-md-12

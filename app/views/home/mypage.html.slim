@@ -14,7 +14,7 @@ main
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |今日のチャンネル使用時間
-              = column_chart @user_channels_time_today, colors: ['#E16B8C']
+              = column_chart @user_channels_time_today, colors: ['#EEA9A9']
             .col-md-6.pt-5
               table.table.table-hover
                 h3.text-secondary.mb-3
@@ -27,7 +27,8 @@ main
                     - @user_channel_time_each_today.each do |key, value|
                       tr
                         td= key
-                        td= value
+                        td.text-info
+                          = value
           .row.text-center.mt-3
             .col-md-12
               h3.pb-2
@@ -51,7 +52,8 @@ main
                     - @user_channel_time_each_month.each do |key, value|
                       tr
                         td= key
-                        td= value
+                        td.text-info
+                          = value
           .row.text-center.mt-3
             .col-md-12
               h3.pb-2
@@ -62,7 +64,7 @@ main
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |トータル使用時間
-              = bar_chart @time_all, colors: ['#E98B2A']
+              = bar_chart @time_all, colors: ['#81C7D4']
             .col-md-6.pt-5
               table.table.table-hover
                 h3.text-secondary.mb-3
@@ -75,7 +77,8 @@ main
                     - @user_channel_time_each_all.each do |key, value|
                       tr
                         td= key
-                        td= value
+                        td.text-info
+                          = value
           .row.text-center.mt-3
             .col-md-12
               h3.pb-2
@@ -86,7 +89,7 @@ main
             .col-md-12.text-left.pt-5
               h3.text-center.text-secondary
                 |これまでの各チャンネルの使用時間
-              = column_chart @user_channels_time_all
+              = column_chart @user_channels_time_all, colors: ['#81C7D4']
 
           .row.text-center.pt-5
             .col-md-12.text-left.pt-5
