@@ -13,7 +13,46 @@ main
           = link_to 'サーバーにボットを登録する', "https://discord.com/api/oauth2/authorize?client_id=#{Rails.application.credentials.discord[:client_id]}&permissions=0&scope=bot",
                     target: :_blank, rel: "noopener noreferrer", class: 'btn btn-lg btn-info mt-5 mr-5'
           = link_to 'Discord-Logを使う', api_v1_auth_at_provider_path(:provider => :discord), class: 'btn btn-lg btn-primary mt-5'
-          = link_to 'Discord-Logの使い方', '#', class: 'btn btn-lg btn-warning mt-5 ml-5'
+          button.btn.btn-warning.btn-lg.mt-5.ml-5[type="button" data-toggle="modal" data-target="#modal01"]
+            |Discord-Logの使い方
+
+        .modal.fade[id="modal01" tabindex="-1" role="dialog" aria-labelleadby="modal-01-label" aria-hidden="true"]
+          .modal-dialog.modal-dialog-centered[role="document"]
+            .modal-content
+              .modal-header
+                h5.modal-title[id="modal01-label"]
+                  |Discord-Logの使い方
+                button.close[type="button" data-dismiss="modal" aria-label="Close"]
+                  span[aria-hidden="true"]
+                    |&times;
+              .modal-body
+                p.text-center
+                  = image_tag 'music', class: 'img-fluid'
+                p.text-success
+                  |🍀<b>サーバーの管理者の方</b>
+                p
+                  |①本アプリの「ボットを登録する」よりDiscordのサーバーにBotを登録してください。
+
+                p.text-danger
+                  |(※Botを追加するにはサーバーの管理者権限が付与されている必要があります。)
+                p
+                  |
+                    ②Discordアプリの「サーバー設定」の「ウィジェット」より「サーバーウィジェットを有効化」にチェックを入れてください。
+                p
+                  |③本アプリの「Discord-Logを使う」からアプリを使用ください。
+
+                p.text-info
+                  |🌟<b>サーバー管理者以外の方</b>
+                p
+                  |
+                    ①サーバー管理者による上記の設定ができていれば、使用することができます。<br>
+                    本アプリの「Discord-Logを使う」からアプリを使用ください。
+
+
+              .modal-footer
+                button.btn.btn-secondary[type="button" data-dismiss="modal"]
+                  |閉じる
+
         .col-5.align-self-center.pr-5
           = image_tag 'stacked_graph.png', class: 'mw-100'
 

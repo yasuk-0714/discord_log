@@ -13,34 +13,100 @@ main
           .row.text-center
             .col-md-6.text-left.pt-5
               = column_chart @user_channels_time_today, colors: ['#E16B8C']
-            .col-md-6.pt-2
+            .col-md-6.pt-2.align-self-start
               h3 今日のチャンネル使用時間
               h1= @total_time_today
 
-          .row.text-center
+              table.table.table-hover
+                thead
+                  tr
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                  tr
+                    td= "チャンネル名1"
+                    td= "3時間 00分"
+                  tr
+                    td= "チャンネル名2"
+                    td= "2時間 40分"
+                  tr
+                    td= "チャンネル名3"
+                    td= "2時間 00分"
+                  tr
+                    td= "チャンネル名4"
+                    td= "1時間 30分"
+                  tr
+                    td= "チャンネル名5"
+                    td= "1時間 01分"
+
+          .row.text-center.pt-5
             .col-md-6.text-left.pt-5
               = column_chart @graph, stacked: true
-            .col-md-6.pt-2
+            .col-md-6.pt-2.align-self-start
               h3.pb-2
                 |今週のチャンネル使用時間
               h1= @user_channels_time_week
 
-          .row.text-center
+              table.table.table-hover
+                thead
+                  tr
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                  tr
+                    td= "チャンネル名1"
+                    td= "3時間 00分"
+                  tr
+                    td= "チャンネル名2"
+                    td= "2時間 40分"
+                  tr
+                    td= "チャンネル名3"
+                    td= "2時間 00分"
+                  tr
+                    td= "チャンネル名4"
+                    td= "1時間 30分"
+                  tr
+                    td= "チャンネル名5"
+                    td= "1時間 01分"
+
+          .row.text-center.pt-5
             .col-md-6.text-left.pt-5
               = bar_chart @time_all, colors: ['#E98B2A']
-            .col-md-6.pt-2
+            .col-md-6.pt-2.align-self-start
               h3.pb-2
                 |トータル使用時間
               h1= @total_time
 
-          .row.text-center
+              table.table.table-hover
+                thead
+                  tr
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                  tr
+                    td= "チャンネル名1"
+                    td= "3時間 00分"
+                  tr
+                    td= "チャンネル名2"
+                    td= "2時間 40分"
+                  tr
+                    td= "チャンネル名3"
+                    td= "2時間 00分"
+                  tr
+                    td= "チャンネル名4"
+                    td= "1時間 30分"
+                  tr
+                    td= "チャンネル名5"
+                    td= "1時間 01分"
+
+          .row.text-center.pt-5
             .col-md-12.text-left.pt-5
               = column_chart @months_graph, stacked: true
 
-          .row.text-center.pt-4
+          .row.text-center.pt-5
             .col-md-3
               = image_tag 'traiangle', size: '200x200'
-            .col-md-6
+            .col-md-6.align-self-start.pt-2
               h3.pb-2
                 |今月のチャンネル使用時間
               h1= @user_channels_time_month
