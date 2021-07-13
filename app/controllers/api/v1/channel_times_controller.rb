@@ -18,7 +18,7 @@ class Api::V1::ChannelTimesController < Api::V1::BaseController
           if update_channel.present? && update_channel.user_channel_id == user_channel.id
 
           #ボイスチャンネルに入室して、退出せずに、違う部屋に入室した場合Botでは判定がつかないので、新しい入室リクエストが来たら、
-          #前いたユーザーチャンネルを外部キーに持つchannel_timesテーブルのend_timeに現在時間を入れて、新たな部屋のインスタンスを生成する
+          #前いたユーザーチャンネルを外部キーに持つchannel_timesテーブルを更新して、新たな部屋のインスタンスを生成する
           elsif update_channel
             update_channel.update(end_time: Time.now, total_time: Time.now - update_channel.start_time)
             start_channel = ChannelTime.new(start_time: Time.now, user_channel_id: user_channel.id)
@@ -34,4 +34,5 @@ class Api::V1::ChannelTimesController < Api::V1::BaseController
       redirect_to mypage_path
     end
   end
+
 end

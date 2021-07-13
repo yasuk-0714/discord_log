@@ -25,9 +25,9 @@ class HomeController < ApplicationController
       @user_channel_time_each_all[channel.name] = shaped_time
     end
 
-    #ユーザーが参加している各チャンネルの使用時間
+    #これまでのユーザーが参加している各チャンネルの使用時間
     @user_channels_time_all = {}
-    time_all.each do |key, value|
+    time_all.sort_by {|k,v| v}.reverse.to_h.each do |key, value|
       user_channel =  UserChannel.find(key)
       channel = Channel.find(user_channel.channel_id)
       shaped_time = shaped_time(value)
@@ -38,7 +38,7 @@ class HomeController < ApplicationController
     user_channels_time_today = current_user.channel_times.where(created_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
     @total_time_today = caliculate_time(user_channels_time_today.values.sum)
     @user_channels_time_today = {}
-    user_channels_time_today.each do |key, value|
+    user_channels_time_today.sort_by {|k,v| v}.reverse.to_h.each do |key, value|
       user_channel =  UserChannel.find(key)
       channel = Channel.find(user_channel.channel_id)
       shaped_time = shaped_time(value)
