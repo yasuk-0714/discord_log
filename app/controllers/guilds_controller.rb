@@ -58,7 +58,8 @@ class GuildsController < ApplicationController
     friday_time = [['金曜日', shaped_time(friday)]]
     saturday_time = [['土曜日', shaped_time(saturday)]]
     sunday_time = [['日曜日', shaped_time(sunday)]]
-    @weeks_graph = [{name: '月曜日', data: monday_time}, {name: '火曜日', data: tuesday_time}, {name: '水曜日', data: wednesday_time}, {name:'木曜日', data: thursday_time}, {name: '金曜日', data: friday_time}, {name: '土曜日', data: saturday_time}, {name: '日曜日', data: sunday_time}]
+    @weeks_graph = [{name: '月曜日', data: monday_time}, {name: '火曜日', data: tuesday_time}, {name: '水曜日', data: wednesday_time},
+                    {name:'木曜日', data: thursday_time}, {name: '金曜日', data: friday_time}, {name: '土曜日', data: saturday_time}, {name: '日曜日', data: sunday_time}]
 
     #今週のサーバー内のチャンネル使用時間トップ5を算出
     guild_time_week_all = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_week).group(:user_channel_id).sum(:total_time)
@@ -98,6 +99,9 @@ class GuildsController < ApplicationController
     nine_month_ago_time = [['9ヶ月前', shaped_time(nine_month_ago)]]
     ten_month_ago_time = [['10ヶ月前', shaped_time(ten_month_ago)]]
     eleven_month_ago_time = [['11ヶ月前', shaped_time(eleven_month_ago)]]
-    @months_graph = [{name: '11ヶ月前', data: eleven_month_ago_time}, {name: '10ヶ月前', data: ten_month_ago_time}, {name: '9ヶ月前', data: nine_month_ago_time}, {name: '8ヶ月前', data: eight_month_ago_time}, {name: '7ヶ月前', data: seven_month_ago_time}, {name: '6ヶ月前', data: six_month_ago_time}, {name: '5ヶ月前', data: five_month_ago_time}, {name: '4ヶ月前', data: four_month_ago_time}, {name: '3ヶ月前', data: three_month_ago_time}, {name: '2ヶ月前', data: two_month_ago_time}, {name: '1ヶ月前', data: a_month_ago_time}, {name: '今月', data: this_month_time}]
+    @months_graph = [{name: '11ヶ月前', data: eleven_month_ago_time}, {name: '10ヶ月前', data: ten_month_ago_time}, {name: '9ヶ月前', data: nine_month_ago_time},
+                      {name: '8ヶ月前', data: eight_month_ago_time}, {name: '7ヶ月前', data: seven_month_ago_time}, {name: '6ヶ月前', data: six_month_ago_time},
+                      {name: '5ヶ月前', data: five_month_ago_time}, {name: '4ヶ月前', data: four_month_ago_time}, {name: '3ヶ月前', data: three_month_ago_time},
+                      {name: '2ヶ月前', data: two_month_ago_time}, {name: '1ヶ月前', data: a_month_ago_time}, {name: '今月', data: this_month_time}]
   end
 end

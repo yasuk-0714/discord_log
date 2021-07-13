@@ -2,6 +2,12 @@ class ApplicationController < ActionController::Base
   add_flash_types :success, :info, :warning, :danger
   before_action :require_login, only: :mypage
 
+  private
+
+  def not_authenticated
+    redirect_to root_path, danger: 'ログインしてください'
+  end
+
   #画面表示用
   def caliculate_time(seconds)
     if seconds
@@ -21,11 +27,5 @@ class ApplicationController < ActionController::Base
     else
       sprintf('%0.2f', 0)
     end
-  end
-
-  private
-
-  def not_authenticated
-    redirect_to root_path, danger: 'ログインしてください'
   end
 end
