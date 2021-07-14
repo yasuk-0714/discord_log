@@ -25,15 +25,18 @@ main
                   |今日のチャンネル使用時間トップ5
                 thead
                   tr
+                    th= "順位"
                     th= "チャンネル名"
                     th= "チャンネル使用時間"
                 tbody
+                    - n = 1
                     - @guild_time_today_each_channel.each do |key, value|
                       tr
+                        td= n
                         td= key
                         td.text-info
                           = value
-
+                      - n += 1
 
           .row.text-center.mt-3
             .col-md-12
@@ -53,14 +56,18 @@ main
                   |ここ１週間のチャンネル使用時間トップ5
                 thead
                   tr
+                    th= "順位"
                     th= "チャンネル名"
                     th= "チャンネル使用時間"
                 tbody
+                    - n = 1
                     - @guild_time_week_each_channel.each do |key, value|
                       tr
+                        td= n
                         td= key
                         td.text-info
                           = value
+                      - n += 1
 
           .row.text-center.mt-5
             .col-md-12
@@ -79,14 +86,18 @@ main
                   |これまでのチャンネル使用時間トップ5
                 thead
                   tr
+                    th= "順位"
                     th= "チャンネル名"
                     th= "チャンネル使用時間"
                 tbody
+                    - n = 1
                     - @guild_time_each_channel.each do |key, value|
                       tr
+                        td= n
                         td= key
                         td.text-info
                           = value
+                      - n += 1
 
           .row.text-center.mt-3
             .col-md-12

@@ -3,13 +3,14 @@ main
   .top.jumbotron.jumbotrn-fluid.bg-white
     .container-fluid
       .row
-        .col-7.text-center
-          .h1.display-1.font-weight-bold
-            | Discord-Log
-          p.lead.ml-5.font-weight-bold.text-muted
-            |
-              Discordアカウントでログインすると<br>
-              使った時間を視覚化します
+        .col-md-7.text-center
+          .row
+            .col-md-12.h1.display-1.font-weight-bold
+              | Discord-Log
+              p.lead.ml-5.font-weight-bold.text-muted
+                |
+                  Discordアカウントでログインすると<br>
+                  使った時間を視覚化します
 
           = link_to 'サーバーにボットを登録する', "https://discord.com/api/oauth2/authorize?client_id=#{Rails.application.credentials.discord[:client_id]}&permissions=0&scope=bot",
                     target: :_blank, rel: "noopener noreferrer", class: 'btn btn-lg btn-info mt-5 mr-5'
@@ -53,7 +54,7 @@ main
                 button.btn.btn-secondary[type="button" data-dismiss="modal"]
                   |閉じる
 
-        .col-5.align-self-center.pr-5
+        .col-md-5.align-self-center.pr-5
           = image_tag 'stacked_graph.png', class: 'mw-100'
 
   .contents.py-4

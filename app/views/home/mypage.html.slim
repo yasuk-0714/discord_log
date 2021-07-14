@@ -22,14 +22,18 @@ main
                   |今日のチャンネル使用時間トップ5
                 thead
                   tr
+                    th= "順位"
                     th= "チャンネル名"
                     th= "チャンネル使用時間"
                 tbody
+                    - n = 1
                     - @user_channel_time_each_today.each do |key, value|
                       tr
+                        td= n
                         td= key
                         td.text-info
                           = value
+                      - n += 1
           .row.text-center.mt-3
             .col-md-12
               h3.pb-2
@@ -47,14 +51,18 @@ main
                   |ここ１週間のチャンネル使用時間トップ5
                 thead
                   tr
+                    th= "順位"
                     th= "チャンネル名"
                     th= "チャンネル使用時間"
                 tbody
+                    - n = 1
                     - @user_channel_time_each_month.each do |key, value|
                       tr
+                        td= n
                         td= key
                         td.text-info
                           = value
+                      - n += 1
           .row.text-center.mt-3
             .col-md-12
               h3.pb-2
@@ -72,14 +80,18 @@ main
                   |これまでのチャンネル使用時間トップ5
                 thead
                   tr
+                    th= "順位"
                     th= "チャンネル名"
                     th= "チャンネル使用時間"
                 tbody
+                    - n = 1
                     - @user_channel_time_each_all.each do |key, value|
                       tr
+                        td= n
                         td= key
                         td.text-info
                           = value
+                      - n += 1
           .row.text-center.mt-3
             .col-md-12
               h3.pb-2

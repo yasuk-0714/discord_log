@@ -8,10 +8,6 @@ class Api::V1::OauthsController < Api::V1::BaseController
 
   def callback
     provider = auth_params[:provider]
-    if auth_params[:denied].present?
-      redirect_to root_path
-      return
-    end
     begin
       if (user = login_from(provider))
         user.authentication.update!(
@@ -31,7 +27,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
   private
 
   def auth_params
-    params.permit(:code, :provider, :denied)
+    params.permit(:code, :provider)
   end
 
   def fetch_user_data_from(provider)
@@ -41,16 +37,16 @@ class Api::V1::OauthsController < Api::V1::BaseController
                                provider: provider,
                                access_token: access_token.token,
                                refresh_token: access_token.refresh_token)
+    @token = access_token.token
     @user.save!
     reset_session
     auto_login(@user)
   end
 
   def get_guilds
-    token = current_user.authentication.access_token
     uri = URI.parse("https://discord.com/api/v8/users/@me/guilds")
     req = Net::HTTP::Get.new(uri)
-    req['authorization'] = "Bearer #{token}"
+    req['authorization'] = "Bearer #{@token}"
     req_options = {
       use_ssl: uri.scheme == 'https'
     }

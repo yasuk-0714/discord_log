@@ -1,13 +1,23 @@
 header.sticky-top
   nav.navbar.navbar-expand-md.navbar-dark
     .container-fluid
-      = link_to 'Discord-Log', root_path, class: 'navbar-brand ml-5'
+      = link_to 'Discord-Log', root_path, class: 'navbar-brand'
+      /切り替えボタン
+      button.navbar-toggler[type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation"]
+        /ハンバーガーアイコン
+        span.navbar-toggler-icon
 
-      ul.navbar-nav.justify-content-end
-        li= link_to 'ボットを登録', "https://discord.com/api/oauth2/authorize?client_id=#{Rails.application.credentials.discord[:client_id]}&permissions=0&scope=bot",
-                    target: :_blank, rel: "noopener noreferrer", class: 'nav-link active pr-3'
-        - if logged_in?
-          li= link_to 'マイページ', mypage_path, class: 'nav-link active pr-3'
-          li= link_to 'ログアウト', api_v1_logout_path, method: :delete, class: 'nav-link active'
-        - else
-          li= link_to 'ログイン', api_v1_auth_at_provider_path(:provider => :discord), class: 'nav-link active'
+      /ナビゲーション
+      .collapse.navbar-collapse.justify-content-end[id="navbar-content"]
+        ul.navbar-nav
+          li.nav-item
+            = link_to 'ボットを登録', "https://discord.com/api/oauth2/authorize?client_id=#{Rails.application.credentials.discord[:client_id]}&permissions=0&scope=bot",
+                      target: :_blank, rel: "noopener noreferrer", class: 'nav-link active pr-3'
+          - if logged_in?
+            li.nav-item
+              = link_to 'マイページ', mypage_path, class: 'nav-link active pr-3'
+            li.nav-item
+              = link_to 'ログアウト', api_v1_logout_path, method: :delete, class: 'nav-link active'
+          - else
+            li.nav-item
+              = link_to 'ログイン', api_v1_auth_at_provider_path(:provider => :discord), class: 'nav-link active'
