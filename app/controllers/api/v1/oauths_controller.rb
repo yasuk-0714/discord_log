@@ -16,7 +16,8 @@ class Api::V1::OauthsController < Api::V1::BaseController
       else
         fetch_user_data_from(provider)
       end
-      get_guilds
+      token = access_token.token
+      get_guilds(token)
       get_channels
       redirect_to mypage_path
     rescue
@@ -37,16 +38,15 @@ class Api::V1::OauthsController < Api::V1::BaseController
                                provider: provider,
                                access_token: access_token.token,
                                refresh_token: access_token.refresh_token)
-    @token = access_token.token
     @user.save!
     reset_session
     auto_login(@user)
   end
 
-  def get_guilds
+  def get_guilds(token)
     uri = URI.parse("https://discord.com/api/v8/users/@me/guilds")
     req = Net::HTTP::Get.new(uri)
-    req['authorization'] = "Bearer #{@token}"
+    req['authorization'] = "Bearer #{token}"
     req_options = {
       use_ssl: uri.scheme == 'https'
     }
@@ -63,14 +63,11 @@ class Api::V1::OauthsController < Api::V1::BaseController
         guild = Guild.find_by(id: guild_id)
         guild.update(name: guild_name)
       end
-      user_guild = current_user.user_guilds.find_or_initialize_by(guild_id: guild.id)
-      user_guild.save
+      user_guild = current_user.user_guilds.find_or_create_by(guild_id: guild.id)
       @guild_list.delete_if { |n| n == guild_id }
     end
     destroy_guilds = UserGuild.where(guild_id: @guild_list)
-    destroy_guilds.each do |guild|
-      guild.destroy
-    end
+    destroy_guilds.each { |guild| guild.destroy }
   end
 
   def get_channels
@@ -96,17 +93,15 @@ class Api::V1::OauthsController < Api::V1::BaseController
             channel = Channel.find_by(id: id)
             channel.update(name: name, position: position)
           end
-          user_channel = current_user.user_channels.find_or_initialize_by(channel_id: id)
-          user_channel.save
+          user_channel = current_user.user_channels.find_or_create_by(channel_id: id)
           @channel_list.delete_if { |n| n == id }
         end
       rescue => e
-        puts "#{e.class}, #{e.message}"
+        logger.error e
+        logger.error e.backtrace.join("\n")
       end
     end
     destroy_channels = UserChannel.where(channel_id: @channel_list)
-    destroy_channels.each do |channel|
-      channel.destroy
-    end
+    destroy_channels.each { |channel| channel.destroy }
   end
 end

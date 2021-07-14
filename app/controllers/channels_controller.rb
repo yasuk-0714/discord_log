@@ -5,44 +5,28 @@ class ChannelsController < ApplicationController
     @channels = current_user.channels.order(position: :asc).map {|user_channel| user_channel }
 
     user_channel = current_user.user_channels.where(channel_id: @channel.id).pluck(:id)
+
     #今までのチャンネルの使用時間が算出される
     channel_time = ChannelTime.where(user_channel_id: user_channel).group(:user_channel_id).sum(:total_time)
+    #時間表示用
     @channel_time = caliculate_time(channel_time.values[0])
+    #グラフ
     @channel_time_graph = {}
     @channel_time_graph['合計時間'] = shaped_time(channel_time.values[0])
 
     #今日のチャンネル使用時間が算出される
     channel_time_today = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
+    #時間表示用
     @channel_time_today = caliculate_time(channel_time_today.values[0])
+    #グラフ用
     @channel_time_today_graph = {}
     @channel_time_today_graph[@channel.name] = shaped_time(channel_time_today.values[0])
 
-    # #今週のチャンネルの使用時間
-    # channel_time_week = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_week).group(:user_channel_id).sum(:total_time)
-    # @channel_time_week = caliculate_time(channel_time_week.values[0])
-    # #曜日ごとのチャンネル使用時間
-    # sunday = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.beginning_of_week(:sunday).beginning_of_day..Time.now.beginning_of_week(:sunday).end_of_day).group(:user_channel_id).sum(:total_time)
-    # monday = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.beginning_of_week(:monday).beginning_of_day..Time.now.beginning_of_week(:monday).end_of_day).group(:user_channel_id).sum(:total_time)
-    # tuesday = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.beginning_of_week(:tuesday).beginning_of_day..Time.now.beginning_of_week(:tuesday).end_of_day).group(:user_channel_id).sum(:total_time)
-    # wednesday = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.beginning_of_week(:wednesday).beginning_of_day..Time.now.beginning_of_week(:wednesday).end_of_day).group(:user_channel_id).sum(:total_time)
-    # thursday = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.beginning_of_week(:thursday).beginning_of_day..Time.now.beginning_of_week(:thursday).end_of_day).group(:user_channel_id).sum(:total_time)
-    # friday = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.beginning_of_week(:friday).beginning_of_day..Time.now.beginning_of_week(:friday).end_of_day).group(:user_channel_id).sum(:total_time)
-    # saturday = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.beginning_of_week(:saturday).beginning_of_day..Time.now.beginning_of_week(:saturday).end_of_day).group(:user_channel_id).sum(:total_time)
-    # monday_time = [['月曜日', shaped_time(monday.values.sum)]]
-    # tuesday_time = [['火曜日', shaped_time(tuesday.values.sum)]]
-    # wednesday_time = [['水曜日', shaped_time(wednesday.values.sum)]]
-    # thursday_time = [['木曜日', shaped_time(thursday.values.sum)]]
-    # friday_time = [['金曜日', shaped_time(friday.values.sum)]]
-    # saturday_time = [['土曜日', shaped_time(saturday.values.sum)]]
-    # sunday_time = [['日曜日', shaped_time(sunday.values.sum)]]
-    # @weeks_graph = [{name: '月曜日', data: monday_time}, {name: '火曜日', data: tuesday_time}, {name: '水曜日', data: wednesday_time},
-    #                 {name:'木曜日', data: thursday_time}, {name: '金曜日', data: friday_time}, {name: '土曜日', data: saturday_time}, {name: '日曜日', data: sunday_time}]
-
     #今日から6日前までの使用時間
     channel_time_week = ChannelTime.where(user_channel_id: user_channel).where(created_at: 6.days.ago.beginning_of_day..Time.now.end_of_day).group(:user_channel_id).sum(:total_time)
+    #時間表示用
     @channel_time_week = caliculate_time(channel_time_week.values[0])
-
-    #今日から6日前までの使用時間を算出
+    #グラフ用
     on_day = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
     day_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.yesterday.beginning_of_day..Time.now.yesterday.end_of_day).group(:user_channel_id).sum(:total_time)
     two_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 2.days.ago.beginning_of_day..2.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
@@ -60,10 +44,12 @@ class ChannelsController < ApplicationController
     @weeks_graph = [{name: '6日前', data: six_days_ago}, {name: '５日前', data: five_days_ago}, {name: '４日前', data: four_days_ago},
                     {name:'３日前', data: three_days_ago}, {name: '２日前', data: two_days_ago}, {name: '１日前', data: day_ago}, {name: '今日', data: on_day}]
 
-    # #今月のチャンネル使用時間
+    #今月のチャンネル使用時間
     channel_time_month = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_month).group(:user_channel_id).sum(:total_time)
+    #時間表示用
     @channel_time_month = caliculate_time(channel_time_month.values[0])
-    # #数ヶ月前までのチャンネル使用時間
+
+    #数ヶ月前までのチャンネル使用時間: グラフ用
     a_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 1.month.ago.beginning_of_month..1.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
     two_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 2.month.ago.beginning_of_month..2.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
     three_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 3.month.ago.beginning_of_month..3.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)

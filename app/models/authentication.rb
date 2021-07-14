@@ -1,4 +1,5 @@
 class Authentication < ApplicationRecord
+  before_save :encrypt_access_token
   belongs_to :user
 
   validates :uid, presence: true

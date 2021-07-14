@@ -28,4 +28,5 @@ class ApplicationController < ActionController::Base
       sprintf('%0.2f', 0)
     end
   end
+
 end
