@@ -1,3 +1,4 @@
+- content_for(:title, "#{@channel.name}" )
 main
   .container-fluid
     .row
@@ -15,24 +16,33 @@ main
         .container-fluid.text-center.pt-5
           .row.text-center
             .col-md-6.text-left.pt-5
-              = bar_chart @channel_time_today_graph
-            .col-md-6.pt-2
+              h3.text-center.text-secondary
+                |今日のチャンネル使用時間
+              = bar_chart @channel_time_today_graph, colors: ['#EEA9A9']
+            .col-md-6.pt-5
               h3 今日のチャンネル使用時間
               h1= @channel_time_today
+              = image_tag 'join', size: '200x200'
 
           .row.text-center
             .col-md-6.text-left.pt-5
+              h3.text-center.text-secondary
+                |ここ１週間のチャンネル使用時間
               = column_chart @weeks_graph, stacked: true
-            .col-md-6.pt-2
-              h3 今週のチャンネル使用時間
+            .col-md-6.pt-5
+              h3 ここ１週間のチャンネル使用時間
               h1= @channel_time_week
+              = image_tag 'elements', size: '200x200'
 
           .row.text-center
             .col-md-6.text-left.pt-5
-              = bar_chart @channel_time_graph
-            .col-md-6.pt-2
+              h3.text-center.text-secondary
+                |これまでのチャンネル使用時間
+              = bar_chart @channel_time_graph, colors: ['#81C7D4']
+            .col-md-6.pt-5
               h3 これまでのチャンネル使用時間
               h1= @channel_time
+              = image_tag 'gift', size: '200x200'
 
           .row.text-center
             .col-md-12.text-left.pt-5
@@ -40,7 +50,7 @@ main
 
           .row.text-center.pt-4
             .col-md-3
-              = image_tag 'joy_character', size: '200x200'
+              = image_tag 'girl_and_character', size: '250x200'
             .col-md-6.pt-2
               h3.pb-2
                 |今月のチャンネル使用時間

@@ -2,7 +2,7 @@ doctype html
 html
   head
     title
-      | DiscordLog
+      = page_title(yield(:title))
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
@@ -11,6 +11,6 @@ html
 
   body
     = render 'shared/header'
-    / = render 'shared/flash_message'
+    = render 'shared/flash_message'
     = yield
     = render 'shared/footer'

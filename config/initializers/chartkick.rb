@@ -3,6 +3,8 @@ Chartkick.options = {
   thousands: ",",
   suffix: "時間",
   legend: false,
+  loading: "ちょっと待ってね",
+  message: {empty: "データがありません"},
   library: {
     title: {
       align: 'center',

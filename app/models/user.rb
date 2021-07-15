@@ -1,9 +1,4 @@
 class User < ApplicationRecord
-  require "net/http"
-  require "uri"
-  require "json"
-  require "openssl"
-
   before_create :set_uuid
 
   authenticates_with_sorcery!
@@ -14,9 +9,10 @@ class User < ApplicationRecord
   has_many :guilds, through: :user_guilds, source: :guild
   has_many :user_channels, dependent: :destroy
   has_many :channels, through: :user_channels, source: :channel
-  has_many :channel_times, through: :user_channels
+  has_many :channel_times, through: :user_channels, dependent: :destroy
 
   validates :discord_id, presence: true, uniqueness: true
+  validates :id, uniqueness: true
   validates :name, presence: true
   validates :email, presence: true
   validates :role, presence: true

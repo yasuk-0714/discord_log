@@ -232,7 +232,7 @@ Rails.application.config.sorcery.configure do |config|
   config.discord.key = Rails.application.credentials.discord[:client_id]
   config.discord.secret = Rails.application.credentials.discord[:client_secret_id]
   config.discord.callback_url = Settings.sorcery[:callback_url]
-  config.discord.scope = "identify email guilds bot applications.builds.read"
+  config.discord.scope = "identify email guilds applications.builds.read"
   config.discord.user_info_mapping = {
     id: 'id',
     discord_id: 'id',
