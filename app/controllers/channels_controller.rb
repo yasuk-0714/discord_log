@@ -28,12 +28,12 @@ class ChannelsController < ApplicationController
     @channel_time_week = caliculate_time(channel_time_week.values[0])
     #グラフ用
     on_day = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
-    day_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: Time.now.yesterday.beginning_of_day..Time.now.yesterday.end_of_day).group(:user_channel_id).sum(:total_time)
-    two_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 2.days.ago.beginning_of_day..2.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
-    three_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 3.days.ago.beginning_of_day..3.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
-    four_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 4.days.ago.beginning_of_day..4.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
-    five_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 5.days.ago.beginning_of_day..5.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
-    six_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 6.days.ago.beginning_of_day..6.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
+    day_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 1.day.ago.all_day).group(:user_channel_id).sum(:total_time)
+    two_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 2.days.ago.all_day).group(:user_channel_id).sum(:total_time)
+    three_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 3.days.ago.all_day).group(:user_channel_id).sum(:total_time)
+    four_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 4.days.ago.all_day).group(:user_channel_id).sum(:total_time)
+    five_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 5.days.ago.all_day).group(:user_channel_id).sum(:total_time)
+    six_days_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 6.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     on_day = [['今日', shaped_time(on_day.values.sum)]]
     day_ago = [['１日前', shaped_time(day_ago.values.sum)]]
     two_days_ago = [['２日前', shaped_time(two_days_ago.values.sum)]]
@@ -50,17 +50,17 @@ class ChannelsController < ApplicationController
     @channel_time_month = caliculate_time(channel_time_month.values[0])
 
     #数ヶ月前までのチャンネル使用時間: グラフ用
-    a_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 1.month.ago.beginning_of_month..1.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    two_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 2.month.ago.beginning_of_month..2.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    three_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 3.month.ago.beginning_of_month..3.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    four_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 4.month.ago.beginning_of_month..4.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    five_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 5.month.ago.beginning_of_month..5.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    six_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 6.month.ago.beginning_of_month..6.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    seven_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 7.month.ago.beginning_of_month..7.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    eight_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 8.month.ago.beginning_of_month..8.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    nine_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 9.month.ago.beginning_of_month..9.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    ten_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 10.month.ago.beginning_of_month..10.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
-    eleven_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 11.month.ago.beginning_of_month..11.month.ago.end_of_month).group(:user_channel_id).sum(:total_time)
+    a_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 1.month.ago.all_month).group(:user_channel_id).sum(:total_time)
+    two_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 2.months.ago.all_month).group(:user_channel_id).sum(:total_time)
+    three_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 3.months.ago.all_month).group(:user_channel_id).sum(:total_time)
+    four_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 4.months.ago.all_month).group(:user_channel_id).sum(:total_time)
+    five_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 5.months.ago.all_month).group(:user_channel_id).sum(:total_time)
+    six_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 6.months.ago.all_month).group(:user_channel_id).sum(:total_time)
+    seven_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 7.months.ago.all_month).group(:user_channel_id).sum(:total_time)
+    eight_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 8.months.ago.all_month).group(:user_channel_id).sum(:total_time)
+    nine_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 9.months.ago.all_month).group(:user_channel_id).sum(:total_time)
+    ten_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 10.months.ago.all_month).group(:user_channel_id).sum(:total_time)
+    eleven_month_ago = ChannelTime.where(user_channel_id: user_channel).where(created_at: 11.months.ago.all_month).group(:user_channel_id).sum(:total_time)
     this_month_time = [['今月', shaped_time(channel_time_month.values.sum)]]
     a_month_ago_time = [['1ヶ月前', shaped_time(a_month_ago.values.sum)]]
     two_month_ago_time = [['2ヶ月前', shaped_time(two_month_ago.values.sum)]]

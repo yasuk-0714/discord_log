@@ -2,7 +2,9 @@ footer.py-1.text-light
   .container-fluid.text-center
     ul.nav.justify-content-center.mb-1
       li.nav-item
-        = link_to '利用規約', "#", class: 'nav-link'
+        = link_to '利用規約', terms_of_service_path, class: 'nav-link'
+      li.nav-item
+        = link_to 'プライバシーポリシー', privacy_policy_path, class: 'nav-link'
       li.nav-item
         = link_to 'お問い合わせ', "https://docs.google.com/forms/d/e/1FAIpQLSdeotw5_g7fjP3tN2mFcsdI7SCkti-awtqtRPxTl6zGi71bcg/viewform", class: 'nav-link'
     p @2021 Discord-Log

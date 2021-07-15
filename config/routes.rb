@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root to: 'home#index'
   get 'mypage', to: 'home#mypage'
+  get 'privacy_policy', to: 'home#privacy_policy'
+  get 'terms_of_service', to: 'home#terms_of_service'
   resources :guilds, param: :uuid, only: %i[show]
   resources :channels, param: :uuid, only: %i[show]
 
