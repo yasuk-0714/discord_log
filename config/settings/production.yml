@@ -1,0 +1,2 @@
+sorcery:
+  callback_url: "https://discord-log-work/api/v1/oauth/callback?provider=discord"
