@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_29_074955) do
+ActiveRecord::Schema.define(version: 2021_07_18_080142) do
 
   create_table "authentications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 2021_06_29_074955) do
     t.bigint "user_channel_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_at"], name: "index_channel_times_on_created_at"
+    t.index ["total_time"], name: "index_channel_times_on_total_time"
     t.index ["user_channel_id"], name: "index_channel_times_on_user_channel_id"
   end
 
