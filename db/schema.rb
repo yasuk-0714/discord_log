@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_06_29_074955) do
 
-  create_table "authentications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "authentications", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "provider", null: false
     t.string "uid", null: false
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_074955) do
     t.index ["user_id"], name: "index_authentications_on_user_id"
   end
 
-  create_table "channel_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "channel_times", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "start_time", null: false
     t.datetime "end_time"
     t.integer "total_time"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_074955) do
     t.index ["user_channel_id"], name: "index_channel_times_on_user_channel_id"
   end
 
-  create_table "channels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "channels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "uuid", null: false
     t.integer "position", null: false
@@ -44,14 +44,14 @@ ActiveRecord::Schema.define(version: 2021_06_29_074955) do
     t.index ["guild_id"], name: "index_channels_on_guild_id"
   end
 
-  create_table "guilds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "guilds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "uuid", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "user_channels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "user_channels", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "channel_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_074955) do
     t.index ["user_id"], name: "index_user_channels_on_user_id"
   end
 
-  create_table "user_guilds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "user_guilds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "guild_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2021_06_29_074955) do
     t.index ["user_id"], name: "index_user_guilds_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "discord_id", null: false
     t.string "name", null: false
     t.string "email", null: false
