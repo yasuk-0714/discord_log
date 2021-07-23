@@ -1,2 +1,2 @@
 sorcery:
-  callback_url: "https://discord-log-work.herokuapp.com/api/v1/oauth/callback?provider=discord"
+  callback_url: "https://discord-log.com/api/v1/oauth/callback?provider=discord"
