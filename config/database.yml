@@ -52,5 +52,6 @@ test:
 production:
   <<: *default
   database: discord_log_production
-  username: discord_log
-  password: <%= ENV['DISCORD_LOG_DATABASE_PASSWORD'] %>
+  username: root
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  socket: /var/lib/mysql/mysql.sock
