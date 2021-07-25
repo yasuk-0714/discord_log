@@ -17,6 +17,7 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password: <%= ENV['MYSQL_KEY'] %>
+  socket: /tmp/mysql.sock
 
 development:
   <<: *default
@@ -53,4 +54,4 @@ production:
   database: <%= Rails.application.credentials.db[:database] %>
   username: <%= Rails.application.credentials.db[:username] %>
   password: <%= Rails.application.credentials.db[:password] %>
-  socket: /var/lib/mysql/mysql.sock
+  socket: <%= Rails.application.credentials.db[:socket] %>
