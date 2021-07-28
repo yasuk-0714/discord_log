@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    meta charset="UTF-8"
+    meta lang='ja'
+    meta name="robots" content="noindex, nofollow"
+    title
+      = page_title(yield(:title), admin: true)
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_pack_tag 'admin', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'admin', 'data-turbolinks-track': 'reload'
+
+  body.hold-transition.sidebar-mini.layout-fixed
+  .wrapper
+    = render 'admin/shared/header'
+    = render 'admin/shared/sidebar'
+
+    .content-wrapper
+      = render 'shared/flash_message'
+      = yield
