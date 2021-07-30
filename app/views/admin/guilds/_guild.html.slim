@@ -1,0 +1,4 @@
+- if guild.channels.present?
+  ul.nav.flex-column
+    li= link_to guild.name, admin_guild_path(guild.uuid), class: 'nav-link btn btn-outline-secondary bg-warning my-2'
+

@@ -1,0 +1,49 @@
+- content_for(:title, "#{@guild.name}")
+.container-fluid
+  h2.pt-3.ml-3
+    = "#{@guild.name} サーバー詳細"
+  .row.pt-3
+    .col-md-6
+      h3.text-center.mb-3.text-secondary
+       |ユーザー一覧
+      .mb-3
+        table.table.table-hover
+          thead.thead-default
+            tr
+              th
+              th= User.human_attribute_name(:name)
+              th= User.human_attribute_name(:role)
+              th= User.human_attribute_name(:updated_at)
+              th
+          tbody
+            - n = 1
+            - @users.each do |user|
+              tr
+                td= n
+                td= link_to user.name, admin_user_path(user.uuid)
+                td= user.role? ? 'あり' : 'なし'
+                td= l user.updated_at, format: :long
+                td
+                  = link_to '編集', edit_admin_user_path(user), class: 'btn btn-success btn-group-sm mr-3'
+                  = link_to '削除', admin_user_path(user), method: :delete, data: { confirm: "#{user.name}を削除します。よろしいですか?"}, class: 'btn btn-danger btn-group-sm'
+                - n += 1
+
+
+    .col-md-4
+      h3.text-center.text-secondary
+       |チャンネル一覧
+      .mb-3
+        table.table.table-hover
+          thead.thead-default
+            tr
+              th
+              th= Channel.human_attribute_name(:name)
+              th
+          tbody
+            - n = 1
+            - @channels.each do |channel|
+              tr
+                td= n
+                td= channel.name
+                td= link_to '削除', admin_channel_path(channel), method: :delete, data: { confirm: "#{channel.name}を削除します。よろしいですか?"}, class: 'btn btn-danger btn-group-sm'
+                - n += 1

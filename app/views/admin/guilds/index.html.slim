@@ -1,0 +1,26 @@
+- content_for(:title, 'サーバー 一覧')
+
+.container-fluid
+  h2 サーバー 一覧
+
+  .mb-3
+  table.table.table-hover
+    thead
+      tr
+        th
+        th= Guild.human_attribute_name(:name)
+        th= Guild.human_attribute_name(:created_at)
+        th= Guild.human_attribute_name(:updated_at)
+        th
+    tbody
+      - n = 1
+      - @guilds.each do |guild|
+        tr
+          td= n
+          td= link_to guild.name, admin_guild_path(guild.uuid)
+          td= l guild.created_at, format: :long
+          td= l guild.updated_at, format: :long
+          td
+            = link_to '詳細', admin_guild_path(guild.uuid), class: 'btn btn-info mr-3'
+            = link_to '削除', admin_guild_path(guild.uuid), method: :delete, data: { confirm: "#{guild.name}を削除します。よろしいですか?"}, class: 'btn btn-danger'
+          - n += 1
