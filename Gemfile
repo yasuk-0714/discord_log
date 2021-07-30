@@ -35,6 +35,7 @@ gem 'html2slim'
 
 # 日本語化
 gem 'rails-i18n'
+gem 'enum_help'
 
 gem 'sorcery'
 
