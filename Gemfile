@@ -55,6 +55,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'faker'
+  gem 'seed-fu'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
 end
