@@ -24,3 +24,4 @@
             = link_to '詳細', admin_guild_path(guild.uuid), class: 'btn btn-info mr-3'
             = link_to '削除', admin_guild_path(guild.uuid), method: :delete, data: { confirm: "#{guild.name}を削除します。よろしいですか?"}, class: 'btn btn-danger'
           - n += 1
+  = paginate @guilds

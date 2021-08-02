@@ -19,4 +19,8 @@ module ApplicationHelper
       sprintf("%d時間 %02d分", 0, 0)
     end
   end
+
+  def active_if(path)
+    path == controller_path ? 'active' : ''
+  end
 end

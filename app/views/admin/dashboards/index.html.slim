@@ -18,7 +18,7 @@
         th
     tbody
       - n = 1
-      - @guild_users.each do |user|
+      - @users.each do |user|
         tr
           td= n
           td= link_to user.name, admin_user_path(user.uuid)
@@ -35,3 +35,4 @@
             = link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary mr-3'
             = link_to '削除', admin_user_path(user), method: :delete, data: { confirm: "#{user.name}を削除します。よろしいですか?"}, class: 'btn btn-danger'
           - n += 1
+  = paginate @users

@@ -6,8 +6,8 @@ aside.main-sidebar.sidebar-dark-primary
         li.nav-item.menu-open
           ul.nav.nav-treeview
             li.nav-item.pt-5
-              = link_to 'RUNTEQユーザー', admin_root_path, class: 'nav-link btn btn-outline-warning'
+              = link_to 'RUNTEQユーザー', admin_root_path, class: "nav-link btn #{active_if('admin/dashboards')}"
             li.nav-item.pt-2
-              = link_to '全てのユーザー', admin_users_path, class: 'nav-link btn'
+              = link_to '全てのユーザー', admin_users_path, class: "nav-link btn  #{active_if('admin/users')}"
             li.nav-item.pt-2
-              = link_to '全てのサーバー', admin_guilds_path, class: 'nav-link btn'
+              = link_to '全てのサーバー', admin_guilds_path, class: "nav-link btn  #{active_if('admin/guilds')}"
