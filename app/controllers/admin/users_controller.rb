@@ -2,7 +2,7 @@ class Admin::UsersController < Admin::BaseController
   before_action :set_user, only: %i[edit update destroy]
 
   def index
-    @users = User.all
+    @users = User.all.order(:created_at).page(params[:page])
   end
 
   def show
@@ -70,9 +70,9 @@ class Admin::UsersController < Admin::BaseController
     end
 
     #7日前から13日前までのチャンネルの使用時間
-    user_channels_time_2week = @user.channel_times.where(created_at: 7.days.ago.beginning_of_day..13.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
+    user_channels_time_2week = @user.channel_times.where(created_at: 13.days.ago.beginning_of_day..7.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
     #時間表示用
-    @user_channels_time_2week = caliculate_time(user_channels_time_week.values.sum)
+    @user_channels_time_2week = caliculate_time(user_channels_time_2week.values.sum)
     #グラフ用
     seven_days_ago = @user.channel_times.where(created_at: 7.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     eight_days_ago = @user.channel_times.where(created_at: 8.days.ago.all_day).group(:user_channel_id).sum(:total_time)
@@ -90,7 +90,7 @@ class Admin::UsersController < Admin::BaseController
     thirteen_days_ago = [['13日前', shaped_time(thirteen_days_ago.values.sum)]]
     @graph_2week = [{name: '13日前', data: thirteen_days_ago}, {name: '12日前', data: twelve_days_ago}, {name: '11日前', data: eleven_days_ago},
               {name:'10日前', data: ten_days_ago}, {name: '9日前', data: nine_days_ago}, {name: '8日前', data: eight_days_ago}, {name: '7日前', data: seven_days_ago}]
-    #今週のユーザーチャンネルの使用時間トップ5を算出
+    #7日前から13日前までの使用時間トップ5を算出
     user_channel_time_each_2week = user_channels_time_2week.sort_by {|k,v| v}.reverse.first(5).to_h
     @user_channel_time_each_2week = {}
     user_channel_time_each_2week.each do |key, value|
@@ -101,9 +101,9 @@ class Admin::UsersController < Admin::BaseController
     end
 
     #14日前から20日前までのチャンネルの使用時間
-    user_channels_time_3week = @user.channel_times.where(created_at: 14.days.ago.beginning_of_day..20.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
+    user_channels_time_3week = @user.channel_times.where(created_at: 20.days.ago.beginning_of_day..14.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
     #時間表示用
-    @user_channels_time_3week = caliculate_time(user_channels_time_week.values.sum)
+    @user_channels_time_3week = caliculate_time(user_channels_time_3week.values.sum)
     #グラフ用
     fourteen_days_ago = @user.channel_times.where(created_at: 14.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     fifteen_days_ago = @user.channel_times.where(created_at: 15.days.ago.all_day).group(:user_channel_id).sum(:total_time)
@@ -132,9 +132,9 @@ class Admin::UsersController < Admin::BaseController
     end
 
     #21日前から27日前までのチャンネルの使用時間
-    user_channels_time_4week = @user.channel_times.where(created_at: 21.days.ago.beginning_of_day..27.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
+    user_channels_time_4week = @user.channel_times.where(created_at: 27.days.ago.beginning_of_day..21.days.ago.end_of_day).group(:user_channel_id).sum(:total_time)
     #時間表示用
-    @user_channels_time_4week = caliculate_time(user_channels_time_week.values.sum)
+    @user_channels_time_4week = caliculate_time(user_channels_time_4week.values.sum)
     #グラフ用
     twentyone_days_ago = @user.channel_times.where(created_at: 21.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     twentytwo_days_ago = @user.channel_times.where(created_at: 22.days.ago.all_day).group(:user_channel_id).sum(:total_time)
@@ -210,7 +210,8 @@ class Admin::UsersController < Admin::BaseController
 
   def destroy
     @user.destroy!
-    redirect_to admin_root_path, success: 'ユーザーを削除しました'
+    redirect_back(fallback_location: admin_root_path)
+    flash[:success] = 'ユーザーを削除しました'
   end
 
   private

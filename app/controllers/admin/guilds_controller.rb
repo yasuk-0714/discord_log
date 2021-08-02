@@ -2,11 +2,11 @@ class Admin::GuildsController < Admin::BaseController
   before_action :set_guild, only: %i[show destroy]
 
   def index
-    @guilds = Guild.all
+    @guilds = Guild.all.page(params[:page])
   end
 
   def show
-    @channels = @guild.channels
+    @channels = @guild.channels.order(:position)
     @users = @guild.users
   end
 
