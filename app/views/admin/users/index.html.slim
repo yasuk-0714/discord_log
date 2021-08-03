@@ -3,6 +3,11 @@
 .container-fluid
   h2 ユーザー 一覧
 
+  .container.my-3
+    .row
+      .col-lg-9.offset-lg-1
+        = render 'admin/shared/search_field', url: admin_users_path
+
   .mb-3
   table.table.table-hover
     thead.thead-default
@@ -11,14 +16,13 @@
         th= User.human_attribute_name(:name)
         th= User.human_attribute_name(:email)
         th= User.human_attribute_name(:role)
-        th= User.human_attribute_name(:created_at)
-        th= User.human_attribute_name(:updated_at)
+        th = sort_link(@q, :created_at, User.human_attribute_name(:created_at), hide_indicator: true)
+        th = sort_link(@q, :updated_at, User.human_attribute_name(:updated_at), hide_indicator: true)
         th
     tbody
-      - n = 1
-      - @users.each do |user|
+      - @users.each.with_index(1) do |user, i|
         tr
-          td= n
+          td= i
           td= link_to user.name, admin_user_path(user.uuid)
           td= user.email
           td= user.admin? ? 'あり' : 'なし'
@@ -27,6 +31,5 @@
           td
             = link_to '詳細', admin_user_path(user.uuid), class: 'btn btn-info mr-3'
             = link_to '削除', admin_user_path(user), method: :delete, data: { confirm: "#{user.name}を削除します。よろしいですか?"}, class: 'btn btn-danger'
-          - n += 1
 
   = paginate @users

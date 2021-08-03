@@ -3,25 +3,28 @@
 .container-fluid
   h2 サーバー 一覧
 
+  .container.my-3
+    .row
+      .col-lg-9.offset-lg-1
+        = render 'admin/shared/search_field', url: admin_guilds_path
+
   .mb-3
   table.table.table-hover
     thead
       tr
         th
         th= Guild.human_attribute_name(:name)
-        th= Guild.human_attribute_name(:created_at)
-        th= Guild.human_attribute_name(:updated_at)
+        th= sort_link(@q, :created_at, Guild.human_attribute_name(:created_at), hide_indicator: true)
+        th= sort_link(@q, :updated_at, Guild.human_attribute_name(:updated_at), hide_indicator: true)
         th
     tbody
-      - n = 1
-      - @guilds.each do |guild|
+      - @guilds.each.with_index(1) do |guild, i|
         tr
-          td= n
+          td= i
           td= link_to guild.name, admin_guild_path(guild.uuid)
           td= l guild.created_at, format: :long
           td= l guild.updated_at, format: :long
           td
             = link_to '詳細', admin_guild_path(guild.uuid), class: 'btn btn-info mr-3'
             = link_to '削除', admin_guild_path(guild.uuid), method: :delete, data: { confirm: "#{guild.name}を削除します。よろしいですか?"}, class: 'btn btn-danger'
-          - n += 1
   = paginate @guilds

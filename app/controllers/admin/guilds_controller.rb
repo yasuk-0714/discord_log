@@ -2,7 +2,8 @@ class Admin::GuildsController < Admin::BaseController
   before_action :set_guild, only: %i[show destroy]
 
   def index
-    @guilds = Guild.all.page(params[:page])
+    @q = Guild.ransack(params[:q])
+    @guilds = @q.result(distinct: true).order(:created_at).page(params[:page])
   end
 
   def show
