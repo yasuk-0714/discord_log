@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   add_flash_types :success, :info, :warning, :danger
-  before_action :require_login, only: :mypage
+  before_action :require_login, only: %i[mypage]
 
   rescue_from StandardError, with: :render_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_404

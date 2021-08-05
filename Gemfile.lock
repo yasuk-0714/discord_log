@@ -128,6 +128,8 @@ GEM
       dry-equalizer (~> 0.2)
       dry-initializer (~> 3.0)
       dry-schema (~> 1.5, >= 1.5.2)
+    enum_help (0.0.17)
+      activesupport (>= 3.0.0)
     erubi (1.10.0)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
@@ -166,6 +168,18 @@ GEM
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
     jwt (2.2.3)
+    kaminari (1.2.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.2.1)
+      kaminari-activerecord (= 1.2.1)
+      kaminari-core (= 1.2.1)
+    kaminari-actionview (1.2.1)
+      actionview
+      kaminari-core (= 1.2.1)
+    kaminari-activerecord (1.2.1)
+      activerecord
+      kaminari-core (= 1.2.1)
+    kaminari-core (1.2.1)
     kgio (2.11.4)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
@@ -248,6 +262,10 @@ GEM
     rainbow (3.0.0)
     raindrops (0.19.2)
     rake (13.0.6)
+    ransack (2.4.2)
+      activerecord (>= 5.2.4)
+      activesupport (>= 5.2.4)
+      i18n
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
@@ -298,6 +316,9 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    seed-fu (2.3.9)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
@@ -369,11 +390,13 @@ DEPENDENCIES
   chartkick
   config
   dotenv-rails
+  enum_help
   factory_bot_rails
   faker
   font-awesome-sass
   html2slim
   jbuilder (~> 2.7)
+  kaminari
   listen (~> 3.2)
   mysql2 (>= 0.4.4)
   pry-byebug
@@ -381,10 +404,12 @@ DEPENDENCIES
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
   rails-i18n
+  ransack
   rspec-rails
   rubocop
   rubocop-rails
   sass-rails (>= 6)
+  seed-fu
   slim-rails
   sorcery
   spring

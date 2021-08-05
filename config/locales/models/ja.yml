@@ -3,14 +3,23 @@ ja:
     models:
       user: 'ユーザー'
       authentication: '認証'
+      guild: 'サーバー'
     attributes:
       user:
         id: 'ID'
         name: '名前'
         email: 'メールアドレス'
-  attributes:
-    created_at: '作成日'
-    updated_at: '更新日'
+        role: '権限'
+        created_at: 'アプリ登録日'
+        updated_at: '最終ログイン日'
+        password: 'パスワード'
+      guild:
+        id: 'ID'
+        name: 'サーバー名'
+        created_at: '作成日'
+        updated_at: '更新日'
+      channel:
+        name: 'チャンネル名'
   enums:
     user:
       role:

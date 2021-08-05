@@ -1,0 +1,13 @@
+aside.main-sidebar.sidebar-dark-primary
+  = link_to 'Discord-Log', admin_root_path, class: 'brand-link fonr-weight-light brand-text pl-5'
+  .sidebar
+    nav.mt-2
+      ul.nav.nav-pills.nav-sidebar.flex-column[data-widget="treeview" role="menu" data-accordion="false"]
+        li.nav-item.menu-open
+          ul.nav.nav-treeview
+            li.nav-item.pt-5
+              = link_to 'RUNTEQユーザー', admin_root_path, class: "nav-link btn #{active_if('admin/dashboards')}"
+            li.nav-item.pt-2
+              = link_to '全てのユーザー', admin_users_path, class: "nav-link btn  #{active_if('admin/users')}"
+            li.nav-item.pt-2
+              = link_to '全てのサーバー', admin_guilds_path, class: "nav-link btn  #{active_if('admin/guilds')}"

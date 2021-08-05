@@ -1,0 +1,183 @@
+- content_for(:title, "#{@user.name}" )
+main
+  .container-fluid
+    .row
+      .col-md-2.border-right.bg-white
+        ul.navbar-nav
+          li= render partial: '/admin/guilds/guild', collection: @guilds
+
+      .col-md-10.contents.pt-4
+        h1.pl-5
+         = "#{@user.name}の詳細ページ"
+
+        .container-fluid.text-center
+          //今日から6日前までの表示
+          .row.text-center.pt-5
+            .col-md-6.text-left.pt-5
+              h5.text-center.text-secondary
+                |ここ１週間のチャンネル使用時間
+              = column_chart @graph_week, stacked: true
+            .col-md-6.pt-5
+              table.table.table-hover
+                h5.text-secondary.mb-3
+                  |ここ１週間のチャンネル使用時間トップ5
+                thead
+                  tr
+                    th= "順位"
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                    - n = 1
+                    - @user_channel_time_each_week.each do |key, value|
+                      tr
+                        td= n
+                        td= key
+                        td.text-info
+                          = value
+                      - n += 1
+          .row.text-center.mt-3
+            .col-md-12
+              h5.pb-2
+                |ここ１週間のチャンネル使用時間
+                h1= @user_channels_time_week
+
+          //7日前から13日前までの表示
+          .row.text-center.pt-5
+            .col-md-6.text-left.pt-5
+              h5.text-center.text-secondary
+                |７日前から13日前までのチャンネル使用時間
+              = column_chart @graph_2week, stacked: true
+            .col-md-6.pt-5
+              table.table.table-hover
+                h5.text-secondary.mb-3
+                  |7日前から13日前までのチャンネル使用時間トップ5
+                thead
+                  tr
+                    th= "順位"
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                    - n = 1
+                    - @user_channel_time_each_2week.each do |key, value|
+                      tr
+                        td= n
+                        td= key
+                        td.text-info
+                          = value
+                      - n += 1
+          .row.text-center.mt-3
+            .col-md-12
+              h5.pb-2
+                |7日前から13日前までのチャンネル使用時間
+                h1= @user_channels_time_2week
+
+          //14日前から20日前までの表示
+          .row.text-center.pt-5
+            .col-md-6.text-left.pt-5
+              h5.text-center.text-secondary
+                |14日前から20日前のチャンネル使用時間
+              = column_chart @graph_3week, stacked: true
+            .col-md-6.pt-5
+              table.table.table-hover
+                h5.text-secondary.mb-3
+                  |14日前から20日前のチャンネル使用時間トップ5
+                thead
+                  tr
+                    th= "順位"
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                    - n = 1
+                    - @user_channel_time_each_3week.each do |key, value|
+                      tr
+                        td= n
+                        td= key
+                        td.text-info
+                          = value
+                      - n += 1
+          .row.text-center.mt-3
+            .col-md-12
+              h5.pb-2
+                |14日前から20日前のチャンネル使用時間
+                h1= @user_channels_time_3week
+
+          //21日前から27日前までの表示
+          .row.text-center.pt-5
+            .col-md-6.text-left.pt-5
+              h5.text-center.text-secondary
+                |21日前から27日前のチャンネル使用時間
+              = column_chart @graph_4week, stacked: true
+            .col-md-6.pt-5
+              table.table.table-hover
+                h5.text-secondary.mb-3
+                  |21日前から27日前のチャンネル使用時間トップ5
+                thead
+                  tr
+                    th= "順位"
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                    - n = 1
+                    - @user_channel_time_each_4week.each do |key, value|
+                      tr
+                        td= n
+                        td= key
+                        td.text-info
+                          = value
+                      - n += 1
+          .row.text-center.mt-3
+            .col-md-12
+              h5.pb-2
+                |21日前から27日前のチャンネル使用時間
+                h1= @user_channels_time_4week
+
+          .row.text-center.pt-5
+            .col-md-6.text-left.pt-5
+              h5.text-center.text-secondary
+                |トータル使用時間
+              = bar_chart @time_all, colors: ['#81C7D4']
+            .col-md-6.pt-5
+              table.table.table-hover
+                h5.text-secondary.mb-3
+                  |これまでのチャンネル使用時間トップ5
+                thead
+                  tr
+                    th= "順位"
+                    th= "チャンネル名"
+                    th= "チャンネル使用時間"
+                tbody
+                    - n = 1
+                    - @user_channel_time_each_all.each do |key, value|
+                      tr
+                        td= n
+                        td= key
+                        td.text-info
+                          = value
+                      - n += 1
+          .row.text-center.mt-3
+            .col-md-12
+              h5.pb-2
+                |トータル使用時間
+                h1= @total_time
+
+          .row.text-center.pt-5
+            .col-md-12.text-left.pt-5
+              h3.text-center.text-secondary
+                |これまでの各チャンネルの使用時間
+              = column_chart @user_channels_time_all, colors: ['#EEA9A9']
+
+          .row.text-center.pt-5
+            .col-md-12.text-left.pt-5
+              h3.text-center.text-secondary
+                |月別のチャンネル使用時間
+              = column_chart @months_graph, stacked: true
+
+          .row.text-center.pt-5
+            .col-md-3
+              = image_tag 'traiangle', size: '200x200'
+            .col-md-6.align-self-start.pt-2
+              h3.pb-2
+                |今月のチャンネル使用時間
+              h1= @user_channels_time_month
+            .col-md-3.pt-2
+              = image_tag 'joy_character', size: '200x200'

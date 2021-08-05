@@ -35,6 +35,7 @@ gem 'html2slim'
 
 # 日本語化
 gem 'rails-i18n'
+gem 'enum_help'
 
 gem 'sorcery'
 
@@ -43,6 +44,10 @@ gem 'config'
 gem 'font-awesome-sass'
 
 gem "chartkick"
+
+gem 'kaminari'
+
+gem 'ransack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -54,6 +59,7 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-rails'
   gem 'faker'
+  gem 'seed-fu'
   gem 'rspec-rails'
   gem 'factory_bot_rails'
 end

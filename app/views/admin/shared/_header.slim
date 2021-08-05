@@ -1,0 +1,9 @@
+nav.main-header.navbar.navbar-expand.navbar-dark
+  ul.navbar-nav
+
+    /ナビゲーション
+  .collapse.navbar-collapse.justify-content-end
+    ul.navbar-nav
+      li.nav-item
+        = link_to 'ログアウト', admin_logout_path, method: :delete, class: 'nav-link active'
+

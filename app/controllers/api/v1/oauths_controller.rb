@@ -13,6 +13,8 @@ class Api::V1::OauthsController < Api::V1::BaseController
         user.authentication.update!(
           access_token: access_token.token,
           refresh_token: access_token.refresh_token)
+        user.update!(name: @user_hash[:user_info]['username'],
+            email: @user_hash[:user_info]['email'])
       else
         fetch_user_data_from(provider)
       end
