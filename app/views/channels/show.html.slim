@@ -28,25 +28,25 @@ main
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |ここ１週間のチャンネル使用時間
-              = column_chart @weeks_graph, stacked: true
+              = column_chart @channel_past_week_graph, stacked: true
             .col-md-6.pt-5
               h3 ここ１週間のチャンネル使用時間
-              h1= @channel_time_week
+              h1= @channel_time_past_week
               = image_tag 'elements', size: '200x200'
 
           .row.text-center
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |これまでのチャンネル使用時間
-              = bar_chart @channel_time_graph, colors: ['#81C7D4']
+              = bar_chart @channel_time_so_far_graph, colors: ['#81C7D4']
             .col-md-6.pt-5
               h3 これまでのチャンネル使用時間
-              h1= @channel_time
+              h1= @channel_time_so_far
               = image_tag 'gift', size: '200x200'
 
           .row.text-center
             .col-md-12.text-left.pt-5
-              = column_chart @months_graph, stacked: true
+              = column_chart @channel_time_months_graph, stacked: true
 
           .row.text-center.pt-4
             .col-md-3
@@ -54,6 +54,6 @@ main
             .col-md-6.pt-2
               h3.pb-2
                 |今月のチャンネル使用時間
-              h1= @channel_time_month
+              h1= @channel_time_this_month
             .col-md-3.pt-2
               = image_tag 'dornuts_and_characters', size: '200x200'

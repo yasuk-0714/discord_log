@@ -61,8 +61,8 @@ class GuildsController < ApplicationController
     four_days_ago = [[t('defaults.day.4_days_ago'), shaped_time(four_days_ago)]]
     five_days_ago = [[t('defaults.day.5_days_ago'), shaped_time(five_days_ago)]]
     six_days_ago = [[t('defaults.day.6_days_ago'), shaped_time(six_days_ago)]]
-    @weeks_graph = [{ name: t('defaults.day.6_days_ago'), data: six_days_ago }, { name: t('defaults.day.5_days_ago'), data: five_days_ago }, { name: t('defaults.day.4_days_ago'), data: four_days_ago },
-                    { name: t('defaults.day.3_days_ago'), data: three_days_ago }, { name: t('defaults.day.2_days_ago'), data: two_days_ago }, { name: t('defaults.day.1_day_ago'), data: day_ago }, { name: t('defaults.day.today'), data: on_day }]
+    @weeks_graph = [{ data: six_days_ago }, { data: five_days_ago }, { data: four_days_ago },
+                    { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: on_day }]
     # 今日から6日前までのサーバー内のチャンネル使用時間トップ5を算出
     guild_time_week_all = ChannelTime.where(user_channel_id: user_channel).where(created_at: 6.days.ago.beginning_of_day..Time.now.end_of_day).group(:user_channel_id).sum(:total_time)
     guild_time_week_each = guild_time_week_all.sort_by { |_k, v| v }.reverse.first(5).to_h

@@ -67,8 +67,8 @@ class HomeController < ApplicationController
     four_days_ago = [[t('defaults.day.4_days_ago'), shaped_time(four_days_ago.values.sum)]]
     five_days_ago = [[t('defaults.day.5_days_ago'), shaped_time(five_days_ago.values.sum)]]
     six_days_ago = [[t('defaults.day.6_days_ago'), shaped_time(six_days_ago.values.sum)]]
-    @graph = [{ name: t('defaults.day.6_days_ago'), data: six_days_ago }, { name: t('defaults.day.5_days_ago'), data: five_days_ago }, { name: t('defaults.day.4_days_ago'), data: four_days_ago },
-              { name: t('defaults.day.3_days_ago'), data: three_days_ago }, { name: t('defaults.day.2_days_ago'), data: two_days_ago }, { name: t('defaults.day.1_day_ago'), data: day_ago }, { name: t('defaults.day.today'), data: on_day }]
+    @graph = [{ data: six_days_ago }, { data: five_days_ago }, { data: four_days_ago },
+              { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: on_day }]
     # 今週のユーザーチャンネルの使用時間トップ5を算出
     user_channel_time_each_month = user_channels_time_week.sort_by { |key, value| value }.reverse.first(5).to_h
     @user_channel_time_each_month = {}

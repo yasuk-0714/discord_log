@@ -74,10 +74,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
   end
 
   def get_channels
-    guilds = []
-    current_user.guilds.each do |result|
-      guilds << result[:id]
-    end
+    guilds = current_user.guilds.ids
     @channel_list = current_user.channels.ids
     guilds.each do |guild|
       uri = URI.parse('https://discord.com')
