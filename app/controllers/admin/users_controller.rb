@@ -18,7 +18,7 @@ class Admin::UsersController < Admin::BaseController
     @total_time = caliculate_time(time_all.values.sum)
     #ユーザーが参加しているチャンネルの総合時間 :グラフ用
     @time_all = {}
-    @time_all['合計時間'] = shaped_time(time_all.values.sum)
+    @time_all[t('defaults.common.total_time')] = shaped_time(time_all.values.sum)
 
     #全てのユーザーチャンネルの使用時間トップ5を算出
     user_channel_time_each_all = time_all.sort_by {|k,v| v}.reverse.first(5).to_h
@@ -51,15 +51,15 @@ class Admin::UsersController < Admin::BaseController
     four_days_ago = @user.channel_times.where(created_at: 4.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     five_days_ago = @user.channel_times.where(created_at: 5.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     six_days_ago = @user.channel_times.where(created_at: 6.days.ago.all_day).group(:user_channel_id).sum(:total_time)
-    on_day = [['今日', shaped_time(on_day.values.sum)]]
-    day_ago = [['１日前', shaped_time(day_ago.values.sum)]]
-    two_days_ago = [['２日前', shaped_time(two_days_ago.values.sum)]]
-    three_days_ago = [['３日前', shaped_time(three_days_ago.values.sum)]]
-    four_days_ago = [['４日前', shaped_time(four_days_ago.values.sum)]]
-    five_days_ago = [['５日前', shaped_time(five_days_ago.values.sum)]]
-    six_days_ago = [['６日前', shaped_time(six_days_ago.values.sum)]]
-    @graph_week = [{name: '6日前', data: six_days_ago}, {name: '５日前', data: five_days_ago}, {name: '４日前', data: four_days_ago},
-              {name:'３日前', data: three_days_ago}, {name: '２日前', data: two_days_ago}, {name: '１日前', data: day_ago}, {name: '今日', data: on_day}]
+    on_day = [[t('defaults.day.today'), shaped_time(on_day.values.sum)]]
+    day_ago = [[t('defaults.day.1_day_ago'), shaped_time(day_ago.values.sum)]]
+    two_days_ago = [[t('defaults.day.2_days_ago'), shaped_time(two_days_ago.values.sum)]]
+    three_days_ago = [[t('defaults.day.3_days_ago'), shaped_time(three_days_ago.values.sum)]]
+    four_days_ago = [[t('defaults.day.4_days_ago'), shaped_time(four_days_ago.values.sum)]]
+    five_days_ago = [[t('defaults.day.5_days_ago'), shaped_time(five_days_ago.values.sum)]]
+    six_days_ago = [[t('defaults.day.6_days_ago'), shaped_time(six_days_ago.values.sum)]]
+    @graph_week = [{name: t('defaults.day.6_days_ago'), data: six_days_ago}, {name: t('defaults.day.5_days_ago'), data: five_days_ago}, {name: t('defaults.day.4_days_ago'), data: four_days_ago},
+              {name: t('defaults.day.3_days_ago'), data: three_days_ago}, {name: t('defaults.day.2_days_ago'), data: two_days_ago}, {name: t('defaults.day.1_day_ago'), data: day_ago}, {name: t('defaults.day.today'), data: on_day}]
     #今週のユーザーチャンネルの使用時間トップ5を算出
     user_channel_time_each_week = user_channels_time_week.sort_by {|k,v| v}.reverse.first(5).to_h
     @user_channel_time_each_week = {}
@@ -82,15 +82,15 @@ class Admin::UsersController < Admin::BaseController
     eleven_days_ago = @user.channel_times.where(created_at: 11.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     twelve_days_ago = @user.channel_times.where(created_at: 12.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     thirteen_days_ago = @user.channel_times.where(created_at: 13.days.ago.all_day).group(:user_channel_id).sum(:total_time)
-    seven_days_ago = [['７日前', shaped_time(seven_days_ago.values.sum)]]
-    eight_days_ago = [['8日前', shaped_time(eight_days_ago.values.sum)]]
-    nine_days_ago = [['9日前', shaped_time(nine_days_ago.values.sum)]]
-    ten_days_ago = [['10日前', shaped_time(ten_days_ago.values.sum)]]
-    eleven_days_ago = [['11日前', shaped_time(eleven_days_ago.values.sum)]]
-    twelve_days_ago = [['12日前', shaped_time(twelve_days_ago.values.sum)]]
-    thirteen_days_ago = [['13日前', shaped_time(thirteen_days_ago.values.sum)]]
-    @graph_2week = [{name: '13日前', data: thirteen_days_ago}, {name: '12日前', data: twelve_days_ago}, {name: '11日前', data: eleven_days_ago},
-              {name:'10日前', data: ten_days_ago}, {name: '9日前', data: nine_days_ago}, {name: '8日前', data: eight_days_ago}, {name: '7日前', data: seven_days_ago}]
+    seven_days_ago = [[t('defaults.day.7_days_ago'), shaped_time(seven_days_ago.values.sum)]]
+    eight_days_ago = [[t('defaults.day.8_days_ago'), shaped_time(eight_days_ago.values.sum)]]
+    nine_days_ago = [[t('defaults.day.9_days_ago'), shaped_time(nine_days_ago.values.sum)]]
+    ten_days_ago = [[t('defaults.day.10_days_ago'), shaped_time(ten_days_ago.values.sum)]]
+    eleven_days_ago = [[t('defaults.day.11_days_ago'), shaped_time(eleven_days_ago.values.sum)]]
+    twelve_days_ago = [[t('defaults.day.12_days_ago'), shaped_time(twelve_days_ago.values.sum)]]
+    thirteen_days_ago = [[t('defaults.day.13_days_ago'), shaped_time(thirteen_days_ago.values.sum)]]
+    @graph_2week = [{name: t('defaults.day.13_days_ago'), data: thirteen_days_ago}, {name: t('defaults.day.12_days_ago'), data: twelve_days_ago}, {name: t('defaults.day.11_days_ago'), data: eleven_days_ago},
+              {name: t('defaults.day.10_days_ago'), data: ten_days_ago}, {name: t('defaults.day.9_days_ago'), data: nine_days_ago}, {name: t('defaults.day.8_days_ago'), data: eight_days_ago}, {name: t('defaults.day.7_days_ago'), data: seven_days_ago}]
     #7日前から13日前までの使用時間トップ5を算出
     user_channel_time_each_2week = user_channels_time_2week.sort_by {|k,v| v}.reverse.first(5).to_h
     @user_channel_time_each_2week = {}
@@ -113,15 +113,15 @@ class Admin::UsersController < Admin::BaseController
     eighteen_days_ago = @user.channel_times.where(created_at: 18.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     nineteen_days_ago = @user.channel_times.where(created_at: 19.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     twenty_days_ago = @user.channel_times.where(created_at: 20.days.ago.all_day).group(:user_channel_id).sum(:total_time)
-    fourteen_days_ago = [['14日前', shaped_time(fourteen_days_ago.values.sum)]]
-    fifteen_days_ago = [['15日前', shaped_time(fifteen_days_ago.values.sum)]]
-    sixteen_days_ago = [['16日前', shaped_time(sixteen_days_ago.values.sum)]]
-    seventeen_days_ago = [['17日前', shaped_time(seventeen_days_ago.values.sum)]]
-    eighteen_days_ago = [['18日前', shaped_time(eighteen_days_ago.values.sum)]]
-    nineteen_days_ago = [['19日前', shaped_time(nineteen_days_ago.values.sum)]]
-    twenty_days_ago = [['20日前', shaped_time(twenty_days_ago.values.sum)]]
-    @graph_3week = [{name: '20日前', data: twenty_days_ago}, {name: '19日前', data: nineteen_days_ago}, {name: '18日前', data: eighteen_days_ago},
-              {name:'17日前', data: seventeen_days_ago}, {name: '16日前', data: sixteen_days_ago}, {name: '15日前', data: fifteen_days_ago}, {name: '14日前', data: fourteen_days_ago}]
+    fourteen_days_ago = [[t('defaults.day.14_days_ago'), shaped_time(fourteen_days_ago.values.sum)]]
+    fifteen_days_ago = [[t('defaults.day.15_days_ago'), shaped_time(fifteen_days_ago.values.sum)]]
+    sixteen_days_ago = [[t('defaults.day.16_days_ago'), shaped_time(sixteen_days_ago.values.sum)]]
+    seventeen_days_ago = [[t('defaults.day.17_days_ago'), shaped_time(seventeen_days_ago.values.sum)]]
+    eighteen_days_ago = [[t('defaults.day.18_days_ago'), shaped_time(eighteen_days_ago.values.sum)]]
+    nineteen_days_ago = [[t('defaults.day.19_days_ago'), shaped_time(nineteen_days_ago.values.sum)]]
+    twenty_days_ago = [[t('defaults.day.20_days_ago'), shaped_time(twenty_days_ago.values.sum)]]
+    @graph_3week = [{name: t('defaults.day.20_days_ago'), data: twenty_days_ago}, {name: t('defaults.day.19_days_ago'), data: nineteen_days_ago}, {name: t('defaults.day.18_days_ago'), data: eighteen_days_ago},
+              {name: t('defaults.day.17_days_ago'), data: seventeen_days_ago}, {name: t('defaults.day.16_days_ago'), data: sixteen_days_ago}, {name: t('defaults.day.15_days_ago'), data: fifteen_days_ago}, {name: t('defaults.day.14_days_ago'), data: fourteen_days_ago}]
     #今週のユーザーチャンネルの使用時間トップ5を算出
     user_channel_time_each_3week = user_channels_time_3week.sort_by {|k,v| v}.reverse.first(5).to_h
     @user_channel_time_each_3week = {}
@@ -144,15 +144,15 @@ class Admin::UsersController < Admin::BaseController
     twentyfive_days_ago = @user.channel_times.where(created_at: 25.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     twentysix_days_ago = @user.channel_times.where(created_at: 26.days.ago.all_day).group(:user_channel_id).sum(:total_time)
     twentyseven_days_ago = @user.channel_times.where(created_at: 27.days.ago.all_day).group(:user_channel_id).sum(:total_time)
-    twentyone_days_ago = [['21日前', shaped_time(twentyone_days_ago.values.sum)]]
-    twentytwo_days_ago = [['22日前', shaped_time(twentytwo_days_ago.values.sum)]]
-    twentythree_days_ago = [['23日前', shaped_time(twentythree_days_ago.values.sum)]]
-    twentyfour_days_ago = [['24日前', shaped_time(twentyfour_days_ago.values.sum)]]
-    twentyfive_days_ago = [['25日前', shaped_time(twentyfive_days_ago.values.sum)]]
-    twentysix_days_ago = [['26日前', shaped_time(twentysix_days_ago.values.sum)]]
-    twentyseven_days_ago = [['27日前', shaped_time(twentyseven_days_ago.values.sum)]]
-    @graph_4week = [{name: '27日前', data: twentyseven_days_ago}, {name: '26日前', data: twentysix_days_ago}, {name: '25日前', data: twentyfive_days_ago},
-              {name:'24日前', data: twentyfour_days_ago}, {name: '23日前', data: twentythree_days_ago}, {name: '22日前', data: twentytwo_days_ago}, {name: '21日前', data: twentyone_days_ago}]
+    twentyone_days_ago = [[t('defaults.day.21_days_ago'), shaped_time(twentyone_days_ago.values.sum)]]
+    twentytwo_days_ago = [[t('defaults.day.22_days_ago'), shaped_time(twentytwo_days_ago.values.sum)]]
+    twentythree_days_ago = [[t('defaults.day.23_days_ago'), shaped_time(twentythree_days_ago.values.sum)]]
+    twentyfour_days_ago = [[t('defaults.day.24_days_ago'), shaped_time(twentyfour_days_ago.values.sum)]]
+    twentyfive_days_ago = [[t('defaults.day.25_days_ago'), shaped_time(twentyfive_days_ago.values.sum)]]
+    twentysix_days_ago = [[t('defaults.day.26_days_ago'), shaped_time(twentysix_days_ago.values.sum)]]
+    twentyseven_days_ago = [[t('defaults.day.27_days_ago'), shaped_time(twentyseven_days_ago.values.sum)]]
+    @graph_4week = [{name: t('defaults.day.27_days_ago'), data: twentyseven_days_ago}, {name: t('defaults.day.26_days_ago'), data: twentysix_days_ago}, {name: t('defaults.day.25_days_ago'), data: twentyfive_days_ago},
+              {name: t('defaults.day.24_days_ago'), data: twentyfour_days_ago}, {name: t('defaults.day.23_days_ago'), data: twentythree_days_ago}, {name: t('defaults.day.22_days_ago'), data: twentytwo_days_ago}, {name: t('defaults.day.21_days_ago'), data: twentyone_days_ago}]
     #今週のユーザーチャンネルの使用時間トップ5を算出
     user_channel_time_each_4week = user_channels_time_4week.sort_by {|k,v| v}.reverse.first(5).to_h
     @user_channel_time_each_4week = {}
@@ -180,31 +180,31 @@ class Admin::UsersController < Admin::BaseController
     nine_month_ago = @user.channel_times.where(created_at: 9.months.ago.all_month).group(:user_channel_id).sum(:total_time)
     ten_month_ago = @user.channel_times.where(created_at: 10.months.ago.all_month).group(:user_channel_id).sum(:total_time)
     eleven_month_ago = @user.channel_times.where(created_at: 11.months.ago.all_month).group(:user_channel_id).sum(:total_time)
-    this_month_time = [['今月', shaped_time(user_channels_time_month.values.sum)]]
-    a_month_ago_time = [['1ヶ月前', shaped_time(a_month_ago.values.sum)]]
-    two_month_ago_time = [['2ヶ月前', shaped_time(two_month_ago.values.sum)]]
-    three_month_ago_time = [['3ヶ月前', shaped_time(three_month_ago.values.sum)]]
-    four_month_ago_time = [['4ヶ月前', shaped_time(four_month_ago.values.sum)]]
-    five_month_ago_time = [['5ヶ月前', shaped_time(five_month_ago.values.sum)]]
-    six_month_ago_time = [['6ヶ月前', shaped_time(six_month_ago.values.sum)]]
-    seven_month_ago_time = [['7ヶ月前', shaped_time(seven_month_ago.values.sum)]]
-    eight_month_ago_time = [['8ヶ月前', shaped_time(eight_month_ago.values.sum)]]
-    nine_month_ago_time = [['9ヶ月前', shaped_time(nine_month_ago.values.sum)]]
-    ten_month_ago_time = [['10ヶ月前', shaped_time(ten_month_ago.values.sum)]]
-    eleven_month_ago_time = [['11ヶ月前', shaped_time(eleven_month_ago.values.sum)]]
-    @months_graph = [{name: '11ヶ月前', data: eleven_month_ago_time}, {name: '10ヶ月前', data: ten_month_ago_time}, {name: '9ヶ月前', data: nine_month_ago_time},
-                      {name: '8ヶ月前', data: eight_month_ago_time}, {name: '7ヶ月前', data: seven_month_ago_time}, {name: '6ヶ月前', data: six_month_ago_time},
-                      {name: '5ヶ月前', data: five_month_ago_time}, {name: '4ヶ月前', data: four_month_ago_time}, {name: '3ヶ月前', data: three_month_ago_time},
-                      {name: '2ヶ月前', data: two_month_ago_time}, {name: '1ヶ月前', data: a_month_ago_time}, {name: '今月', data: this_month_time}]
+    this_month_time = [[t('defaults.month.this_month'), shaped_time(user_channels_time_month.values.sum)]]
+    a_month_ago_time = [[t('defaults.month.1_month_ago'), shaped_time(a_month_ago.values.sum)]]
+    two_month_ago_time = [[t('defaults.month.2_months_ago'), shaped_time(two_month_ago.values.sum)]]
+    three_month_ago_time = [[t('defaults.month.3_months_ago'), shaped_time(three_month_ago.values.sum)]]
+    four_month_ago_time = [[t('defaults.month.4_months_ago'), shaped_time(four_month_ago.values.sum)]]
+    five_month_ago_time = [[t('defaults.month.5_months_ago'), shaped_time(five_month_ago.values.sum)]]
+    six_month_ago_time = [[t('defaults.month.6_months_ago'), shaped_time(six_month_ago.values.sum)]]
+    seven_month_ago_time = [[t('defaults.month.7_months_ago'), shaped_time(seven_month_ago.values.sum)]]
+    eight_month_ago_time = [[t('defaults.month.8_months_ago'), shaped_time(eight_month_ago.values.sum)]]
+    nine_month_ago_time = [[t('defaults.month.9_months_ago'), shaped_time(nine_month_ago.values.sum)]]
+    ten_month_ago_time = [[t('defaults.month.10_months_ago'), shaped_time(ten_month_ago.values.sum)]]
+    eleven_month_ago_time = [[t('defaults.month.11_months_ago'), shaped_time(eleven_month_ago.values.sum)]]
+    @months_graph = [{name: t('defaults.month.11_months_ago'), data: eleven_month_ago_time}, {name: t('defaults.month.10_months_ago'), data: ten_month_ago_time}, {name: t('defaults.month.9_months_ago'), data: nine_month_ago_time},
+                      {name: t('defaults.month.8_months_ago'), data: eight_month_ago_time}, {name: t('defaults.month.7_months_ago'), data: seven_month_ago_time}, {name: t('defaults.month.6_months_ago'), data: six_month_ago_time},
+                      {name: t('defaults.month.5_months_ago'), data: five_month_ago_time}, {name: t('defaults.month.4_months_ago'), data: four_month_ago_time}, {name: t('defaults.month.3_months_ago'), data: three_month_ago_time},
+                      {name: t('defaults.month.2_months_ago'), data: two_month_ago_time}, {name: t('defaults.month.1_month_ago'), data: a_month_ago_time}, {name: t('defaults.month.this_month'), data: this_month_time}]
   end
 
   def edit; end
 
   def update
     if @user.update(user_params)
-      redirect_to admin_root_path, success: 'ユーザー更新に成功しました'
+      redirect_to admin_root_path, success: t('.success')
     else
-      flash.now['danger'] = 'ユーザー更新に失敗しました'
+      flash.now['danger'] = t('.fail')
       render :edit
     end
   end
@@ -212,7 +212,7 @@ class Admin::UsersController < Admin::BaseController
   def destroy
     @user.destroy!
     redirect_back(fallback_location: admin_root_path)
-    flash[:success] = 'ユーザーを削除しました'
+    flash[:success] = t('.success')
   end
 
   private

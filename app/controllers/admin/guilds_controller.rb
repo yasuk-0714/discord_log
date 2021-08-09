@@ -13,7 +13,7 @@ class Admin::GuildsController < Admin::BaseController
 
   def destroy
     @guild.destroy!
-    redirect_to admin_guilds_path, success: 'サーバーを削除しました'
+    redirect_to admin_guilds_path, success: t('.success')
   end
 
   private

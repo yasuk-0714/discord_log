@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
   private
 
   def not_authenticated
-    redirect_to root_path, danger: 'ログインしてください'
+    redirect_to root_path, danger: t('defaults.message.login_required')
   end
 
   #画面表示用

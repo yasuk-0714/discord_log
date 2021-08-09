@@ -23,7 +23,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
       get_channels
       redirect_to mypage_path
     rescue
-      redirect_to root_path, info: 'ログインをキャンセルしました'
+      redirect_to root_path, info: t('.info')
     end
   end
 

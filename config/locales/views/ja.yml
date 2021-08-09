@@ -1,12 +1,75 @@
 ja:
   defaults:
     message:
+      login_required: 'ログインしてください'
+      check_admin: '管理者以外ログインできません'
+    common:
+      total_time: '合計時間'
+    day:
+      today: '今日'
+      1_day_ago: '１日前'
+      2_days_ago: '2日前'
+      3_days_ago: '3日前'
+      4_days_ago: '4日前'
+      5_days_ago: '5日前'
+      6_days_ago: '6日前'
+      7_days_ago: '7日前'
+      8_days_ago: '8日前'
+      9_days_ago: '9日前'
+      10_days_ago: '10日前'
+      11_days_ago: '11日前'
+      12_days_ago: '12日前'
+      13_days_ago: '13日前'
+      14_days_ago: '14日前'
+      15_days_ago: '15日前'
+      16_days_ago: '16日前'
+      17_days_ago: '17日前'
+      18_days_ago: '18日前'
+      19_days_ago: '19日前'
+      20_days_ago: '20日前'
+      21_days_ago: '21日前'
+      22_days_ago: '22日前'
+      23_days_ago: '23日前'
+      24_days_ago: '24日前'
+      25_days_ago: '25日前'
+      26_days_ago: '26日前'
+      27_days_ago: '27日前'
+    month:
+      this_month: '今月'
+      1_month_ago: '1ヶ月前'
+      2_months_ago: '2ヶ月前'
+      3_months_ago: '3ヶ月前'
+      4_months_ago: '4ヶ月前'
+      5_months_ago: '5ヶ月前'
+      6_months_ago: '6ヶ月前'
+      7_months_ago: '7ヶ月前'
+      8_months_ago: '8ヶ月前'
+      9_months_ago: '9ヶ月前'
+      10_months_ago: '10ヶ月前'
+      11_months_ago: '11ヶ月前'
   api:
     v1:
       oauths:
         callback:
           info: 'ログインをキャンセルしました'
-          success: 'Discordでログインしました'
       user_sessions:
         destroy:
           success: 'ログアウトしました'
+  admin:
+    channels:
+      destroy:
+        success: 'チャンネルを削除しました'
+    guilds:
+      destroy:
+        success: 'サーバーを削除しました'
+    user_sessions:
+      create:
+        success: 'ログインしました'
+        fail: 'ログインに失敗しました'
+      destroy:
+        success: 'ログアウトしました'
+      update:
+        success: 'ユーザー更新に成功しました'
+        fail: 'ユーザー更新に失敗しました'
+      destroy:
+        success: 'ユーザーを削除しました'
