@@ -12,9 +12,10 @@ class Api::V1::OauthsController < Api::V1::BaseController
       if (user = login_from(provider))
         user.authentication.update!(
           access_token: access_token.token,
-          refresh_token: access_token.refresh_token)
+          refresh_token: access_token.refresh_token
+        )
         user.update!(name: @user_hash[:user_info]['username'],
-            email: @user_hash[:user_info]['email'])
+                     email: @user_hash[:user_info]['email'])
       else
         fetch_user_data_from(provider)
       end
@@ -22,7 +23,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
       get_guilds(token)
       get_channels
       redirect_to mypage_path
-    rescue
+    rescue StandardError
       redirect_to root_path, info: t('.info')
     end
   end
@@ -46,7 +47,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
   end
 
   def get_guilds(token)
-    uri = URI.parse("https://discord.com/api/v8/users/@me/guilds")
+    uri = URI.parse('https://discord.com/api/v8/users/@me/guilds')
     req = Net::HTTP::Get.new(uri)
     req['authorization'] = "Bearer #{token}"
     req_options = {
@@ -58,8 +59,8 @@ class Api::V1::OauthsController < Api::V1::BaseController
     end
     results = JSON.parse(response.body)
     results.each do |result|
-      guild_id = result["id"].to_i
-      guild_name = result["name"]
+      guild_id = result['id'].to_i
+      guild_name = result['name']
       guild = Guild.find_or_initialize_by(id: guild_id, name: guild_name, uuid: guild_id)
       unless guild.save
         guild = Guild.find_by(id: guild_id)
@@ -79,29 +80,27 @@ class Api::V1::OauthsController < Api::V1::BaseController
     end
     @channel_list = current_user.channels.ids
     guilds.each do |guild|
-      begin
-        uri = URI.parse("https://discord.com")
-        uri.path = "/api/v8/guilds/#{guild}/widget.json"
-        https = Net::HTTP.new(uri.host, uri.port)
-        https.use_ssl = true
-        response = https.get uri.request_uri
-        response_hash = JSON.parse(response.body)
-        response_hash["channels"].each do |value|
-          id = value['id'].to_i
-          name = value['name']
-          position = value['position']
-          channel = Channel.find_or_initialize_by(id: id, name: name, uuid: id, position: position, guild_id: guild)
-          unless channel.save
-            channel = Channel.find_by(id: id)
-            channel.update(name: name, position: position)
-          end
-          user_channel = current_user.user_channels.find_or_create_by(channel_id: id)
-          @channel_list.delete_if { |n| n == id }
+      uri = URI.parse('https://discord.com')
+      uri.path = "/api/v8/guilds/#{guild}/widget.json"
+      https = Net::HTTP.new(uri.host, uri.port)
+      https.use_ssl = true
+      response = https.get uri.request_uri
+      response_hash = JSON.parse(response.body)
+      response_hash['channels'].each do |value|
+        id = value['id'].to_i
+        name = value['name']
+        position = value['position']
+        channel = Channel.find_or_initialize_by(id: id, name: name, uuid: id, position: position, guild_id: guild)
+        unless channel.save
+          channel = Channel.find_by(id: id)
+          channel.update(name: name, position: position)
         end
-      rescue => e
-        logger.error e
-        logger.error e.backtrace.join("\n")
+        user_channel = current_user.user_channels.find_or_create_by(channel_id: id)
+        @channel_list.delete_if { |n| n == id }
       end
+    rescue StandardError => e
+      logger.error e
+      logger.error e.backtrace.join("\n")
     end
     destroy_channels = UserChannel.where(channel_id: @channel_list)
     destroy_channels.each { |channel| channel.destroy }

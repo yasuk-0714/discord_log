@@ -17,7 +17,7 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :role, presence: true
 
-  enum role: { general: 0, admin: 10}
+  enum role: { general: 0, admin: 10 }
 
   private
 

@@ -1,6 +1,7 @@
 class Admin::BaseController < ApplicationController
   layout 'admin/layouts/application'
   before_action :check_admin
+
   private
 
   def not_authenticated

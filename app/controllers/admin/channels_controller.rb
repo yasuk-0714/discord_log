@@ -1,5 +1,4 @@
 class Admin::ChannelsController < Admin::BaseController
-
   def destroy
     channel = Channel.find(params[:id])
     channel.destroy!

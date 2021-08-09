@@ -1,5 +1,5 @@
 class Admin::GuildsController < Admin::BaseController
-  before_action :set_guild, only: %i[show destroy]
+  before_action :set_guild, only: [:show, :destroy]
 
   def index
     @q = Guild.ransack(params[:q])

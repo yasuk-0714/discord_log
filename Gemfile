@@ -41,7 +41,7 @@ gem 'sorcery'
 
 gem 'config'
 
-gem "chartkick"
+gem 'chartkick'
 
 gem 'kaminari'
 
