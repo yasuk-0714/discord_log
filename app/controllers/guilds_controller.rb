@@ -103,9 +103,9 @@ class GuildsController < ApplicationController
     nine_month_ago_time = [[t('defaults.month.9_months_ago'), shaped_time(nine_month_ago)]]
     ten_month_ago_time = [[t('defaults.month.10_months_ago'), shaped_time(ten_month_ago)]]
     eleven_month_ago_time = [[t('defaults.month.11_months_ago'), shaped_time(eleven_month_ago)]]
-    @months_graph = [{ name: t('defaults.month.11_months_ago'), data: eleven_month_ago_time }, { name: t('defaults.month.10_months_ago'), data: ten_month_ago_time }, { name: t('defaults.month.9_months_ago'), data: nine_month_ago_time },
-                     { name: t('defaults.month.8_months_ago'), data: eight_month_ago_time }, { name: t('defaults.month.7_months_ago'), data: seven_month_ago_time }, { name: t('defaults.month.6_months_ago'), data: six_month_ago_time },
-                     { name: t('defaults.month.5_months_ago'), data: five_month_ago_time }, { name: t('defaults.month.4_months_ago'), data: four_month_ago_time }, { name: t('defaults.month.3_months_ago'), data: three_month_ago_time },
-                     { name: t('defaults.month.2_months_ago'), data: two_month_ago_time }, { name: t('defaults.month.1_month_ago'), data: a_month_ago_time }, { name: t('defaults.month.this_month'), data: this_month_time }]
+    @months_graph = [{ data: eleven_month_ago_time }, { data: ten_month_ago_time }, { data: nine_month_ago_time },
+                     { data: eight_month_ago_time }, { data: seven_month_ago_time }, { data: six_month_ago_time },
+                     {  data: five_month_ago_time }, { data: four_month_ago_time }, { data: three_month_ago_time },
+                     { data: two_month_ago_time }, { data: a_month_ago_time }, { data: this_month_time }]
   end
 end

@@ -425,6 +425,6 @@ end
     start_time: 11.months.ago.end_of_month.beginning_of_day,
     end_time: 11.months.ago.end_of_month + 40.minutes,
     total_time: 11.months.ago.end_of_month + 40.minutes - 11.months.ago.end_of_month.beginning_of_day,
-    created_at: 11.months.ago.end_of_month.beginning_of_day
+    created_at: 11.months.ago.end_of_month.beginning_of_month
   )
 end

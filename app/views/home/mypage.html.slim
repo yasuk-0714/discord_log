@@ -1,10 +1,10 @@
-- content_for(:title, 'マイページ' )
+- content_for(:title, t('.title') )
 main
   .container-fluid
     .row
       .col-md-2.border-right.bg-white
         ul.navbar-nav
-          li= render partial: 'guilds/guild', collection: @guilds, as: :guild
+          li= render partial: 'guilds/guild', collection: @guilds
 
       .col-md-10.contents.pt-4
         h1.pl-5

@@ -55,6 +55,15 @@ ja:
       user_sessions:
         destroy:
           success: 'ログアウトしました'
+  home:
+    mypage:
+      title: 'マイページ'
+    top:
+      title: 'トップ'
+    privacy_policy:
+      title: 'プライバシーポリシー'
+    terms_of_service:
+      title: '利用規約'
   admin:
     channels:
       destroy:

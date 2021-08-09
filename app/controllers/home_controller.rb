@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  def index; end
+  def top; end
 
   def terms_of_service; end
 
@@ -7,7 +7,7 @@ class HomeController < ApplicationController
 
   def mypage
     @guilds = current_user.guilds
-    @channels = current_user.channels.order(position: :asc).map { |user_channel| user_channel }
+    @channels = current_user.channels.order(:position).map { |channel| channel }
 
     # ユーザーが所持しているチャンネルごとに時間を算出
     time_all = current_user.channel_times.group(:user_channel_id).sum(:total_time)
@@ -19,18 +19,13 @@ class HomeController < ApplicationController
     @time_all[t('defaults.common.total_time')] = shaped_time(time_all.values.sum)
 
     # 全てのユーザーチャンネルの使用時間トップ5を算出
-    user_channel_time_each_all = time_all.sort_by { |_k, v| v }.reverse.first(5).to_h
+    user_channel_time_each_all = time_all.sort_by { |key, value| value }.reverse.first(5).to_h
     @user_channel_time_each_all = {}
-    user_channel_time_each_all.each do |key, value|
-      find_channel = UserChannel.find(key)
-      channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      @user_channel_time_each_all[channel.name] = shaped_time
-    end
+    top_five_channel_times(user_channel_time_each_all, @user_channel_time_each_all)
 
     # これまでのユーザーが参加している各チャンネルの使用時間
     @user_channels_time_all = {}
-    time_all.sort_by { |_k, v| v }.reverse.to_h.each do |key, value|
+    time_all.sort_by { |key, value| value }.reverse.to_h.each do |key, value|
       user_channel = UserChannel.find(key)
       channel = Channel.find(user_channel.channel_id)
       shaped_time = shaped_time(value)
@@ -41,7 +36,7 @@ class HomeController < ApplicationController
     user_channels_time_today = current_user.channel_times.where(created_at: Time.now.all_day).group(:user_channel_id).sum(:total_time)
     @total_time_today = caliculate_time(user_channels_time_today.values.sum)
     @user_channels_time_today = {}
-    user_channels_time_today.sort_by { |_k, v| v }.reverse.to_h.each do |key, value|
+    user_channels_time_today.sort_by { |key, value| value }.reverse.to_h.each do |key, value|
       user_channel = UserChannel.find(key)
       channel = Channel.find(user_channel.channel_id)
       shaped_time = shaped_time(value)
@@ -49,14 +44,9 @@ class HomeController < ApplicationController
     end
 
     # 今日のユーザーチャンネルの使用時間トップ5を算出
-    user_channel_time_each_today = user_channels_time_today.sort_by { |_k, v| v }.reverse.first(5).to_h
+    user_channel_time_each_today = user_channels_time_today.sort_by { |key, value| value }.reverse.first(5).to_h
     @user_channel_time_each_today = {}
-    user_channel_time_each_today.each do |key, value|
-      find_channel = UserChannel.find(key)
-      channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      @user_channel_time_each_today[channel.name] = shaped_time
-    end
+    top_five_channel_times(user_channel_time_each_today, @user_channel_time_each_today)
 
     # 今日から６日前までのチャンネルの使用時間
     user_channels_time_week = current_user.channel_times.where(created_at: 6.days.ago.beginning_of_day..Time.now.end_of_day).group(:user_channel_id).sum(:total_time)
@@ -80,14 +70,9 @@ class HomeController < ApplicationController
     @graph = [{ name: t('defaults.day.6_days_ago'), data: six_days_ago }, { name: t('defaults.day.5_days_ago'), data: five_days_ago }, { name: t('defaults.day.4_days_ago'), data: four_days_ago },
               { name: t('defaults.day.3_days_ago'), data: three_days_ago }, { name: t('defaults.day.2_days_ago'), data: two_days_ago }, { name: t('defaults.day.1_day_ago'), data: day_ago }, { name: t('defaults.day.today'), data: on_day }]
     # 今週のユーザーチャンネルの使用時間トップ5を算出
-    user_channel_time_each_month = user_channels_time_week.sort_by { |_k, v| v }.reverse.first(5).to_h
+    user_channel_time_each_month = user_channels_time_week.sort_by { |key, value| value }.reverse.first(5).to_h
     @user_channel_time_each_month = {}
-    user_channel_time_each_month.each do |key, value|
-      find_channel = UserChannel.find(key)
-      channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      @user_channel_time_each_month[channel.name] = shaped_time
-    end
+    top_five_channel_times(user_channel_time_each_month, @user_channel_time_each_month)
 
     # 今月のチャンネル使用時間
     user_channels_time_month = current_user.channel_times.where(created_at: Time.now.all_month).group(:user_channel_id).sum(:total_time)
@@ -118,9 +103,20 @@ class HomeController < ApplicationController
     nine_month_ago_time = [[t('defaults.month.9_months_ago'), shaped_time(nine_month_ago.values.sum)]]
     ten_month_ago_time = [[t('defaults.month.10_months_ago'), shaped_time(ten_month_ago.values.sum)]]
     eleven_month_ago_time = [[t('defaults.month.11_months_ago'), shaped_time(eleven_month_ago.values.sum)]]
-    @months_graph = [{ name: t('defaults.month.11_months_ago'), data: eleven_month_ago_time }, { name: t('defaults.month.10_months_ago'), data: ten_month_ago_time }, { name: t('defaults.month.9_months_ago'), data: nine_month_ago_time },
-                     { name: t('defaults.month.8_months_ago'), data: eight_month_ago_time }, { name: t('defaults.month.7_months_ago'), data: seven_month_ago_time }, { name: t('defaults.month.6_months_ago'), data: six_month_ago_time },
-                     { name: t('defaults.month.5_months_ago'), data: five_month_ago_time }, { name: t('defaults.month.4_months_ago'), data: four_month_ago_time }, { name: t('defaults.month.3_months_ago'), data: three_month_ago_time },
-                     { name: t('defaults.month.2_months_ago'), data: two_month_ago_time }, { name: t('defaults.month.1_month_ago'), data: a_month_ago_time }, { name: t('defaults.month.this_month'), data: this_month_time }]
+    @months_graph = [{ data: eleven_month_ago_time }, { data: ten_month_ago_time }, { data: nine_month_ago_time },
+                     { data: eight_month_ago_time }, { data: seven_month_ago_time }, { data: six_month_ago_time },
+                     { data: five_month_ago_time }, { data: four_month_ago_time }, { data: three_month_ago_time },
+                     { data: two_month_ago_time }, { data: a_month_ago_time }, { data: this_month_time }]
+  end
+
+  private
+
+  def top_five_channel_times(sort_data, new_hash)
+    sort_data.each do |key, value|
+      find_channel = UserChannel.find(key)
+      channel = Channel.find(find_channel.channel_id)
+      shaped_time = caliculate_time(value)
+      new_hash[channel.name] = shaped_time
+    end
   end
 end

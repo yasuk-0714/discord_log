@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'home#index'
+  root to: 'home#top'
   get 'mypage', to: 'home#mypage'
   get 'privacy_policy', to: 'home#privacy_policy'
   get 'terms_of_service', to: 'home#terms_of_service'
