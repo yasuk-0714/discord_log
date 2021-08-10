@@ -17,7 +17,7 @@ class User < ApplicationRecord
   validates :discord_id, presence: true, uniqueness: true
   validates :id, uniqueness: true
   validates :name, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :role, presence: true
 
   enum role: { general: 0, admin: 10 }

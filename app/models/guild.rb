@@ -5,9 +5,9 @@ class Guild < ApplicationRecord
   has_many :users, through: :user_guilds, source: :user
   has_many :channels, dependent: :destroy
 
+  validates :id, uniqueness: true
   validates :name, presence: true
   validates :uuid, presence: true
-  validates :id, uniqueness: true
 
   private
 
