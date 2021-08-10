@@ -16,13 +16,7 @@ class GuildsController < ApplicationController
     # サーバー内のこれまでのチャンネル使用時間トップ5を算出
     server_time_so_far_rank = ChannelTime.user_channel(user_channel).group_id.total_time
     rank_sort = server_time_so_far_rank.sort_by { |key, value| value }.reverse.first(5).to_h
-    @server_time_so_far_rank = {}
-    rank_sort.each do |key, value|
-      find_channel = UserChannel.find(key)
-      channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      @server_time_so_far_rank[channel.name] = shaped_time
-    end
+    top_five_channel_times(rank_sort, @server_time_so_far_rank = {})
 
     # 今日のチャンネル使用時間が算出される
     server_time_today = ChannelTime.user_channel(user_channel).date(Time.now.all_day).total_time
@@ -31,18 +25,12 @@ class GuildsController < ApplicationController
     # グラフ用
     @server_time_today_graph = {}
     @server_time_today_graph[@guild.name] = shaped_time(server_time_today)
-    # 本日のサーバー内のチャンネル使用時間トップ5を算出
+    # 今日のサーバー内のチャンネル使用時間トップ5を算出
     server_time_today_rank = ChannelTime.user_channel(user_channel).date(Time.now.all_day).group_id.total_time
     rank_sort = server_time_today_rank.sort_by { |key, value| value }.reverse.first(5).to_h
-    @server_time_today_rank = {}
-    rank_sort.each do |key, value|
-      find_channel = UserChannel.find(key)
-      channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      @server_time_today_rank[channel.name] = shaped_time
-    end
+    top_five_channel_times(rank_sort, @server_time_today_rank = {})
 
-    # 今日から６日前までの使用時間
+    # ここ１週間のサーバー使用時間
     server_time_past_week = ChannelTime.user_channel(user_channel).date(6.days.ago.beginning_of_day..Time.now.end_of_day).total_time
     # 時間表示用
     @server_time_past_week = caliculate_time(server_time_past_week)
@@ -66,19 +54,12 @@ class GuildsController < ApplicationController
     # 今日から6日前までのサーバー内のチャンネル使用時間トップ5を算出
     server_time_past_week_rank = ChannelTime.user_channel(user_channel).date(6.days.ago.beginning_of_day..Time.now.end_of_day).group_id.total_time
     rank_sort = server_time_past_week_rank.sort_by { |key, value| value }.reverse.first(5).to_h
-    @server_time_past_week_rank = {}
-    rank_sort.each do |key, value|
-      find_channel = UserChannel.find(key)
-      channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      @server_time_past_week_rank[channel.name] = shaped_time
-    end
+    top_five_channel_times(rank_sort, @server_time_past_week_rank = {})
 
     # 今月のチャンネル使用時間
     server_time_this_month = ChannelTime.user_channel(user_channel).date(Time.now.all_month).total_time
     # 時間表示用
     @server_time_this_month = caliculate_time(server_time_this_month)
-
     # 数ヶ月前までのチャンネル使用時間: グラフ用
     a_month_ago = ChannelTime.user_channel(user_channel).date(1.month.ago.all_month).total_time
     two_month_ago = ChannelTime.user_channel(user_channel).date(2.months.ago.all_month).total_time
@@ -108,4 +89,16 @@ class GuildsController < ApplicationController
                      {  data: five_month_ago_time }, { data: four_month_ago_time }, { data: three_month_ago_time },
                      { data: two_month_ago_time }, { data: a_month_ago_time }, { data: this_month_time }]
   end
+
+  private
+
+  def top_five_channel_times(rank_sort, hash_container)
+    rank_sort.each do |key, value|
+      find_channel = UserChannel.find(key)
+      channel = Channel.find(find_channel.channel_id)
+      shaped_time = caliculate_time(value)
+      hash_container[channel.name] = shaped_time
+    end
+  end
+
 end

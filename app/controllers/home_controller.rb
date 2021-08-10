@@ -11,22 +11,14 @@ class HomeController < ApplicationController
 
     # これまでのユーザーが使用したボイスチャンネル時間の全て
     all_time_so_far = current_user.channel_times.group(:user_channel_id).sum(:total_time)
-
     # これまでのユーザーが参加しているチャンネルの総合時間 :表示用
     @all_time_so_far = caliculate_time(all_time_so_far.values.sum)
     # これまでのユーザーが参加しているチャンネルの総合時間 :グラフ用
     @all_time_so_far_graph = {}
     @all_time_so_far_graph['合計時間'] = shaped_time(all_time_so_far.values.sum)
-
     # これまでユーザーが使用した全てのチャンネルの使用時間トップ5を算出
     rank_sort = all_time_so_far.sort_by { |key, value| value }.reverse.first(5).to_h
-    @all_time_so_far_rank = {}
-    rank_sort.each do |key, value|
-      find_channel = UserChannel.find(key)
-      channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      @all_time_so_far_rank[channel.name] = shaped_time
-    end
+    top_five_channel_times(rank_sort, @all_time_so_far_rank = {})
 
     # 各チャンネルそれぞれの使用時間グラフ
     @time_for_each_channel_graph = {}
@@ -50,19 +42,11 @@ class HomeController < ApplicationController
       shaped_time = shaped_time(value)
       @all_time_today_graph[channel.name] = shaped_time
     end
-
     # 今日のユーザーチャンネルの使用時間トップ5を算出
     rank_sort = all_time_today.sort_by { |key, value| value }.reverse.first(5).to_h
-    @all_time_today_rank = {}
-    # top_five_channel_times(user_channel_time_each_today, @user_channel_time_each_today)
-    rank_sort.each do |key, value|
-      find_channel = UserChannel.find(key)
-      channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      @all_time_today_rank[channel.name] = shaped_time
-    end
+    top_five_channel_times(rank_sort, @all_time_today_rank = {})
 
-    # 今日から６日前までのチャンネルの使用時間
+    # ここ１週間のチャンネルの使用時間
     all_time_past_week = current_user.channel_times.date(6.days.ago.beginning_of_day..Time.now.end_of_day).group_id.total_time
     # 時間表示用
     @all_time_past_week = caliculate_time(all_time_past_week.values.sum)
@@ -83,21 +67,14 @@ class HomeController < ApplicationController
     six_days_ago = [['6日前', shaped_time(six_days_ago.values.sum)]]
     @all_time_past_week_graph = [{ data: six_days_ago }, { data: five_days_ago }, { data: four_days_ago },
                                 { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: on_day }]
-    # 今週のユーザーチャンネルの使用時間トップ5を算出
+    # ここ１週間のチャンネル使用時間トップ5を算出
     rank_sort = all_time_past_week.sort_by { |key, value| value }.reverse.first(5).to_h
-    @all_time_past_week_rank = {}
-    rank_sort.each do |key, value|
-      find_channel = UserChannel.find(key)
-      channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      @all_time_past_week_rank[channel.name] = shaped_time
-    end
+    top_five_channel_times(rank_sort, @all_time_past_week_rank = {})
 
     # 今月のチャンネル使用時間
     all_time_this_month = current_user.channel_times.date(Time.now.all_month).group_id.total_time
     # 時間表示用
     @all_time_this_month = caliculate_time(all_time_this_month.values.sum)
-
     # 数ヶ月前までのチャンネル使用時間: グラフ用
     a_month_ago = current_user.channel_times.date(1.month.ago.all_month).group_id.total_time
     two_month_ago = current_user.channel_times.date(2.months.ago.all_month).group_id.total_time
@@ -126,6 +103,17 @@ class HomeController < ApplicationController
                      { data: eight_month_ago_time }, { data: seven_month_ago_time }, { data: six_month_ago_time },
                      { data: five_month_ago_time }, { data: four_month_ago_time }, { data: three_month_ago_time },
                      { data: two_month_ago_time }, { data: a_month_ago_time }, { data: this_month_time }]
+  end
+
+  private
+
+  def top_five_channel_times(rank_sort, hash_container)
+    rank_sort.each do |key, value|
+      find_channel = UserChannel.find(key)
+      channel = Channel.find(find_channel.channel_id)
+      shaped_time = caliculate_time(value)
+      hash_container[channel.name] = shaped_time
+    end
   end
 
 end
