@@ -1,12 +1,48 @@
 ja:
   defaults:
     message:
+      login_required: 'ログインしてください'
+      check_admin: '管理者以外ログインできません'
   api:
     v1:
       oauths:
         callback:
           info: 'ログインをキャンセルしました'
-          success: 'Discordでログインしました'
       user_sessions:
         destroy:
           success: 'ログアウトしました'
+  home:
+    mypage:
+      title: 'マイページ'
+    top:
+      title: 'トップ'
+    privacy_policy:
+      title: 'プライバシーポリシー'
+    terms_of_service:
+      title: '利用規約'
+  admin:
+    dashboards:
+      index:
+        title: 'トップ'
+    channels:
+      destroy:
+        success: 'チャンネルを削除しました'
+    guilds:
+      index:
+        title: 'サーバー 一覧'
+      destroy:
+        success: 'サーバーを削除しました'
+    user_sessions:
+      create:
+        success: 'ログインしました'
+        fail: 'ログインに失敗しました'
+      destroy:
+        success: 'ログアウトしました'
+      destroy:
+        success: 'ユーザーを削除しました'
+    users:
+      index:
+        title: 'ユーザー 一覧'
+      update:
+        success: 'ユーザー更新に成功しました'
+        fail: 'ユーザー更新に失敗しました'

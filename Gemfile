@@ -41,9 +41,7 @@ gem 'sorcery'
 
 gem 'config'
 
-gem 'font-awesome-sass'
-
-gem "chartkick"
+gem 'chartkick'
 
 gem 'kaminari'
 

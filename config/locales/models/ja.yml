@@ -13,6 +13,7 @@ ja:
         created_at: 'アプリ登録日'
         updated_at: '最終ログイン日'
         password: 'パスワード'
+        password_confirmation: 'パスワード(確認)'
       guild:
         id: 'ID'
         name: 'サーバー名'

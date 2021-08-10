@@ -1,5 +1,5 @@
 class Admin::GuildsController < Admin::BaseController
-  before_action :set_guild, only: %i[show destroy]
+  before_action :set_guild, only: [:show, :destroy]
 
   def index
     @q = Guild.ransack(params[:q])
@@ -13,7 +13,7 @@ class Admin::GuildsController < Admin::BaseController
 
   def destroy
     @guild.destroy!
-    redirect_to admin_guilds_path, success: 'サーバーを削除しました'
+    redirect_to admin_guilds_path, success: t('.success')
   end
 
   private

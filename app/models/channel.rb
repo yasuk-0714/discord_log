@@ -6,9 +6,9 @@ class Channel < ApplicationRecord
   belongs_to :guild
   has_many :channel_times, through: :user_channels, dependent: :destroy
 
+  validates :id, uniqueness: true
   validates :name, presence: true
   validates :uuid, presence: true
-  validates :id, uniqueness: true
   validates :position, presence: true
 
   private
