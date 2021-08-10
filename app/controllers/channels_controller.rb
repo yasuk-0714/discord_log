@@ -41,7 +41,7 @@ class ChannelsController < ApplicationController
     five_days_ago = [['５日前', shaped_time(five_days_ago.values.sum)]]
     six_days_ago = [['６日前', shaped_time(six_days_ago.values.sum)]]
     @channel_time_past_week_graph = [{ data: six_days_ago }, { data: five_days_ago }, { data: four_days_ago },
-                                    { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: today }]
+                                     { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: today }]
 
     # 今月のチャンネル使用時間
     channel_time_this_month = ChannelTime.user_channel(user_channel).date(Time.now.all_month).group_id.total_time

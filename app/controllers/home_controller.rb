@@ -9,41 +9,30 @@ class HomeController < ApplicationController
     @guilds = current_user.guilds
     @channels = current_user.channels.order(:position).map { |channel| channel }
 
-    # これまでのユーザーが使用したボイスチャンネル時間の全て
+    # これまでユーザーが使用したボイスチャンネル時間の全て
     all_time_so_far = current_user.channel_times.group(:user_channel_id).sum(:total_time)
-    # これまでのユーザーが参加しているチャンネルの総合時間 :表示用
+    # 時間表示用
     @all_time_so_far = caliculate_time(all_time_so_far.values.sum)
-    # これまでのユーザーが参加しているチャンネルの総合時間 :グラフ用
+    # グラフ用
     @all_time_so_far_graph = {}
     @all_time_so_far_graph['合計時間'] = shaped_time(all_time_so_far.values.sum)
     # これまでユーザーが使用した全てのチャンネルの使用時間トップ5を算出
-    rank_sort = all_time_so_far.sort_by { |key, value| value }.reverse.first(5).to_h
+    rank_sort = all_time_so_far.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_so_far_rank = {})
 
     # 各チャンネルそれぞれの使用時間グラフ
-    @time_for_each_channel_graph = {}
-    all_time_so_far.sort_by { |key, value| value }.reverse.to_h.each do |key, value|
-      user_channel = UserChannel.find(key)
-      channel = Channel.find(user_channel.channel_id)
-      shaped_time = shaped_time(value)
-      @time_for_each_channel_graph[channel.name] = shaped_time
-    end
+    channel_sort = all_time_so_far.sort_by { |_key, value| value }.reverse.to_h
+    sort_time_for_each_channel(channel_sort, @time_for_each_channel_graph = {})
 
     # 今日のチャンネルの使用時間
     all_time_today = current_user.channel_times.date(Time.now.all_day).group_id.total_time
-    #今日のチャンネル使用時間 :表示用
+    # 時間表示用
     @all_time_today = caliculate_time(all_time_today.values.sum)
-    #今日のチャンネル使用時間 :グラフ用
-    channel_sort = all_time_today.sort_by { |key, value| value }.reverse.to_h
-    @all_time_today_graph = {}
-    rank_sort.each do |key, value|
-      user_channel = UserChannel.find(key)
-      channel = Channel.find(user_channel.channel_id)
-      shaped_time = shaped_time(value)
-      @all_time_today_graph[channel.name] = shaped_time
-    end
+    # グラフ用
+    channel_sort = all_time_today.sort_by { |_key, value| value }.reverse.to_h
+    sort_time_for_each_channel(channel_sort, @all_time_today_graph = {})
     # 今日のユーザーチャンネルの使用時間トップ5を算出
-    rank_sort = all_time_today.sort_by { |key, value| value }.reverse.first(5).to_h
+    rank_sort = all_time_today.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_today_rank = {})
 
     # ここ１週間のチャンネルの使用時間
@@ -66,9 +55,9 @@ class HomeController < ApplicationController
     five_days_ago = [['５日前', shaped_time(five_days_ago.values.sum)]]
     six_days_ago = [['6日前', shaped_time(six_days_ago.values.sum)]]
     @all_time_past_week_graph = [{ data: six_days_ago }, { data: five_days_ago }, { data: four_days_ago },
-                                { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: on_day }]
+                                 { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: on_day }]
     # ここ１週間のチャンネル使用時間トップ5を算出
-    rank_sort = all_time_past_week.sort_by { |key, value| value }.reverse.first(5).to_h
+    rank_sort = all_time_past_week.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_past_week_rank = {})
 
     # 今月のチャンネル使用時間
@@ -100,9 +89,9 @@ class HomeController < ApplicationController
     ten_month_ago_time = [['10ヶ月前', shaped_time(ten_month_ago.values.sum)]]
     eleven_month_ago_time = [['11ヶ月前', shaped_time(eleven_month_ago.values.sum)]]
     @all_time_months_graph = [{ data: eleven_month_ago_time }, { data: ten_month_ago_time }, { data: nine_month_ago_time },
-                     { data: eight_month_ago_time }, { data: seven_month_ago_time }, { data: six_month_ago_time },
-                     { data: five_month_ago_time }, { data: four_month_ago_time }, { data: three_month_ago_time },
-                     { data: two_month_ago_time }, { data: a_month_ago_time }, { data: this_month_time }]
+                              { data: eight_month_ago_time }, { data: seven_month_ago_time }, { data: six_month_ago_time },
+                              { data: five_month_ago_time }, { data: four_month_ago_time }, { data: three_month_ago_time },
+                              { data: two_month_ago_time }, { data: a_month_ago_time }, { data: this_month_time }]
   end
 
   private
@@ -116,4 +105,12 @@ class HomeController < ApplicationController
     end
   end
 
+  def sort_time_for_each_channel(channel_sort, hash_container)
+    channel_sort.each do |key, value|
+      user_channel = UserChannel.find(key)
+      channel = Channel.find(user_channel.channel_id)
+      shaped_time = shaped_time(value)
+      hash_container[channel.name] = shaped_time
+    end
+  end
 end

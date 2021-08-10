@@ -16,7 +16,7 @@ main
             .col-md-6.text-left.pt-5
               h5.text-center.text-secondary
                 |ここ１週間のチャンネル使用時間
-              = column_chart @graph_week, stacked: true
+              = column_chart @all_time_past_week_graph, stacked: true
             .col-md-6.pt-5
               table.table.table-hover
                 h5.text-secondary.mb-3
@@ -28,7 +28,7 @@ main
                     th= "チャンネル使用時間"
                 tbody
                     - n = 1
-                    - @user_channel_time_each_week.each do |key, value|
+                    - @all_time_past_week_rank.each do |key, value|
                       tr
                         td= n
                         td= key
@@ -39,14 +39,14 @@ main
             .col-md-12
               h5.pb-2
                 |ここ１週間のチャンネル使用時間
-                h1= @user_channels_time_week
+                h1= @all_time_past_week
 
           //7日前から13日前までの表示
           .row.text-center.pt-5
             .col-md-6.text-left.pt-5
               h5.text-center.text-secondary
                 |７日前から13日前までのチャンネル使用時間
-              = column_chart @graph_2week, stacked: true
+              = column_chart @all_time_last_2weeks_graph, stacked: true
             .col-md-6.pt-5
               table.table.table-hover
                 h5.text-secondary.mb-3
@@ -58,7 +58,7 @@ main
                     th= "チャンネル使用時間"
                 tbody
                     - n = 1
-                    - @user_channel_time_each_2week.each do |key, value|
+                    - @all_time_last_2weeks_rank.each do |key, value|
                       tr
                         td= n
                         td= key
@@ -69,14 +69,14 @@ main
             .col-md-12
               h5.pb-2
                 |7日前から13日前までのチャンネル使用時間
-                h1= @user_channels_time_2week
+                h1= @all_time_last_2weeks
 
           //14日前から20日前までの表示
           .row.text-center.pt-5
             .col-md-6.text-left.pt-5
               h5.text-center.text-secondary
                 |14日前から20日前のチャンネル使用時間
-              = column_chart @graph_3week, stacked: true
+              = column_chart @all_time_last_3weeks_graph, stacked: true
             .col-md-6.pt-5
               table.table.table-hover
                 h5.text-secondary.mb-3
@@ -88,7 +88,7 @@ main
                     th= "チャンネル使用時間"
                 tbody
                     - n = 1
-                    - @user_channel_time_each_3week.each do |key, value|
+                    - @all_time_last_3weeks_rank.each do |key, value|
                       tr
                         td= n
                         td= key
@@ -99,14 +99,14 @@ main
             .col-md-12
               h5.pb-2
                 |14日前から20日前のチャンネル使用時間
-                h1= @user_channels_time_3week
+                h1= @all_time_last_3weeks
 
           //21日前から27日前までの表示
           .row.text-center.pt-5
             .col-md-6.text-left.pt-5
               h5.text-center.text-secondary
                 |21日前から27日前のチャンネル使用時間
-              = column_chart @graph_4week, stacked: true
+              = column_chart @all_time_last_4weeks_graph, stacked: true
             .col-md-6.pt-5
               table.table.table-hover
                 h5.text-secondary.mb-3
@@ -118,7 +118,7 @@ main
                     th= "チャンネル使用時間"
                 tbody
                     - n = 1
-                    - @user_channel_time_each_4week.each do |key, value|
+                    - @all_time_last_4weeks_rank.each do |key, value|
                       tr
                         td= n
                         td= key
@@ -129,13 +129,13 @@ main
             .col-md-12
               h5.pb-2
                 |21日前から27日前のチャンネル使用時間
-                h1= @user_channels_time_4week
+                h1= @all_time_last_4weeks
 
           .row.text-center.pt-5
             .col-md-6.text-left.pt-5
               h5.text-center.text-secondary
                 |トータル使用時間
-              = bar_chart @time_all, colors: ['#81C7D4']
+              = bar_chart @all_time_so_far_graph, colors: ['#81C7D4']
             .col-md-6.pt-5
               table.table.table-hover
                 h5.text-secondary.mb-3
@@ -147,7 +147,7 @@ main
                     th= "チャンネル使用時間"
                 tbody
                     - n = 1
-                    - @user_channel_time_each_all.each do |key, value|
+                    - @all_time_so_far_rank.each do |key, value|
                       tr
                         td= n
                         td= key
@@ -158,19 +158,19 @@ main
             .col-md-12
               h5.pb-2
                 |トータル使用時間
-                h1= @total_time
+                h1= @all_time_so_far
 
           .row.text-center.pt-5
             .col-md-12.text-left.pt-5
               h3.text-center.text-secondary
                 |これまでの各チャンネルの使用時間
-              = column_chart @user_channels_time_all, colors: ['#EEA9A9']
+              = column_chart @time_for_each_channel_graph, colors: ['#EEA9A9']
 
           .row.text-center.pt-5
             .col-md-12.text-left.pt-5
               h3.text-center.text-secondary
                 |月別のチャンネル使用時間
-              = column_chart @months_graph, stacked: true
+              = column_chart @all_time_months_graph, stacked: true
 
           .row.text-center.pt-5
             .col-md-3
@@ -178,6 +178,6 @@ main
             .col-md-6.align-self-start.pt-2
               h3.pb-2
                 |今月のチャンネル使用時間
-              h1= @user_channels_time_month
+              h1= @all_time_this_month
             .col-md-3.pt-2
               = image_tag 'joy_character', size: '200x200'

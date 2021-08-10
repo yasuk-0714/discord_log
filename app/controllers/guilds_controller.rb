@@ -15,7 +15,7 @@ class GuildsController < ApplicationController
     @server_time_so_far_graph['合計時間'] = shaped_time(server_time_so_far)
     # サーバー内のこれまでのチャンネル使用時間トップ5を算出
     server_time_so_far_rank = ChannelTime.user_channel(user_channel).group_id.total_time
-    rank_sort = server_time_so_far_rank.sort_by { |key, value| value }.reverse.first(5).to_h
+    rank_sort = server_time_so_far_rank.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @server_time_so_far_rank = {})
 
     # 今日のチャンネル使用時間が算出される
@@ -27,7 +27,7 @@ class GuildsController < ApplicationController
     @server_time_today_graph[@guild.name] = shaped_time(server_time_today)
     # 今日のサーバー内のチャンネル使用時間トップ5を算出
     server_time_today_rank = ChannelTime.user_channel(user_channel).date(Time.now.all_day).group_id.total_time
-    rank_sort = server_time_today_rank.sort_by { |key, value| value }.reverse.first(5).to_h
+    rank_sort = server_time_today_rank.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @server_time_today_rank = {})
 
     # ここ１週間のサーバー使用時間
@@ -53,7 +53,7 @@ class GuildsController < ApplicationController
                                     { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: on_day }]
     # 今日から6日前までのサーバー内のチャンネル使用時間トップ5を算出
     server_time_past_week_rank = ChannelTime.user_channel(user_channel).date(6.days.ago.beginning_of_day..Time.now.end_of_day).group_id.total_time
-    rank_sort = server_time_past_week_rank.sort_by { |key, value| value }.reverse.first(5).to_h
+    rank_sort = server_time_past_week_rank.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @server_time_past_week_rank = {})
 
     # 今月のチャンネル使用時間
@@ -85,9 +85,9 @@ class GuildsController < ApplicationController
     ten_month_ago_time = [['10ヶ月前', shaped_time(ten_month_ago)]]
     eleven_month_ago_time = [['11ヶ月前', shaped_time(eleven_month_ago)]]
     @server_time_months_graph = [{ data: eleven_month_ago_time }, { data: ten_month_ago_time }, { data: nine_month_ago_time },
-                     { data: eight_month_ago_time }, { data: seven_month_ago_time }, { data: six_month_ago_time },
-                     {  data: five_month_ago_time }, { data: four_month_ago_time }, { data: three_month_ago_time },
-                     { data: two_month_ago_time }, { data: a_month_ago_time }, { data: this_month_time }]
+                                 { data: eight_month_ago_time }, { data: seven_month_ago_time }, { data: six_month_ago_time },
+                                 { data: five_month_ago_time }, { data: four_month_ago_time }, { data: three_month_ago_time },
+                                 { data: two_month_ago_time }, { data: a_month_ago_time }, { data: this_month_time }]
   end
 
   private
@@ -100,5 +100,4 @@ class GuildsController < ApplicationController
       hash_container[channel.name] = shaped_time
     end
   end
-
 end

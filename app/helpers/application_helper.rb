@@ -20,6 +20,10 @@ module ApplicationHelper
     end
   end
 
+  def user_channels_time_week(user)
+    user.channel_times.where(created_at: 6.days.ago.beginning_of_day..Time.now.end_of_day).group(:user_channel_id).sum(:total_time).values.sum
+  end
+
   def active_if(path)
     path == controller_path ? 'active' : ''
   end
