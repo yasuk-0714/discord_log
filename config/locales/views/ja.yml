@@ -38,11 +38,11 @@ ja:
         fail: 'ログインに失敗しました'
       destroy:
         success: 'ログアウトしました'
+      destroy:
+        success: 'ユーザーを削除しました'
+    users:
+      index:
+        title: 'ユーザー 一覧'
       update:
         success: 'ユーザー更新に成功しました'
         fail: 'ユーザー更新に失敗しました'
-      destroy:
-        success: 'ユーザーを削除しました'
-      users:
-        index:
-          title: 'ユーザー 一覧'
