@@ -11,7 +11,7 @@ class ChannelsController < ApplicationController
     @channel_time_so_far = caliculate_time(channel_time_so_far.values[0])
     # グラフ
     @channel_time_so_far_graph = {}
-    @channel_time_so_far_graph[t('defaults.common.total_time')] = shaped_time(channel_time_so_far.values[0])
+    @channel_time_so_far_graph['合計時間'] = shaped_time(channel_time_so_far.values[0])
 
     # 今日のチャンネル使用時間が算出される
     channel_time_today = ChannelTime.user_channel(user_channel).date(Time.now.all_day).group_id.total_time

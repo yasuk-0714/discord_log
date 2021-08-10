@@ -18,7 +18,7 @@ main
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |今日のサーバー使用時間
-              = bar_chart @guild_time_today_graph, colors: ['#EEA9A9']
+              = bar_chart @server_time_today_graph, colors: ['#EEA9A9']
             .col-md-6.pt-5
               table.table.table-hover
                 h3.text-secondary.mb-3
@@ -30,7 +30,7 @@ main
                     th= "チャンネル使用時間"
                 tbody
                     - n = 1
-                    - @guild_time_today_each_channel.each do |key, value|
+                    - @server_time_today_rank.each do |key, value|
                       tr
                         td= n
                         td= key
@@ -42,14 +42,14 @@ main
             .col-md-12
               h3.pb-2
                 |今日のサーバー使用時間
-                h1= @guild_time_today
+                h1= @server_time_today
 
 
           .row.text-center
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |ここ１週間のサーバー使用時間
-              = column_chart @weeks_graph, stacked: true
+              = column_chart @server_time_past_week_graph, stacked: true
             .col-md-6.pt-5
               table.table.table-hover
                 h3.text-secondary.mb-3
@@ -61,7 +61,7 @@ main
                     th= "チャンネル使用時間"
                 tbody
                     - n = 1
-                    - @guild_time_week_each_channel.each do |key, value|
+                    - @server_time_past_week_rank.each do |key, value|
                       tr
                         td= n
                         td= key
@@ -73,13 +73,13 @@ main
             .col-md-12
               h3.pb-2
                 |ここ１週間のサーバー使用時間
-                h1= @guild_time_week
+                h1= @server_time_past_week
 
           .row.text-center
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |これまでのサーバー使用時間
-              = bar_chart @guild_time_graph, colors: ['#81C7D4']
+              = bar_chart @server_time_so_far_graph, colors: ['#81C7D4']
             .col-md-6.pt-5
               table.table.table-hover
                 h3.text-secondary.mb-3
@@ -91,7 +91,7 @@ main
                     th= "チャンネル使用時間"
                 tbody
                     - n = 1
-                    - @guild_time_each_channel.each do |key, value|
+                    - @server_time_so_far_rank.each do |key, value|
                       tr
                         td= n
                         td= key
@@ -103,13 +103,13 @@ main
             .col-md-12
               h3.pb-2
                 |これまでのサーバー使用時間
-                h1= @guild_time
+                h1= @server_time_so_far
 
           .row.text-center
             .col-md-12.text-left.pt-5
               h3.text-center.text-secondary
                 |月別のチャンネル使用時間
-              = column_chart @months_graph, stacked: true
+              = column_chart @server_time_months_graph, stacked: true
 
           .row.text-center.pt-4
             .col-md-3
@@ -117,7 +117,7 @@ main
             .col-md-6.pt-2
               h3.pb-2
                 |今月のサーバー使用時間
-              h1= @guild_time_month
+              h1= @server_time_this_month
             .col-md-3.pt-2
               = image_tag 'blooming', size: '200x200'
 

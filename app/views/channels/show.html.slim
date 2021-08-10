@@ -28,7 +28,7 @@ main
             .col-md-6.text-left.pt-5
               h3.text-center.text-secondary
                 |ここ１週間のチャンネル使用時間
-              = column_chart @channel_past_week_graph, stacked: true
+              = column_chart @channel_time_past_week_graph, stacked: true
             .col-md-6.pt-5
               h3 ここ１週間のチャンネル使用時間
               h1= @channel_time_past_week

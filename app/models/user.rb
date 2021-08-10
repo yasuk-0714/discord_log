@@ -27,4 +27,5 @@ class User < ApplicationRecord
       break random_token unless self.class.exists?(uuid: random_token)
     end
   end
+
 end
