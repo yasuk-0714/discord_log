@@ -16,7 +16,6 @@
         th= User.human_attribute_name(:name)
         th= User.human_attribute_name(:email)
         th= sort_link(@q, :role, User.human_attribute_name(:role))
-        th= sort_link(@q, :password, User.human_attribute_name(:password), hide_indicator: true)
         th= sort_link(@q, :created_at, User.human_attribute_name(:created_at), hide_indicator: true)
         th= sort_link(@q, :updated_at, User.human_attribute_name(:updated_at), hide_indicator: true)
         th= 'ここ１週間の使用時間'
@@ -28,7 +27,6 @@
           td= link_to user.name, admin_user_path(user.uuid)
           td= user.email
           td= user.admin? ? 'あり' : 'なし'
-          td= user.crypted_password.present? ? 'あり' : 'なし'
           td= l user.created_at, format: :long
           td.text-info
             = l user.updated_at, format: :long
