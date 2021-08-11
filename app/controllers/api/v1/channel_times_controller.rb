@@ -2,15 +2,16 @@ class Api::V1::ChannelTimesController < Api::V1::BaseController
   protect_from_forgery with: :null_session
 
   def create
-    if user = User.find_by(id: params[:user_id])
-      if user_channel = UserChannel.find_by(user_id: params[:user_id], channel_id: params[:channel_id])
+    if (user = User.find_by(id: params[:user_id]))
+      if (user_channel = UserChannel.find_by(user_id: params[:user_id], channel_id: params[:channel_id]))
         # 退出処理
-        if params[:state] == 'exit'
+        case params[:state]
+        when 'exit'
           update_channel = user.channel_times.last
           update_channel.update!(end_time: Time.now, total_time: Time.now - update_channel.start_time)
 
         # 入室処理
-        elsif params[:state] == 'enter'
+        when 'enter'
           channel_id_list = UserChannel.where(user_id: user.id).pluck(:id)
           update_channel = ChannelTime.find_by(user_channel_id: channel_id_list, end_time: nil)
 

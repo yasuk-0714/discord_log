@@ -35,8 +35,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
   end
 
   def fetch_user_data_from(provider)
-    user_from_provider = build_from(provider)
-    user = User.find_or_initialize_by(discord_id: user_from_provider.discord_id)
+    build_from(provider)
     @user.build_authentication(uid: @user_hash[:uid],
                                provider: provider,
                                access_token: access_token.token,
@@ -66,11 +65,11 @@ class Api::V1::OauthsController < Api::V1::BaseController
         guild = Guild.find_by(id: guild_id)
         guild.update(name: guild_name)
       end
-      user_guild = current_user.user_guilds.find_or_create_by(guild_id: guild.id)
+      current_user.user_guilds.find_or_create_by(guild_id: guild.id)
       @guild_list.delete_if { |n| n == guild_id }
     end
     destroy_guilds = UserGuild.where(guild_id: @guild_list)
-    destroy_guilds.each { |guild| guild.destroy }
+    destroy_guilds.each(&:destroy)
   end
 
   def get_channels
@@ -92,7 +91,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
           channel = Channel.find_by(id: id)
           channel.update(name: name, position: position)
         end
-        user_channel = current_user.user_channels.find_or_create_by(channel_id: id)
+        current_user.user_channels.find_or_create_by(channel_id: id)
         @channel_list.delete_if { |n| n == id }
       end
     rescue StandardError => e
@@ -100,6 +99,6 @@ class Api::V1::OauthsController < Api::V1::BaseController
       logger.error e.backtrace.join("\n")
     end
     destroy_channels = UserChannel.where(channel_id: @channel_list)
-    destroy_channels.each { |channel| channel.destroy }
+    destroy_channels.each(&:destroy)
   end
 end

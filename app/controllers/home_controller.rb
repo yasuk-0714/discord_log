@@ -9,14 +9,14 @@ class HomeController < ApplicationController
     @guilds = current_user.guilds
     @channels = current_user.channels.order(:position).map { |channel| channel }
 
-    # これまでユーザーが使用したボイスチャンネル時間の全て
+    # これまでユーザーが使用したボイスチャンネル使用時間
     all_time_so_far = current_user.channel_times.group(:user_channel_id).sum(:total_time)
     # 時間表示用
     @all_time_so_far = caliculate_time(all_time_so_far.values.sum)
     # グラフ用
     @all_time_so_far_graph = {}
     @all_time_so_far_graph['合計時間'] = shaped_time(all_time_so_far.values.sum)
-    # これまでユーザーが使用した全てのチャンネルの使用時間トップ5を算出
+    # チャンネルの使用時間トップ5を算出
     rank_sort = all_time_so_far.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_so_far_rank = {})
 
@@ -31,7 +31,7 @@ class HomeController < ApplicationController
     # グラフ用
     channel_sort = all_time_today.sort_by { |_key, value| value }.reverse.to_h
     sort_time_for_each_channel(channel_sort, @all_time_today_graph = {})
-    # 今日のユーザーチャンネルの使用時間トップ5を算出
+    # チャンネルの使用時間トップ5を算出
     rank_sort = all_time_today.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_today_rank = {})
 
@@ -56,7 +56,7 @@ class HomeController < ApplicationController
     six_days_ago = [['6日前', shaped_time(six_days_ago.values.sum)]]
     @all_time_past_week_graph = [{ data: six_days_ago }, { data: five_days_ago }, { data: four_days_ago },
                                  { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: on_day }]
-    # ここ１週間のチャンネル使用時間トップ5を算出
+    # チャンネル使用時間トップ5を算出
     rank_sort = all_time_past_week.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_past_week_rank = {})
 
@@ -64,7 +64,7 @@ class HomeController < ApplicationController
     all_time_this_month = current_user.channel_times.date(Time.now.all_month).group_id.total_time
     # 時間表示用
     @all_time_this_month = caliculate_time(all_time_this_month.values.sum)
-    # 数ヶ月前までのチャンネル使用時間: グラフ用
+    # グラフ用
     a_month_ago = current_user.channel_times.date(1.month.ago.all_month).group_id.total_time
     two_month_ago = current_user.channel_times.date(2.months.ago.all_month).group_id.total_time
     three_month_ago = current_user.channel_times.date(3.months.ago.all_month).group_id.total_time

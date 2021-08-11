@@ -11,14 +11,14 @@ class Admin::UsersController < Admin::BaseController
     @guilds = @user.guilds
     @channels = @user.channels.order(:position).map { |channel| channel }
 
-    # これまでユーザーが使用したボイスチャンネルの使用時間の全て
+    # これまでユーザーが使用したボイスチャンネルの使用時間
     all_time_so_far = @user.channel_times.group_id.total_time
-    # これまでユーザーが参加しているチャンネルの総合時間 :表示用
+    # 時間表示用
     @all_time_so_far = caliculate_time(all_time_so_far.values.sum)
-    # これまでユーザーが参加しているチャンネルの総合時間 :グラフ用
+    # グラフ用
     @all_time_so_far_graph = {}
     @all_time_so_far_graph['合計'] = shaped_time(all_time_so_far.values.sum)
-    # これまでユーザーが使用した全てのチャンネルの使用時間トップ5を算出
+    # チャンネルの使用時間トップ5を算出
     rank_sort = all_time_so_far.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_so_far_rank = {})
 
@@ -47,7 +47,7 @@ class Admin::UsersController < Admin::BaseController
     six_days_ago = [['6日前', shaped_time(six_days_ago.values.sum)]]
     @all_time_past_week_graph = [{ data: six_days_ago }, { data: five_days_ago }, { data: four_days_ago },
                                  { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: on_day }]
-    # ここ１週間のチャンネル使用時間トップ5を算出
+    # チャンネル使用時間トップ5を算出
     rank_sort = all_time_past_week.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_past_week_rank = {})
 
@@ -72,7 +72,7 @@ class Admin::UsersController < Admin::BaseController
     thirteen_days_ago = [['13日前', shaped_time(thirteen_days_ago.values.sum)]]
     @all_time_last_2weeks_graph = [{ data: thirteen_days_ago }, { data: twelve_days_ago }, { data: eleven_days_ago },
                                    { data: ten_days_ago }, { data: nine_days_ago }, { data: eight_days_ago }, { data: seven_days_ago }]
-    # 7日前から13日前までの使用時間トップ5を算出
+    # チャンネル使用時間トップ5を算出
     rank_sort = all_time_last_2weeks.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_last_2weeks_rank = {})
 
@@ -97,7 +97,7 @@ class Admin::UsersController < Admin::BaseController
     twenty_days_ago = [['20日前', shaped_time(twenty_days_ago.values.sum)]]
     @all_time_last_3weeks_graph = [{ data: twenty_days_ago }, { data: nineteen_days_ago }, { data: eighteen_days_ago },
                                    { data: seventeen_days_ago }, { data: sixteen_days_ago }, { data: fifteen_days_ago }, { data: fourteen_days_ago }]
-    # 今週のユーザーチャンネルの使用時間トップ5を算出
+    # チャンネルの使用時間トップ5を算出
     rank_sort = all_time_last_3weeks.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_last_3weeks_rank = {})
 
@@ -122,7 +122,7 @@ class Admin::UsersController < Admin::BaseController
     twentyseven_days_ago = [['27日前', shaped_time(twentyseven_days_ago.values.sum)]]
     @all_time_last_4weeks_graph = [{ data: twentyseven_days_ago }, { data: twentysix_days_ago }, { data: twentyfive_days_ago },
                                    { data: twentyfour_days_ago }, { data: twentythree_days_ago }, { data: twentytwo_days_ago }, { data: twentyone_days_ago }]
-    # 21日前から27日前までのチャンネルの使用時間トップ5を算出
+    # チャンネルの使用時間トップ5
     rank_sort = all_time_last_4weeks.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_last_4weeks_rank = {})
 
@@ -130,7 +130,7 @@ class Admin::UsersController < Admin::BaseController
     all_time_this_month = @user.channel_times.date(Time.now.all_month).group_id.total_time
     # 時間表示用
     @all_time_this_month = caliculate_time(all_time_this_month.values.sum)
-    # 数ヶ月前までのチャンネル使用時間: グラフ用
+    # グラフ用
     a_month_ago = @user.channel_times.date(1.month.ago.all_month).group_id.total_time
     two_month_ago = @user.channel_times.date(2.months.ago.all_month).group_id.total_time
     three_month_ago = @user.channel_times.date(3.months.ago.all_month).group_id.total_time
