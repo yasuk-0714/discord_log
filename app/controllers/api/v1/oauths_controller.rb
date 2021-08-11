@@ -83,16 +83,16 @@ class Api::V1::OauthsController < Api::V1::BaseController
       response = https.get uri.request_uri
       response_hash = JSON.parse(response.body)
       response_hash['channels'].each do |value|
-        id = value['id'].to_i
-        name = value['name']
-        position = value['position']
-        channel = Channel.find_or_initialize_by(id: id, name: name, uuid: id, position: position, guild_id: guild)
+        channel_id = value['id'].to_i
+        channel_name = value['name']
+        channel_position = value['position']
+        channel = Channel.find_or_initialize_by(id: channel_id, name: channel_name, uuid: channel_id, position: channel_position, guild_id: guild)
         unless channel.save
-          channel = Channel.find_by(id: id)
-          channel.update(name: name, position: position)
+          channel = Channel.find(channel_id)
+          channel.update(name: channel_name, position: channel_position)
         end
-        current_user.user_channels.find_or_create_by(channel_id: id)
-        @channel_list.delete_if { |n| n == id }
+        current_user.user_channels.find_or_create_by(channel_id: channel_id)
+        @channel_list.delete_if { |n| n == channel_id }
       end
     rescue StandardError => e
       logger.error e
