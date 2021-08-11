@@ -2,7 +2,7 @@ class GuildsController < ApplicationController
   def show
     @guild = Guild.find_by(uuid: params[:uuid])
     @guilds = current_user.guilds
-    @channels = current_user.channels.order(:position).map { |user_channel| user_channel }
+    @channels = current_user.channels.order(:position)
 
     user_channel = current_user.user_channels.where(channel_id: @guild.channels.ids).pluck(:id)
 

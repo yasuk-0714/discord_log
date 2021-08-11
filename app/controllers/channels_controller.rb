@@ -2,7 +2,7 @@ class ChannelsController < ApplicationController
   def show
     @channel = Channel.find_by(uuid: params[:uuid])
     @guilds = current_user.guilds
-    @channels = current_user.channels.order(:position).map { |user_channel| user_channel }
+    @channels = current_user.channels.order(:position)
     user_channel = current_user.user_channels.find_by(channel_id: @channel)
 
     # 今までのチャンネルの使用時間
