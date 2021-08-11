@@ -5,7 +5,7 @@ class ChannelsController < ApplicationController
     @channels = current_user.channels.order(:position).map { |user_channel| user_channel }
     user_channel = current_user.user_channels.find_by(channel_id: @channel)
 
-    # 今までのチャンネルの使用時間が算出される
+    # 今までのチャンネルの使用時間
     channel_time_so_far = ChannelTime.user_channel(user_channel).group_id.total_time
     # 時間表示用
     @channel_time_so_far = caliculate_time(channel_time_so_far.values[0])
@@ -13,7 +13,7 @@ class ChannelsController < ApplicationController
     @channel_time_so_far_graph = {}
     @channel_time_so_far_graph['合計時間'] = shaped_time(channel_time_so_far.values[0])
 
-    # 今日のチャンネル使用時間が算出される
+    # 今日のチャンネル使用時間
     channel_time_today = ChannelTime.user_channel(user_channel).date(Time.now.all_day).group_id.total_time
     # 時間表示用
     @channel_time_today = caliculate_time(channel_time_today.values[0])
@@ -47,8 +47,7 @@ class ChannelsController < ApplicationController
     channel_time_this_month = ChannelTime.user_channel(user_channel).date(Time.now.all_month).group_id.total_time
     # 時間表示用
     @channel_time_this_month = caliculate_time(channel_time_this_month.values[0])
-
-    # 数ヶ月前までのチャンネル使用時間: グラフ用
+    # グラフ用
     a_month_ago = ChannelTime.user_channel(user_channel).date(1.month.ago.all_month).group_id.total_time
     two_months_ago = ChannelTime.user_channel(user_channel).date(2.months.ago.all_month).group_id.total_time
     three_months_ago = ChannelTime.user_channel(user_channel).date(3.months.ago.all_month).group_id.total_time

@@ -1,2 +1,4 @@
 sorcery:
   callback_url: "http://127.0.0.1:3000/api/v1/oauth/callback?provider=discord"
+database:
+  password: "klwqas11"

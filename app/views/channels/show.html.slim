@@ -6,7 +6,7 @@ main
         ul.navbar-nav
           li.text-center.py-3
             = link_to 'マイページへ移動', mypage_path, class: 'nav-link btn btn-outline-success btn-sm'
-          li= render partial: 'guilds/guild', collection: @guilds, as: :guild
+          li= render partial: 'guilds/guild', collection: @guilds
 
       .col-md-10.contents.pt-4
         h1.pl-5

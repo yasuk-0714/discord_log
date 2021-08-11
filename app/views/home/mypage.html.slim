@@ -20,20 +20,9 @@ main
               table.table.table-hover
                 h3.text-secondary.mb-3
                   |今日のチャンネル使用時間トップ5
-                thead
-                  tr
-                    th= "順位"
-                    th= "チャンネル名"
-                    th= "チャンネル使用時間"
-                tbody
-                    - n = 1
-                    - @all_time_today_rank.each do |key, value|
-                      tr
-                        td= n
-                        td= key
-                        td.text-info
-                          = value
-                      - n += 1
+
+                = render partial: 'shared/channel_rank', locals: { object: @all_time_today_rank }
+
           .row.text-center.mt-3
             .col-md-12
               h3.pb-2
@@ -49,20 +38,9 @@ main
               table.table.table-hover
                 h3.text-secondary.mb-3
                   |ここ１週間のチャンネル使用時間トップ5
-                thead
-                  tr
-                    th= "順位"
-                    th= "チャンネル名"
-                    th= "チャンネル使用時間"
-                tbody
-                    - n = 1
-                    - @all_time_past_week_rank.each do |key, value|
-                      tr
-                        td= n
-                        td= key
-                        td.text-info
-                          = value
-                      - n += 1
+
+                = render partial: 'shared/channel_rank', locals: { object: @all_time_past_week_rank }
+
           .row.text-center.mt-3
             .col-md-12
               h3.pb-2
@@ -78,20 +56,9 @@ main
               table.table.table-hover
                 h3.text-secondary.mb-3
                   |これまでのチャンネル使用時間トップ5
-                thead
-                  tr
-                    th= "順位"
-                    th= "チャンネル名"
-                    th= "チャンネル使用時間"
-                tbody
-                    - n = 1
-                    - @all_time_so_far_rank.each do |key, value|
-                      tr
-                        td= n
-                        td= key
-                        td.text-info
-                          = value
-                      - n += 1
+
+                = render partial: 'shared/channel_rank', locals: { object: @all_time_so_far_rank }
+
           .row.text-center.mt-3
             .col-md-12
               h3.pb-2
