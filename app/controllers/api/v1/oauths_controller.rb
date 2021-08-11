@@ -62,7 +62,7 @@ class Api::V1::OauthsController < Api::V1::BaseController
       guild_name = result['name']
       guild = Guild.find_or_initialize_by(id: guild_id, name: guild_name, uuid: guild_id)
       unless guild.save
-        guild = Guild.find_by(id: guild_id)
+        guild = Guild.find(guild_id)
         guild.update(name: guild_name)
       end
       current_user.user_guilds.find_or_create_by(guild_id: guild.id)
