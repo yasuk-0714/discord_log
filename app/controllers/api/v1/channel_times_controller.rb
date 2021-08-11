@@ -2,7 +2,6 @@ class Api::V1::ChannelTimesController < Api::V1::BaseController
   protect_from_forgery with: :null_session
 
   def create
-    binding.pry
     if (user = User.find_by(id: params[:user_id]))
       if (user_channel = UserChannel.find_by(user_id: params[:user_id], channel_id: params[:channel_id]))
         # 退出処理

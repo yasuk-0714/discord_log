@@ -1,0 +1,14 @@
+thead
+  tr
+    th= "順位"
+    th= "チャンネル名"
+    th= "チャンネル使用時間"
+tbody
+    - n = 1
+    - object.each do |key, value|
+      tr
+        td= n
+        td= key
+        td.text-info
+          = value
+      - n += 1
