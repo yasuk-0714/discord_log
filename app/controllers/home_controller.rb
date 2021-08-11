@@ -7,10 +7,10 @@ class HomeController < ApplicationController
 
   def mypage
     @guilds = current_user.guilds
-    @channels = current_user.channels.order(:position).map { |channel| channel }
+    @channels = current_user.channels.order(:position)
 
     # これまでユーザーが使用したボイスチャンネル使用時間
-    all_time_so_far = current_user.channel_times.group(:user_channel_id).sum(:total_time)
+    all_time_so_far = current_user.channel_times.group_id.total_time
     # 時間表示用
     @all_time_so_far = caliculate_time(all_time_so_far.values.sum)
     # グラフ用
