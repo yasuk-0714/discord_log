@@ -40,6 +40,8 @@ gem 'sorcery'
 
 gem 'config'
 
+gem 'dotenv-rails'
+
 gem 'chartkick'
 
 gem 'kaminari'
