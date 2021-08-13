@@ -37,7 +37,7 @@ class GuildsController < ApplicationController
     # グラフ用
     @server_time_past_week_graph = (0..6).to_a.reverse.map do |day|
       day_time = ChannelTime.user_channel(user_channel).date(day.day.ago.all_day).total_time
-      { data: [[day.zero? ? '今日' : "#{day}日前", shaped_time(day_time)]]}
+      { data: [[day.zero? ? '今日' : "#{day}日前", shaped_time(day_time)]] }
     end
     # チャンネル使用時間トップ5を算出
     server_time_past_week_rank = ChannelTime.user_channel(user_channel).date(6.days.ago.beginning_of_day..Time.now.end_of_day).group_id.total_time
@@ -51,9 +51,8 @@ class GuildsController < ApplicationController
     # グラフ用
     @server_time_months_graph = (0..11).to_a.reverse.map do |month|
       month_time = ChannelTime.user_channel(user_channel).date(month.month.ago.all_month).total_time
-      {data: [[month.zero? ? '今月' : "#{month}ヶ月前", shaped_time(month_time) ]]}
+      { data: [[month.zero? ? '今月' : "#{month}ヶ月前", shaped_time(month_time)]] }
     end
-
   end
 
   private
@@ -65,5 +64,4 @@ class GuildsController < ApplicationController
       hash_container[channel.name] = caliculate_time(value)
     end
   end
-
 end

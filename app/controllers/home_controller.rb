@@ -42,7 +42,7 @@ class HomeController < ApplicationController
     # グラフ用
     @all_time_past_week_graph = (0..6).to_a.reverse.map do |day|
       day_time = current_user.channel_times.date(day.day.ago.all_day).total_time
-      { data: [[day.zero? ? '今日' : "#{day}日前", shaped_time(day_time)]]}
+      { data: [[day.zero? ? '今日' : "#{day}日前", shaped_time(day_time)]] }
     end
     # チャンネル使用時間トップ5を算出
     rank_sort = all_time_past_week.sort_by { |_key, value| value }.reverse.first(5).to_h
@@ -55,9 +55,8 @@ class HomeController < ApplicationController
     # グラフ用
     @all_time_months_graph = (0..11).to_a.reverse.map do |month|
       month_time = current_user.channel_times.date(month.month.ago.all_month).total_time
-      {data: [[month.zero? ? '今月' : "#{month}ヶ月前", shaped_time(month_time) ]]}
+      { data: [[month.zero? ? '今月' : "#{month}ヶ月前", shaped_time(month_time)]] }
     end
-
   end
 
   private
@@ -77,5 +76,4 @@ class HomeController < ApplicationController
       hash_container[channel.name] = shaped_time(value)
     end
   end
-
 end

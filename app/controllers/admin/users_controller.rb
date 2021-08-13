@@ -73,9 +73,8 @@ class Admin::UsersController < Admin::BaseController
     # グラフ用
     @all_time_months_graph = (0..11).to_a.reverse.map do |month|
       month_time = @user.channel_times.date(month.month.ago.all_month).total_time
-      {data: [[month.zero? ? '今月' : "#{month}ヶ月前", shaped_time(month_time)]]}
+      { data: [[month.zero? ? '今月' : "#{month}ヶ月前", shaped_time(month_time)]] }
     end
-
   end
 
   def edit; end
@@ -121,11 +120,10 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
-  def all_time_past_week_graph(i, n)
-    container = (i..n).to_a.reverse.map do |day|
+  def all_time_past_week_graph(start, finish)
+    (start..finish).to_a.reverse.map do |day|
       day_time = @user.channel_times.date(day.day.ago.all_day).total_time
       { data: [[day.zero? ? '今日' : "#{day}日前", shaped_time(day_time)]] }
     end
   end
-
 end
