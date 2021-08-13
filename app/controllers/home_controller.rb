@@ -40,22 +40,10 @@ class HomeController < ApplicationController
     # 時間表示用
     @all_time_past_week = caliculate_time(all_time_past_week.values.sum)
     # グラフ用
-    on_day = current_user.channel_times.date(Time.now.all_day).total_time
-    day_ago = current_user.channel_times.date(1.day.ago.all_day).total_time
-    two_days_ago = current_user.channel_times.date(2.days.ago.all_day).total_time
-    three_days_ago = current_user.channel_times.date(3.days.ago.all_day).total_time
-    four_days_ago = current_user.channel_times.date(4.days.ago.all_day).total_time
-    five_days_ago = current_user.channel_times.date(5.days.ago.all_day).total_time
-    six_days_ago = current_user.channel_times.date(6.days.ago.all_day).total_time
-    on_day = [['今日', shaped_time(on_day)]]
-    day_ago = [['１日前', shaped_time(day_ago)]]
-    two_days_ago = [['２日前', shaped_time(two_days_ago)]]
-    three_days_ago = [['3日前', shaped_time(three_days_ago)]]
-    four_days_ago = [['４日前', shaped_time(four_days_ago)]]
-    five_days_ago = [['５日前', shaped_time(five_days_ago)]]
-    six_days_ago = [['6日前', shaped_time(six_days_ago)]]
-    @all_time_past_week_graph = [{ data: six_days_ago }, { data: five_days_ago }, { data: four_days_ago },
-                                 { data: three_days_ago }, { data: two_days_ago }, { data: day_ago }, { data: on_day }]
+    @all_time_past_week_graph = (0..6).to_a.reverse.map do |day|
+      day_time = current_user.channel_times.date(day.day.ago.all_day).total_time
+      { data: [[day.zero? ? '今日' : "#{day}日前", shaped_time(day_time)]]}
+    end
     # チャンネル使用時間トップ5を算出
     rank_sort = all_time_past_week.sort_by { |_key, value| value }.reverse.first(5).to_h
     top_five_channel_times(rank_sort, @all_time_past_week_rank = {})
@@ -65,33 +53,11 @@ class HomeController < ApplicationController
     # 時間表示用
     @all_time_this_month = caliculate_time(all_time_this_month)
     # グラフ用
-    a_month_ago = current_user.channel_times.date(1.month.ago.all_month).total_time
-    two_month_ago = current_user.channel_times.date(2.months.ago.all_month).total_time
-    three_month_ago = current_user.channel_times.date(3.months.ago.all_month).total_time
-    four_month_ago = current_user.channel_times.date(4.months.ago.all_month).total_time
-    five_month_ago = current_user.channel_times.date(5.months.ago.all_month).total_time
-    six_month_ago = current_user.channel_times.date(6.months.ago.all_month).total_time
-    seven_month_ago = current_user.channel_times.date(7.months.ago.all_month).total_time
-    eight_month_ago = current_user.channel_times.date(8.months.ago.all_month).total_time
-    nine_month_ago = current_user.channel_times.date(9.months.ago.all_month).total_time
-    ten_month_ago = current_user.channel_times.date(10.months.ago.all_month).total_time
-    eleven_month_ago = current_user.channel_times.date(11.months.ago.all_month).total_time
-    this_month_time = [['今月', shaped_time(all_time_this_month)]]
-    a_month_ago_time = [['1ヶ月前', shaped_time(a_month_ago)]]
-    two_month_ago_time = [['2ヶ月前', shaped_time(two_month_ago)]]
-    three_month_ago_time = [['3ヶ月前', shaped_time(three_month_ago)]]
-    four_month_ago_time = [['4ヶ月前', shaped_time(four_month_ago)]]
-    five_month_ago_time = [['5ヶ月前', shaped_time(five_month_ago)]]
-    six_month_ago_time = [['6ヶ月前', shaped_time(six_month_ago)]]
-    seven_month_ago_time = [['7ヶ月前', shaped_time(seven_month_ago)]]
-    eight_month_ago_time = [['8ヶ月前', shaped_time(eight_month_ago)]]
-    nine_month_ago_time = [['9ヶ月前', shaped_time(nine_month_ago)]]
-    ten_month_ago_time = [['10ヶ月前', shaped_time(ten_month_ago)]]
-    eleven_month_ago_time = [['11ヶ月前', shaped_time(eleven_month_ago)]]
-    @all_time_months_graph = [{ data: eleven_month_ago_time }, { data: ten_month_ago_time }, { data: nine_month_ago_time },
-                              { data: eight_month_ago_time }, { data: seven_month_ago_time }, { data: six_month_ago_time },
-                              { data: five_month_ago_time }, { data: four_month_ago_time }, { data: three_month_ago_time },
-                              { data: two_month_ago_time }, { data: a_month_ago_time }, { data: this_month_time }]
+    @all_time_months_graph = (0..11).to_a.reverse.map do |month|
+      month_time = current_user.channel_times.date(month.month.ago.all_month).total_time
+      {data: [[month.zero? ? '今月' : "#{month}ヶ月前", shaped_time(month_time) ]]}
+    end
+
   end
 
   private
@@ -100,8 +66,7 @@ class HomeController < ApplicationController
     rank_sort.each do |key, value|
       find_channel = UserChannel.find(key)
       channel = Channel.find(find_channel.channel_id)
-      shaped_time = caliculate_time(value)
-      hash_container[channel.name] = shaped_time
+      hash_container[channel.name] = caliculate_time(value)
     end
   end
 
@@ -109,8 +74,8 @@ class HomeController < ApplicationController
     channel_sort.each do |key, value|
       user_channel = UserChannel.find(key)
       channel = Channel.find(user_channel.channel_id)
-      shaped_time = shaped_time(value)
-      hash_container[channel.name] = shaped_time
+      hash_container[channel.name] = shaped_time(value)
     end
   end
+
 end

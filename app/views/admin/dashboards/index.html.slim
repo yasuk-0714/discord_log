@@ -33,6 +33,6 @@
           td.text-info
             = caliculate_time(user_channels_time_week(user))
           td
-            = link_to '編集', edit_admin_user_path(user), class: 'btn btn-primary mr-3'
+            = link_to '編集', edit_admin_user_path(user), class: 'btn btn-success mr-3'
             = link_to '削除', admin_user_path(user), method: :delete, data: { confirm: "#{user.name}を削除します。よろしいですか?"}, class: 'btn btn-danger'
   = paginate @users
