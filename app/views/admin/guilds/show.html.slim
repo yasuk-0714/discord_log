@@ -26,8 +26,8 @@
                   = link_to '編集', edit_admin_user_path(user), class: 'btn btn-success btn-group-sm mr-3'
                   = link_to '削除', admin_user_path(user), method: :delete, data: { confirm: "#{user.name}を削除します。よろしいですか?"}, class: 'btn btn-danger btn-group-sm'
 
-    .col-md-4
-      h3.text-center.text-secondary
+    .col-md-6
+      h3.text-center.text-secondary.mb-3
        |チャンネル一覧
       .mb-3
         table.table.table-hover
