@@ -31,7 +31,6 @@ RSpec.describe "Mypages", type: :system do
 
     xcontext 'ユーザーがサーバーを複数持っているとき' do
       before do
-        binding.pry
         login_as(guild_user_channels)
       end
       it 'サーバー名が複数表示されていること' do

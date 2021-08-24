@@ -8,7 +8,6 @@ class Channel < ApplicationRecord
 
   validates :id, uniqueness: true
   validates :name, presence: true
-  validates :uuid, presence: true
   validates :position, presence: true
 
   private

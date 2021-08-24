@@ -27,4 +27,8 @@ Rails.application.routes.draw do
       resources :channels, only: [:destroy], shallow: true
     end
   end
+
+  # 開発/テスト用ログイン
+  get '/login_as/:user_id', to: 'development/sessions#login_as' unless Rails.env.production?
+
 end
