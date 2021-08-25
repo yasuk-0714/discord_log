@@ -58,6 +58,13 @@ RSpec.describe User, type: :model do
       other_user.valid?
       expect(other_user.errors[:discord_id]).to include('はすでに存在します')
     end
+
+    it 'idが重複した場合、無効' do
+      user = create(:user, id: 123456789)
+      other_user = build(:user, id: 123456789)
+      other_user.valid?
+      expect(other_user.errors[:id]).to include('はすでに存在します')
+    end
   end
 
   describe 'デフォルトの値' do
