@@ -29,17 +29,6 @@ RSpec.describe "Mypages", type: :system do
       end
     end
 
-    xcontext 'ユーザーがサーバーを複数持っているとき' do
-      before do
-        login_as(guild_user_channels)
-      end
-      it 'サーバー名が複数表示されていること' do
-        expect(page).to have_content(user_guils.guild[0][:name])
-        expect(page).to have_content(user_guils.guild[1][:name])
-        expect(page).to have_content(user_guils.guild[2][:name])
-      end
-    end
-
     context 'ユーザーがサーバーを持っていないとき' do
       it 'なにも表示されないこと' do
         login_as(user)
