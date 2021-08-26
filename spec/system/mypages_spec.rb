@@ -26,18 +26,15 @@ RSpec.describe "Mypages", type: :system do
         it 'チャンネル名が表示されていること' do
           expect(page).to have_content(user_guild.channels[0][:name])
         end
-      end
-    end
 
-    xcontext 'ユーザーがサーバーを複数持っているとき' do
-      before do
-        binding.pry
-        login_as(guild_user_channels)
-      end
-      it 'サーバー名が複数表示されていること' do
-        expect(page).to have_content(user_guils.guild[0][:name])
-        expect(page).to have_content(user_guils.guild[1][:name])
-        expect(page).to have_content(user_guils.guild[2][:name])
+        it 'チャンネル詳細ページにアクセスできること' do
+          click_on user_guild.channels[0][:name]
+          expect(page).to have_content("#{user_guild.channels[0][:name]}の使用状況")
+          expect(current_path).to eq channel_path(user_guild.channels[0][:uuid])
+          within '.sidebar' do
+            expect(page).to have_link('マイページへ移動')
+          end
+        end
       end
     end
 
