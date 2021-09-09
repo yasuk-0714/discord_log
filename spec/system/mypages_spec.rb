@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Mypages", type: :system do
+RSpec.describe 'Mypages', type: :system do
   let(:user) { create(:user) }
   let(:user_guild) { create(:user, :with_guild, :with_channel) }
 
@@ -9,6 +9,7 @@ RSpec.describe "Mypages", type: :system do
       before do
         login_as(user_guild)
       end
+
       it 'サーバー名が表示されていること' do
         expect(page).to have_content(user_guild.guilds[0][:name])
       end
