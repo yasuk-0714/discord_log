@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe "Home", type: :system do
+RSpec.describe 'Home', type: :system do
 
   describe 'ヘッダーの表示' do
     context 'ログイン前' do
       it 'ヘッダーが正しく表示されていること'do
-      visit root_path
-      expect(page).to have_content('Discord-Log')
-      expect(page).to have_content('ボットを登録')
-      expect(page).to have_content('ログイン')
+        visit root_path
+        expect(page).to have_content('Discord-Log')
+        expect(page).to have_content('ボットを登録')
+        expect(page).to have_content('ログイン')
       end
 
       it 'ログインができないこと' do
@@ -19,11 +19,12 @@ RSpec.describe "Home", type: :system do
     end
 
     context 'ログイン後' do
-        let!(:user) { create(:user) }
-        before do
-          login_as(user)
-        end
-        it 'ヘッダーが正しく表示されていること' do
+      let!(:user) { create(:user) }
+      before do
+        login_as(user)
+      end
+
+      it 'ヘッダーが正しく表示されていること' do
         visit mypage_path
         expect(page).to have_content('Discord-Log')
         expect(page).to have_content('ボットを登録')
