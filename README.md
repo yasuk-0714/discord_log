@@ -80,7 +80,8 @@ Discord-Logは、**登録したDiscordアカウントのボイスチャンネル
 
 ## インフラ構成図
 
-![インフラ構成図 (3)](https://user-images.githubusercontent.com/63973453/132781978-815f8afa-6659-41e3-a7a9-07cb3af910d8.png)
+![インフラ構成図 (4)](https://user-images.githubusercontent.com/63973453/132782438-e84cf879-fd0c-4105-b299-56c01e1957ac.png)
+
 
 
 
