@@ -78,5 +78,10 @@ Discord-Logは、**登録したDiscordアカウントのボイスチャンネル
 
 <br>
 
+## インフラ構成図
+
+![インフラ構成図 (1)](https://user-images.githubusercontent.com/63973453/132780710-6c042a58-36b9-454d-a048-e1946edf8e03.png)
+
+
 ## Qiita記事
 - [[個人開発]Discordの使用時間を計測するアプリ「Discord-Log」を作りました](https://qiita.com/yasuk-0714/items/98a25750407209f4b64f)
